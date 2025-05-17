@@ -4,7 +4,7 @@ const BenefitCard = ({icon, text}) => {
       <div className="bg-primary size-[50px] text-3xl rounded-full flex-center">
         {icon}
       </div>
-      <h2 className="text-secondary text-2xl font-bold">{text}</h2>
+      <h5 className="text-secondary font-bold">{text}</h5>
       <p className="text-secondary text-md">Lorem ipsum dolor sit amet, consectetur adipis elit. Sit enim nec, proin faucibus nibh et sagittis a.</p>
     </div>
   );

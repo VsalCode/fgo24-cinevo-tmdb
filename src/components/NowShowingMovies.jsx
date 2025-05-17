@@ -40,7 +40,7 @@ const NowShowingMovies = () => {
         <button className="button-icon">
           <FaArrowLeft />
         </button>
-        <h2 className=" text-4xl font-semibold">Now Showing in Cinemas</h2>
+        <h3 className="font-semibold">Now Showing in Cinemas</h3>
         <button className="button-icon">
           <FaArrowRight />
         </button>
@@ -49,12 +49,12 @@ const NowShowingMovies = () => {
         {movies.map((item) => (
           <div key={item.id} className="flex flex-col justify-between">
             <div className="relative ">
-              <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div>
+              {item.vote_average > 7 && <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div> }
               <img className="rounded-xl" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
             </div>
             <div className="flex flex-col pt-5 gap-2">
               <div className="flex justify-center items-center text-center">
-                <p className="text-xl font-semibold">{item.title || item.name}</p>
+                <h6 className="font-semibold">{item.title || item.name}</h6>
               </div>
               <div className="flex justify-center items-center gap-2 ">
                 <div className="flex-center gap-2 pt-4">

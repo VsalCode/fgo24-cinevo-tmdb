@@ -40,7 +40,7 @@ const UpcomingMovies = () => {
               <div>
                 <div className="flex-center gap-2">
                   <div className="flex-center gap-2">
-                    <div className="text-md bg-third text-primary font-semibold px-2 py-1 rounded-full">{item.release_date}</div>
+                    <div className="chip">{item.release_date}</div>
                   </div>
                 </div>
               </div>
@@ -49,8 +49,8 @@ const UpcomingMovies = () => {
         </div>
 
         <div className="flex-1 gap-7 mx-10 flex-center">
-          <div className="flex flex-col gap-6">
-            <div className="flex-center bg-third rounded-full text-primary font-bold text-lg py-1 max-w-[200px] w-full ">UPCOMING MOVIES</div>
+          <div className="flex flex-col items-start gap-6">
+            <div className="chip">UPCOMING MOVIES</div>
             <h2 className="text-[42px] font-bold">Exciting Movie Coming Soon</h2>
           </div>
         </div>

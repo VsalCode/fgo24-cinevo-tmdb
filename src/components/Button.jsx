@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Button = (props) => {
+const Button = ({style, ...props}) => {
   const baseStyle = `px-4 py-2 rounded-full font-bold cursor-pointer`
   return (
-    <button className={[baseStyle, props.style].join(" ") } >{props.children}</button>
+    <button className={[baseStyle, style].join(" ")} {...props} >{props.children}</button>
   )
 }
 

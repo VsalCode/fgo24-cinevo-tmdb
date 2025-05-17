@@ -8,6 +8,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -31,8 +32,8 @@ const Movies = () => {
         };
       });
 
-      // console.log(updatedMovies);
-      setMovies(updatedMovies);
+      console.log(updatedMovies);
+      setMovies(updatedMovies); 
     }
     fetchData();
   }, []);
@@ -44,11 +45,11 @@ const Movies = () => {
       </header>
       <section className="mt-35 flex justify-center">
         <div className="flex-center w-300  relative">
-          <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] absolute z-10 rounded-4xl  w-full h-full flex flex-col gap-5 justify-end p-12">
-            <div className="flex-center bg-third rounded-full text-primary font-bold text-md py-2 w-[250px] max-w-full ">LIST MOVIE OF THE WEEK</div>
-            <h1 className="text-white text-4xl font-semibold">
+          <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] absolute z-10 rounded-4xl  w-full h-full flex flex-col items-start gap-5 justify-end p-12">
+            <div className="chip">LIST MOVIE OF THE WEEK</div>
+            <h3 className="text-white font-semibold">
               Experience the Magic of Cinema: <span className="text-primary">Book Your Tickets Today</span>
-            </h1>
+            </h3>
             <p className="text-white font-medium">Sign up and get the ticket with a lot of discount</p>
           </div>
           <img className="w-300 rounded-4xl relative" src="/src/assets/images/banner-movie.png" alt="" />
@@ -56,18 +57,18 @@ const Movies = () => {
       </section>
       <section className="m-20">
         <div className="flex-between mb-10">
-          <h1 className="text-5xl font-bold">Now Showing in Cinemas</h1>
+          <h2 className="font-bold">Now Showing in Cinemas</h2>
           <Button style="flex-center bg-primary text-white">
             <span>POPULAR</span> <RiArrowDropDownLine className="text-3xl" />
           </Button>
         </div>
         <div className="flex gap-7">
           <div>
-            <div className="font-bold text-xl pb-5">Find movie</div>
+            <h6 className="font-bold pb-5">Find movie</h6>
             <SearchBar placeholder="Search Your Movies..." />
           </div>
           <div>
-            <div className="font-bold text-xl pb-5">Filters</div>
+            <h6 className="font-bold pb-5">Filters</h6>
             <div className="flex gap-4">
               <Button style="border">ACTION</Button>
               <Button style="border">ADVENTURE</Button>
@@ -78,14 +79,14 @@ const Movies = () => {
         </div>
         <div className="grid grid-cols-4 gap-5 justify-items-center pt-15">
           {movies.map((item) => (
-            <div key={item.id} className="flex flex-col justify-between my-7">
+            <Link to='/movieDetail' key={item.id} className="flex flex-col justify-between my-7">
               <div className="relative ">
-                <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div>
+                {item.vote_average > 7 && <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div> }
                 <img className="rounded-xl" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
               </div>
               <div className="flex flex-col pt-5 gap-2">
                 <div className="flex justify-center items-center text-center">
-                  <p className="text-xl font-semibold">{item.title || item.name}</p>
+                  <h6 className="font-semibold">{item.title || item.name}</h6>
                 </div>
                 <div className="flex justify-center items-center gap-2 ">
                   <div className="flex-center gap-2 pt-4">
@@ -97,7 +98,7 @@ const Movies = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
         <div className="flex-center gap-3 mt-10 text-xl">

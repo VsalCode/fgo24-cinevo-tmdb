@@ -12,25 +12,34 @@
 }
 
 @layer base {
+  h1 { @apply text-6xl }
+  h2 { @apply text-5xl }
+  h3 { @apply text-4xl }
+  h4 { @apply text-3xl }
+  h5 { @apply text-2xl }
+  h6 { @apply text-xl }
+}
+
+@layer utilities {
   .flex-center {
     @apply flex justify-center items-center;
   }
- 
+
   .flex-between {
     @apply flex justify-between items-center;
   }
 
-  .title-section{
-    @apply font-medium text-6xl
+  .chip {
+    @apply bg-third rounded-full text-primary font-bold text-base py-2 px-5; 
   }
 
   .button-icon {
-    @apply bg-primary text-white p-3 rounded-full cursor-pointer
+    @apply bg-primary text-white p-3 rounded-full cursor-pointer;
   }
 
   .input-subscribe {
-    @apply bg-white border-2 border-primary w-full rounded-full py-3 px-5
+    @apply bg-white border-2 border-primary w-full rounded-full py-3 px-5;
   }
-}
 
+}
 

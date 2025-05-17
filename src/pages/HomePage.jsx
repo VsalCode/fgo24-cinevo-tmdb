@@ -10,16 +10,16 @@ import Footer from "../components/Footer";
 
 const HomePage = () => {
   return (
-    <>
+    <main>
       <header>
         <Navbar />
       </header>
       <section className="flex flex-col items-center text-center  mt-30 px-15">
         <div className="flex flex-col items-center gap-5">
-          <div className="bg-third rounded-full text-primary font-bold text-md py-1 w-[400px] max-w-full ">MOVIE TICKET PURCHASES #1 IN INDONESIA</div>
+          <div className="chip">MOVIE TICKET PURCHASES #1 IN INDONESIA</div>
           <div>
-            <p className="title-section">Experience the Magic of Cinema: </p>
-            <p className="text-primary font-extrabold text-6xl ">Book Your Tickets Today</p>
+            <h1>Experience the Magic of Cinema: </h1>
+            <h1 className="text-primary font-extrabold">Book Your Tickets Today</h1>
           </div>
           <div>
             <p className="text-fourth text-lg">Sign up and get the ticket with a lot of discount</p>
@@ -30,7 +30,7 @@ const HomePage = () => {
       <section id="benefit-page" className="bg-secondary text-sixth flex-between px-15 h-fit py-20 rounded-6xl">
         <div className="flex flex-col gap-5 p-2">
           <div className="flex-center bg-third text-primary font-bold rounded-full text-lg py-1 w-[200px]">WHY CHOOSE US</div>
-          <h2 className="text-6xl font-medium">Unleashing the Ultimate Movie Experience</h2>
+          <h1 className="font-medium">Unleashing the Ultimate Movie Experience</h1>
         </div>
         <div className="flex gap-5">
           <BenefitCard text="Guaranted" icon={<MdStars />} />
@@ -41,7 +41,7 @@ const HomePage = () => {
       <UpcomingMovies />
       <Subscribe />
       <Footer />
-    </>
+    </main>
   );
 };
 

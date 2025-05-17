@@ -26,7 +26,7 @@ const UpcomingMovies = () => {
   return (
     <section className="max-h-[1440px] h-fit bg-sixth px-15 py-20">
       <div className="flex">
-        <div className="grid grid-cols-4 justify-items-center pb-15 flex-3">
+        <div className="grid grid-cols-4 justify-items-center pb  -15 flex-3">
           {movies.map((item) => (
             <div key={item.id} className="flex items-center justify-between  flex-col">
               <div className="relative ">
@@ -56,7 +56,7 @@ const UpcomingMovies = () => {
         </div>
       </div>
 
-      <div className="flex-between">
+      <div className="flex-between pt-10">
         <div className="flex gap-3">
           <Button style="bg-primary text-white">ACTION</Button>
           <Button style="border">ADVENTURE</Button>

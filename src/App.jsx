@@ -1,8 +1,8 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Movie from './pages/Movie'
 import BuyTicket from './pages/BuyTicket'
 import NotFound from './pages/NotFound'
 import HomePage from './pages/HomePage'
+import Movies from './pages/Movies'
 
 const router = createBrowserRouter([
   {
@@ -11,7 +11,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/movies',
-    element: <Movie/>
+    element: <Movies/>
   },
   {
     path: '/buyTicket',

@@ -14,7 +14,7 @@ const Footer = () => {
       </div>
       <div className="flex justify-between grow">
         <div>
-          <h3 className="font-bold pb-6">EXPLORE</h3>
+          <h6 className="font-bold pb-6">EXPLORE</h6>
           <div className="flex flex-col gap-2">
             <Link>Cinemas</Link>
             <Link>Movies List</Link>
@@ -23,15 +23,15 @@ const Footer = () => {
           </div>
         </div>
         <div>
-          <h3 className="font-bold pb-6">OUR SPONSOR</h3>
+          <h6 className="font-bold pb-6">OUR SPONSOR</h6>
           <div className="flex flex-col gap-5">
-            <img className="w-40" src="/src/assets/sponsor/ebuId.png" alt="sponsor-image" />
-            <img className="w-40" src="/src/assets/sponsor/cineOne.png" alt="sponsor-image" />
-            <img className="w-40" src="/src/assets/sponsor/hiflix.png" alt="sponsor-image" />
+            <img className="w-30" src="/src/assets/sponsor/ebuId.png" alt="sponsor-image" />
+            <img className="w-30" src="/src/assets/sponsor/cineOne.png" alt="sponsor-image" />
+            <img className="w-30" src="/src/assets/sponsor/hiflix.png" alt="sponsor-image" />
           </div>
         </div>
         <div>
-          <h3 className="font-bold pb-6">FOLLOW US</h3>
+          <h6 className="font-bold pb-6">FOLLOW US</h6>
           <div>
             <div className="flex gap-2 items-center">
               <FaFacebook/>

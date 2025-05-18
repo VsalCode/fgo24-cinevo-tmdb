@@ -13,9 +13,9 @@ const Navbar = () => {
         <Link to="/movies">MOVIE</Link>
         <Link to="/buyTicket">BUY TICKET</Link>
       </div>
-      <div>
-        <Button style="border">LOGIN</Button>
-        <Button style="bg-primary text-white ms-3">SIGN UP</Button>
+      <div className="flex gap-3">
+        <Link to="/login" className="universal-button border">LOGIN</Link>
+        <Link to="/signup" className="universal-button bg-primary text-white">SIGN UP</Link>
       </div>
     </nav>
   );

@@ -9,6 +9,7 @@ import SearchBar from "../components/SearchBar";
 import { useEffect, useState } from "react";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import Dropdown from "../components/Dropdown";
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
@@ -33,7 +34,7 @@ const Movies = () => {
       });
 
       console.log(updatedMovies);
-      setMovies(updatedMovies); 
+      setMovies(updatedMovies);
     }
     fetchData();
   }, []);
@@ -58,9 +59,7 @@ const Movies = () => {
       <section className="m-20">
         <div className="flex-between mb-10">
           <h2 className="font-bold">Now Showing in Cinemas</h2>
-          <Button style="flex-center bg-primary text-white">
-            <span>POPULAR</span> <RiArrowDropDownLine className="text-3xl" />
-          </Button>
+          <Dropdown />
         </div>
         <div className="flex gap-7">
           <div>
@@ -77,12 +76,12 @@ const Movies = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-5 justify-items-center pt-15">
+        <div className="grid grid-cols-4 gap-7 justify-items-center pt-15">
           {movies.map((item) => (
-            <Link to='/movieDetail' key={item.id} className="flex flex-col justify-between my-7">
-              <div className="relative ">
-                {item.vote_average > 7 && <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div> }
-                <img className="rounded-xl" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+            <Link to="/movieDetail" key={item.id} className="flex flex-col my-5">
+              <div>
+                {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-xl px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
+                <img className="rounded-xl object-cover h-100 w-200" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
               </div>
               <div className="flex flex-col pt-5 gap-2">
                 <div className="flex justify-center items-center text-center">
@@ -103,7 +102,7 @@ const Movies = () => {
         </div>
         <div className="flex-center gap-3 mt-10 text-xl">
           <button className="button-icon bg-third text-primary">
-            <FaArrowLeft/>
+            <FaArrowLeft />
           </button>
           <button className="flex-center bg-primary text-white text-xl font-semibold rounded-full size-10">1</button>
           <button className="flex-center border font-semibold rounded-full size-10">2</button>

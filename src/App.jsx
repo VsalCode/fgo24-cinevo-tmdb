@@ -4,6 +4,8 @@ import NotFound from './pages/NotFound'
 import HomePage from './pages/HomePage'
 import Movies from './pages/Movies'
 import MovieDetail from './pages/MovieDetail'
+import Login from './pages/Login'
+import SignUp from './pages/SignUp'
 
 const router = createBrowserRouter([
   {
@@ -12,7 +14,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/login',
-    element: <HomePage/>
+    element: <Login/>
+  },
+  {
+    path: '/signup',
+    element: <SignUp/>
   },
   {
     path: '/movies',

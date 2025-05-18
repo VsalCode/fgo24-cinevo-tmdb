@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-const Login = () => {
+const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   function handleShowPassword(e) {
@@ -25,8 +25,8 @@ const Login = () => {
       <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form>
           <div className="pb-5">
-            <p className="font-semibold pb-3 sm:text-4xl text-2xl">Welcome Back</p>
-            <p className="sm:text-xl text-base">Sign in with your data that you entered during your registration</p>
+            <p className="font-semibold pb-3 sm:text-4xl text-2xl">Sign Up</p>
+            <p className="sm:text-xl text-base text-primary font-medium italic">Join for free now!</p>
           </div>
           <div>
             <label htmlFor="email">Email</label>
@@ -43,16 +43,14 @@ const Login = () => {
               </button>
             </span>
           </div>
-          <div className="text-blue-600 font-medium py-4 flex justify-end sm:text-base text-sm">
-            <Link>Forgot Your Password?</Link>
+          <div className="flex items-center gap-3 py-3">
+            <input type="checkbox" name="terms" id="terms" />
+            <label htmlFor="terms">I agree to terms & conditions</label>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Login</button>
+            <button className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Join</button>
             <p>
-              Do Not Have an Account?{" "}
-              <Link to="/signup" className="text-blue-600">
-                Sign Up
-              </Link>
+              Already Not Have an Account? <Link to="/login" className="text-blue-600"> Login</Link>
             </p>
           </div>
           <div className="flex sm:flex-row flex-col gap-3 mt-5">
@@ -71,4 +69,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

@@ -2,6 +2,7 @@ import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Button from "../components/Button";
 import { SelectOptions } from "../components/Input";
+import SponsorCheckbox from "../components/SponsorCheckbox";
 
 const MovieDetail = () => {
   return (
@@ -76,15 +77,13 @@ const MovieDetail = () => {
             <SelectOptions type="location" />
           </div>
         </div>
-        <div className="flex-between">
-          <div className="w-[269px] h-[153px] bg-primary p-5 flex-center rounded-xl">
-            <img src="/src/assets/sponsor/cineOne.png" alt="" />
-          </div>
-          <div className="w-[269px] h-[153px] bg-primary p-5 flex-center rounded-xl">
-            <img src="/src/assets/sponsor/ebuId.png" alt="" />
-          </div>
-          <div className="w-[269px] h-[153px] bg-primary p-5 flex-center rounded-xl">
-            <img src="/src/assets/sponsor/hiflix.png" alt="" />
+        <div>
+          <h5 className="font-semibold pb-10 pt-15">Choose Cinema</h5>
+          <div className="flex-between ">
+            <SponsorCheckbox cinema="ebu.id" />
+            <SponsorCheckbox cinema="hiflix" />
+            <SponsorCheckbox cinema="CineOne21" />
+            <SponsorCheckbox cinema="idlix" />
           </div>
         </div>
       </form>

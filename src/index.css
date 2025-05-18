@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+*{
+  
+}
+
 @theme {
   --font-sans: "DM Sans", Arial, Helvetica, sans-serif;
 
@@ -9,6 +13,7 @@
   --color-fourth: #333333;
   --color-fifth: #878786;
   --color-sixth: #E0E0E0;
+
 }
 
 @layer base {
@@ -34,7 +39,7 @@
   }
 
   .universal-button {
-    @apply px-4 py-3 rounded-full font-bold cursor-pointer
+    @apply px-4 py-2 rounded-full font-bold cursor-pointer
   }
 
   .button-icon {
@@ -47,3 +52,24 @@
 
 }
 
+.scroll-genre::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-x::-webkit-scrollbar {
+  height: 10px;
+}
+
+.scroll-x::-webkit-scrollbar-track {
+  background: var(--color-sixth);
+  border-radius: 4px;
+}
+
+.scroll-x::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 4px;
+}
+
+.scroll-x::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

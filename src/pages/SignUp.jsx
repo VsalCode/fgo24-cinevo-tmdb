@@ -48,9 +48,9 @@ const SignUp = () => {
             <label htmlFor="terms">I agree to terms & conditions</label>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Join</button>
+            <button type="submit" className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Join</button>
             <p>
-              Already Not Have an Account? <Link to="/login" className="text-blue-600"> Login</Link>
+              Already Have an Account? <Link to="/login" className="text-blue-600"> Login</Link>
             </p>
           </div>
           <div className="flex sm:flex-row flex-col gap-3 mt-5">

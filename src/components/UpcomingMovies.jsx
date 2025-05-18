@@ -15,21 +15,19 @@ const UpcomingMovies = () => {
 
       // console.log(dataMovies);
 
-      const data = dataMovies.slice(16);
-      console.log(data);
-
-      setMovies(data);
+      // const data = dataMovies.slice(16);
+      setMovies(dataMovies);
     }
     fetchData();
   }, []);
 
   return (
-    <section className="max-h-[1440px] h-fit bg-sixth px-15 py-20">
-      <div className="flex">
-        <div className="grid grid-cols-4 justify-items-center pb  -15 flex-3">
+    <section className="max-h-[1440px] h-fit bg-sixth  py-20">
+      <div className="flex lg:flex-row flex-col-reverse lg:px-15 md:px-10 px-5  ">
+        <div className="scroll-x overflow-x-auto flex justify-items-center flex-3">
           {movies.map((item) => (
-            <div key={item.id} className="flex items-center justify-between  flex-col">
-              <div className="relative ">
+            <div key={item.id} className="flex items-center justify-between flex-col pb-10">
+              <div className="relative w-50">
                 <img className="rounded-xl" src={`https://image.tmdb.org/t/p/w185${item.poster_path}`} alt="" />
               </div>
               <div className="flex-center flex-col text-center py-4">
@@ -48,32 +46,32 @@ const UpcomingMovies = () => {
           ))}
         </div>
 
-        <div className="flex-1 gap-7 mx-10 flex-center">
-          <div className="flex flex-col items-start gap-6">
+        <div className="flex-1 gap-7 md:mx-10 mx-0 mb-10">
+          <div className="flex flex-col lg:items-start items-center gap-6">
             <div className="chip">UPCOMING MOVIES</div>
-            <h2 className="text-[42px] font-bold">Exciting Movie Coming Soon</h2>
+            <p className="lg:text-5xl text-4xl font-bold lg:text-start text-center">Exciting Movie Coming Soon</p>
           </div>
         </div>
       </div>
 
-      <div className="flex-between pt-10">
-        <div className="flex gap-3">
-          <Button style="bg-primary text-white">ACTION</Button>
+      <div className="flex lg:flex-row flex-col lg:justify-between lg:gap-0 gap-10  pt-10 overflow-hidden lg:px-15 px-7">
+        <div className="scroll-genre flex gap-3 justify-center flex-wrap">
+          <Button style="bg-primary text-white ">ACTION</Button>
           <Button style="border">ADVENTURE</Button>
           <Button style="border">COMEDY</Button>
-          <Button style="border">SCI-FI</Button>
+          <Button style="border">SCIFI</Button>
         </div>
-        <div className="flex-between gap-5">
+        <div className="lg:flex-between flex justify-center gap-5">
           <button className="button-icon">
-            <FaArrowLeft />
+            <FaArrowLeft className="md:text-lg text-sm" />
           </button>
-          <button className="button-icon">
-            <FaArrowRight />
-          </button>
-          <Link to="/movies" className="flex items-center bg-primary text-white rounded-full px-4 py-2">
-            <span>VIEW ALL</span>
-            <FaArrowRight />
+          <Link to="/movies" className="flex items-center gap-5 bg-primary text-white rounded-full px-4 py-2">
+            <span >VIEW ALL</span>
+            <FaArrowRight className="md:text-lg text-sm" />
           </Link>
+          <button className="button-icon">
+            <FaArrowRight />
+          </button>
         </div>
       </div>
     </section>

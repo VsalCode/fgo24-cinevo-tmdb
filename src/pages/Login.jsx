@@ -47,7 +47,7 @@ const Login = () => {
             <Link>Forgot Your Password?</Link>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Login</button>
+            <button type="submit" className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Login</button>
             <p>
               Do Not Have an Account?{" "}
               <Link to="/signup" className="text-blue-600">

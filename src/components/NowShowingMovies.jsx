@@ -10,7 +10,7 @@ const NowShowingMovies = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const requestMovies = await axios.get(requests.fetchTrending);
+      const requestMovies = await axios.get(requests.fetchNowPlaying);
       const dataMovies = requestMovies.data.results;
       const requestGenres = await axios.get(requests.fetchMovieGenres);
       const movieGenres = requestGenres.data.genres;
@@ -28,29 +28,29 @@ const NowShowingMovies = () => {
       });
 
       // console.log(updatedMovies);
-      const data = updatedMovies.slice(16);
-      setMovies(data);
+      // const data = updatedMovies.slice(16);
+      setMovies(updatedMovies);
     }
     fetchData();
   }, []);
 
   return (
     <div className="w-full my-20">
-      <div className="flex justify-between items-center">
-        <button className="button-icon">
+      <div className="flex justify-between items-center overflow-hidden">
+        <button className="button-icon md:text-lg text-sm">
           <FaArrowLeft />
         </button>
-        <h3 className="font-semibold">Now Showing in Cinemas</h3>
-        <button className="button-icon">
+        <p className="md:font-semibold font-bold md:text-4xl sm:text-2xl text-xl">Now Showing in Cinemas</p>
+        <button className="button-icon md:text-lg text-sm">
           <FaArrowRight />
         </button>
       </div>
-      <div className="grid grid-cols-4 gap-5 justify-items-center py-15">
+      <div className="scroll-x overflow-x-auto flex gap-5 justify-items-center py-10 ">
         {movies.map((item) => (
-          <div key={item.id} className="flex flex-col justify-between">
-            <div className="relative ">
+          <div key={item.id} className="flex flex-col justify-between w-500">
+            <div className="relative lg:w-70 w-50">
               {item.vote_average > 7 && <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div> }
-              <img className="rounded-xl" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+              <img className="rounded-xl object-cover " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
             </div>
             <div className="flex flex-col pt-5 gap-2">
               <div className="flex justify-center items-center text-center">
@@ -58,18 +58,27 @@ const NowShowingMovies = () => {
               </div>
               <div className="flex justify-center items-center gap-2 ">
                 <div className="flex-center gap-2 pt-4">
-                  {item.genre_ids.map((genre) => (
+                  {item.genre_ids.length > 3 ? (
+                    item.genre_ids.slice(2).map((genre) => (
                     <div key={genre?.id} className="text-sm bg-sixth text-fifth font-medium px-2 py-1 rounded-full">
                       {genre.name}
                     </div>
-                  ))}
+                  ))
+                  ) : (
+                    item.genre_ids.map((genre) => (
+                    <div key={genre?.id} className="text-sm bg-sixth text-fifth font-medium px-2 py-1 rounded-full">
+                      {genre.name}
+                    </div>
+                  ))
+                  )}
+                  
                 </div>
               </div>
             </div>
           </div>
         ))}
       </div>
-      <div className="flex-center">
+      <div className="flex-center mt-7">
         <Link to="/movies" className="flex items-center bg-primary text-white rounded-full px-4 py-2">
           <span>VIEW ALL</span>
           <FaArrowRight />
@@ -80,3 +89,4 @@ const NowShowingMovies = () => {
 };
 
 export default NowShowingMovies;
+

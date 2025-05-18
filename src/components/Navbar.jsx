@@ -1,22 +1,57 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import Button from "./Button";
+import { GiHamburgerMenu } from "react-icons/gi";
+import { useState } from "react";
+import { IoClose } from "react-icons/io5";
 
 const Navbar = () => {
+  const [showHamburger, setShowHamburger] = useState(false);
+
+  function HandleHamburger() {
+    if (showHamburger === true) {
+      setShowHamburger(false);
+    } else if (showHamburger === false) {
+      setShowHamburger(true);
+    }
+  }
+
   return (
-    <nav className="bg-white z-100 fixed left-0 right-0 top-0 shadow flex-between h-100px px-15 py-4">
-      <div>
-        <img className="w-30" src="/src/assets/icon/logo.png" alt="logo" />
+    <nav className="bg-white z-100 fixed left-0 right-0 top-0 md:shadow shadow-xl  h-100px md:px-15 sm:px-10 px-7 py-4">
+      <div className="flex-between">
+        <div>
+          <img className="md:w-30 w-25" src="/src/assets/icon/logo.png" alt="logo" />
+        </div>
+        <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 md:flex md:gap-7 md:font-sans md:font-semibold md:text-lg hidden">
+          <Link to="/">HOME</Link>
+          <Link to="/movies">MOVIE</Link>
+          <Link to="/buyTicket">BUY TICKET</Link>
+        </div>
+        <button className="md:hidden text-2xl" onClick={HandleHamburger}>
+          {showHamburger === false ? <GiHamburgerMenu /> : <IoClose />}
+        </button>
+        <div className="md:flex md:gap-3 hidden">
+          <Link to="/login" className="universal-button border">
+            LOGIN
+          </Link>
+          <Link to="/signup" className="universal-button bg-primary text-white">
+            SIGN UP
+          </Link>
+        </div>
       </div>
-      <div className="absolute left-1/2 transform -translate-x-1/2 flex gap-7 font-sans font-semibold text-lg">
-        <Link to="/">HOME</Link>
-        <Link to="/movies">MOVIE</Link>
-        <Link to="/buyTicket">BUY TICKET</Link>
-      </div>
-      <div className="flex gap-3">
-        <Link to="/login" className="universal-button border">LOGIN</Link>
-        <Link to="/signup" className="universal-button bg-primary text-white">SIGN UP</Link>
-      </div>
+      {showHamburger === true && (
+        <div className="flex flex-col h-fit rounded-b-xl text-center text-base font-bold py-7 gap-5">
+          <Link to="/">HOME</Link>
+          <Link to="/movies">MOVIE</Link>
+          <Link to="/buyTicket">BUY TICKET</Link>
+          <div className="flex-between gap-3">
+            <Link to="/login" className="grow universal-button border text-base">
+              LOGIN
+            </Link>
+            <Link to="/signup" className="grow universal-button bg-primary text-white text-base">
+              SIGN UP
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

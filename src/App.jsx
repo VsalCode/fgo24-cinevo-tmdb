@@ -6,6 +6,7 @@ import Movies from './pages/Movies'
 import MovieDetail from './pages/MovieDetail'
 import Login from './pages/Login'
 import SignUp from './pages/SignUp'
+import OrderPage from './pages/OrderPage'
 
 const router = createBrowserRouter([
   {
@@ -25,8 +26,12 @@ const router = createBrowserRouter([
     element: <Movies/>
   },
   {
-    path: '/movieDetail',
+    path: '/movieDetail/:id',
     element: <MovieDetail/>
+  },
+  {
+    path: '/order',
+    element: <OrderPage/>
   },
   {
     path: '/buyTicket',

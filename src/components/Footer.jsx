@@ -7,12 +7,12 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="flex justify-between bg-secondary text-sixth h-fit py-25 px-10 rounded-t-[48px]">
-      <div className="grow">
-        <img className="w-100" src="/src/assets/icon/logo-white.png" alt="logo-image" />
+    <footer className="flex lg:flex-row lg:justify-between flex-col bg-secondary text-sixth h-fit py-25 px-10 rounded-t-[48px]">
+      <div className="grow lg:mb-0 mb-10">
+        <img className="lg:w-90 md:w-80 sm:w-60 w-40" src="/src/assets/icon/logo-white.png" alt="logo-image" />
         <p>Stop waiting in line. Buy tickets conveniently, watch movies quietly.</p>
       </div>
-      <div className="flex justify-between grow">
+      <div className="flex md:flex-row md:justify-between md:grow flex-col gap-10">
         <div>
           <h6 className="font-bold pb-6">EXPLORE</h6>
           <div className="flex flex-col gap-2">
@@ -32,7 +32,7 @@ const Footer = () => {
         </div>
         <div>
           <h6 className="font-bold pb-6">FOLLOW US</h6>
-          <div>
+          <div className="flex flex-col gap-2">
             <div className="flex gap-2 items-center">
               <FaFacebook/>
               <span>tickitz.cinema.id</span>

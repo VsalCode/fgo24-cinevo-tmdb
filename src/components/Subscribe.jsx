@@ -1,12 +1,12 @@
 const Subscribe = () => {
   return (
-    <section className="mx-15 h-fit py-20">
-      <form className="bg-third rounded-4xl flex-center flex-col py-15">
-        <div className="w-[795px] flex flex-col items-center gap-10 py-10">
+    <section className="lg:mx-15 md:mx-10 mx-5 h-fit py-20">
+      <form className="bg-third rounded-4xl flex-center flex-col md:p-15 px-5">
+        <div className="max-w-[795px] w-full flex flex-col items-center gap-10 py-10">
           <div>
-            <h1 className="font-medium">Subscribe to Our Newsletter</h1>
+            <p className="lg:text-6xl md:text-5xl text-2xl font-semibold text-center">Subscribe to Our Newsletter</p>
           </div>
-          <div className="flex justify-between w-full gap-5">
+          <div className="flex md:flex-row md:justify-between flex-col w-full gap-5">
             <input type="text" className="input-subscribe" placeholder="Your First Name" />
             <input type="email" className="input-subscribe" placeholder="Your Email Address" />
           </div>

@@ -53,22 +53,22 @@ const Movies = () => {
             </h3>
             <p className="text-white font-medium">Sign up and get the ticket with a lot of discount</p>
           </div>
-          <img className="w-300 rounded-4xl relative" src="/src/assets/images/banner-movie.png" alt="" />
+          <img className="w-full rounded-4xl relative" src="/src/assets/images/banner-movie.png" alt="" />
         </div>
       </section>
       <section className="m-20">
-        <div className="flex-between mb-10">
-          <h2 className="font-bold">Now Showing in Cinemas</h2>
+        <div className="flex md:flex-row md:justify-between flex-col gap-10 mb-10 ">
+          <p className="font-bold lg:text-5xl text-4xl">Now Showing in Cinemas</p>
           <Dropdown />
         </div>
-        <div className="flex gap-7">
+        <div className="flex lg:flex-row flex-col gap-7">
           <div>
             <h6 className="font-bold pb-5">Find movie</h6>
             <SearchBar placeholder="Search Your Movies..." />
           </div>
           <div>
             <h6 className="font-bold pb-5">Filters</h6>
-            <div className="flex gap-4">
+            <div className="flex gap-4 flex-wrap">
               <Button style="border">ACTION</Button>
               <Button style="border">ADVENTURE</Button>
               <Button style="border">COMEDY</Button>
@@ -76,9 +76,9 @@ const Movies = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-4 gap-7 justify-items-center pt-15">
+        <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid gap-7 justify-items-center pt-15">
           {movies.map((item) => (
-            <Link to="/movieDetail" key={item.id} className="flex flex-col my-5">
+            <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col my-5">
               <div>
                 {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-xl px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
                 <img className="rounded-xl object-cover h-100 w-200" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />

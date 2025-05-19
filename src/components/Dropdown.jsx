@@ -1,6 +1,6 @@
 const Dropdown = () => {
   return (
-    <label className="bg-primary text-white flex items-center rounded-full px-5 py-3">
+    <label className="bg-third text-primary font-extrabold  flex items-center rounded-full px-5 py-3">
       <select id="filter" name="filter" className="grow">
         <option className="text-secondary" value="Jakarta" selected>POPULAR</option>
         <option className="text-secondary" value="Bandung">LATEST</option>

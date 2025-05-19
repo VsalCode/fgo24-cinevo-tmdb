@@ -36,12 +36,12 @@ const NowShowingMovies = () => {
 
   return (
     <div className="w-full my-20">
-      <div className="flex justify-between items-center overflow-hidden">
+      <div className="flex  justify-between items-center overflow-hidden">
         <button className="button-icon md:text-lg text-sm">
           <FaArrowLeft />
         </button>
         <p className="md:font-semibold font-bold md:text-4xl sm:text-2xl text-xl">Now Showing in Cinemas</p>
-        <button className="button-icon md:text-lg text-sm">
+        <button className="button-icon md:text-lg text-sm bg-third">
           <FaArrowRight />
         </button>
       </div>
@@ -49,7 +49,7 @@ const NowShowingMovies = () => {
         {movies.map((item) => (
           <div key={item.id} className="flex flex-col justify-between w-500">
             <div className="relative lg:w-70 w-50">
-              {item.vote_average > 7 && <div className="absolute text-primary bg-third px-2 py-1 rounded-b-lg ">Recommended</div> }
+              {item.vote_average > 7 && <div className="absolute text-primary bg-third font-bold px-2 py-1 rounded-b-lg ">Recommended</div> }
               <img className="rounded-xl object-cover " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
             </div>
             <div className="flex flex-col pt-5 gap-2">
@@ -60,13 +60,13 @@ const NowShowingMovies = () => {
                 <div className="flex-center gap-2 pt-4">
                   {item.genre_ids.length > 3 ? (
                     item.genre_ids.slice(2).map((genre) => (
-                    <div key={genre?.id} className="text-sm bg-sixth text-fifth font-medium px-2 py-1 rounded-full">
+                    <div key={genre?.id} className="text-sm bg-secondary text-third font-medium px-2 py-1 rounded-full">
                       {genre.name}
                     </div>
                   ))
                   ) : (
                     item.genre_ids.map((genre) => (
-                    <div key={genre?.id} className="text-sm bg-sixth text-fifth font-medium px-2 py-1 rounded-full">
+                    <div key={genre?.id} className="text-sm bg-secondary text-third font-medium px-2 py-1 rounded-full">
                       {genre.name}
                     </div>
                   ))
@@ -79,7 +79,7 @@ const NowShowingMovies = () => {
         ))}
       </div>
       <div className="flex-center mt-7">
-        <Link to="/movies" className="flex items-center bg-primary text-white rounded-full px-4 py-2">
+        <Link to="/movies" className="flex items-center bg-third text-primary font-bold gap-3 rounded-full px-4 py-2">
           <span>VIEW ALL</span>
           <FaArrowRight />
         </Link>

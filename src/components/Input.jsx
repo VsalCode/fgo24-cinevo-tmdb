@@ -4,9 +4,9 @@ import { IoSearch } from "react-icons/io5";
 export const SelectOptions = ({ id, type, name, ...props }) => {
   if (type === "location") {
     return (
-      <label htmlFor={type} className="bg-white flex-between gap-5 rounded-full border py-3 px-5 w-full">
+      <label htmlFor={type} className="bg-white text-primary font-semibold flex-between gap-5 rounded-full border py-3 px-5 w-full">
         <IoSearch className="text-xl" />
-        <select id={type} name={type} className="grow">
+        <select id={type} name={type} className="grow outline-none">
           <option value="Jakarta">Jakarta</option>
           <option value="Bandung">Bandung</option>
           <option value="Bekasi" selected>
@@ -18,9 +18,9 @@ export const SelectOptions = ({ id, type, name, ...props }) => {
     );
   }
   return (
-    <label for={id} className="bg-white flex-between gap-5 rounded-full border py-3 px-3">
+    <label for={id} className="bg-white text-primary font-semibold flex-between gap-5 rounded-full border py-3 px-3">
       <IoSearch className="text-xl" />
-      <input className="grow" type={type} id={id} name={name} {...props} />
+      <input className="grow outline-none" type={type} id={id} name={name} {...props} />
       {/* <RiArrowDropDownLine className="text-4xl" /> */}
     </label>
   );

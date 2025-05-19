@@ -20,7 +20,7 @@ const SignUp = () => {
   }
 
   return (
-    <main className="sm:bg-sixth bg-white h-fit py-10 flex-center flex-col font-sans">
+    <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
       <img className="sm:w-50 w-40 sm:mb-3 mb-0" src="/src/assets/icon/logo.png" alt="" />
       <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form>
@@ -48,7 +48,7 @@ const SignUp = () => {
             <label htmlFor="terms">I agree to terms & conditions</label>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button type="submit" className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Join</button>
+            <button type="submit" className="bg-third font-bold w-full text-secondary  py-3 rounded-lg mb-5">JOIN</button>
             <p>
               Already Have an Account? <Link to="/login" className="text-blue-600"> Login</Link>
             </p>

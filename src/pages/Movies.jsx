@@ -41,22 +41,19 @@ const Movies = () => {
 
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
-      <section className="mt-35 flex justify-center">
+      <section className="pt-35 flex justify-center text-white">
         <div className="flex-center w-300  relative">
           <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] absolute z-10 rounded-4xl  w-full h-full flex flex-col items-start gap-5 justify-end p-12">
             <div className="chip">LIST MOVIE OF THE WEEK</div>
             <h3 className="text-white font-semibold">
-              Experience the Magic of Cinema: <span className="text-primary">Book Your Tickets Today</span>
+              Experience the Magic of Cinema: <span className="text-third">Book Your Tickets Today</span>
             </h3>
             <p className="text-white font-medium">Sign up and get the ticket with a lot of discount</p>
           </div>
           <img className="w-full rounded-4xl relative" src="/src/assets/images/banner-movie.png" alt="" />
         </div>
       </section>
-      <section className="m-20">
+      <section className="m-20 text-white">
         <div className="flex md:flex-row md:justify-between flex-col gap-10 mb-10 ">
           <p className="font-bold lg:text-5xl text-4xl">Now Showing in Cinemas</p>
           <Dropdown />
@@ -76,7 +73,7 @@ const Movies = () => {
             </div>
           </div>
         </div>
-        <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid gap-7 justify-items-center pt-15">
+        <div className=" grid lg:grid-cols-4 md:grid-cols-4 sm:grid gap-7 justify-items-center pt-15">
           {movies.map((item) => (
             <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col my-5">
               <div>
@@ -90,7 +87,7 @@ const Movies = () => {
                 <div className="flex justify-center items-center gap-2 ">
                   <div className="flex-center gap-2 pt-4">
                     {item.genre_ids.map((genre) => (
-                      <div key={genre?.id} className="text-sm bg-sixth text-fifth font-medium px-2 py-1 rounded-full">
+                      <div key={genre?.id} className="text-sm bg-secondary text-third font-medium px-2 py-1 rounded-full">
                         {genre.name}
                       </div>
                     ))}
@@ -104,7 +101,7 @@ const Movies = () => {
           <button className="button-icon bg-third text-primary">
             <FaArrowLeft />
           </button>
-          <button className="flex-center bg-primary text-white text-xl font-semibold rounded-full size-10">1</button>
+          <button className="flex-center bg-third text-primary text-xl font-semibold rounded-full size-10">1</button>
           <button className="flex-center border font-semibold rounded-full size-10">2</button>
           <button className="flex-center border font-semibold rounded-full size-10">3</button>
           <button className="button-icon">
@@ -113,7 +110,6 @@ const Movies = () => {
         </div>
       </section>
       <Subscribe />
-      <Footer />
     </>
   );
 };

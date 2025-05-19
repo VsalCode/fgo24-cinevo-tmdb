@@ -6,11 +6,8 @@ import SponsorCheckbox from "../components/SponsorCheckbox";
 
 const MovieDetail = () => {
   return (
-    <main>
-      <header>
-        <Navbar />
-      </header>
-      <section className="flex flex-col justify-end mb-30 mt-25 ">
+    <>
+      <section className="flex flex-col justify-end mb-30 pt-25">
         <div className="flex justify-center relative">
           <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] h-full w-full rounded-[40px] absolute z-40"></div>
           <img className="w-full rounded-[40px] relative" src="/src/assets/images/backdrop_path.png" alt="" />
@@ -31,7 +28,7 @@ const MovieDetail = () => {
                 <div className="border-2 font-semibold px-4 py-2 rounded-full">Adventure</div>
               </div>
             </div>
-            <div className="text-secondary text-base flex gap-10">
+            <div className="text-white text-base flex gap-10">
               <div>
                 <div className="pb-5">
                   <p>Release Date</p>
@@ -59,7 +56,7 @@ const MovieDetail = () => {
       <form className="bg-sixth p-20 h-screen">
         <div className="flex-between pb-15">
           <h3 className="font-semibold">Book Tickets</h3>
-          <Button type="submit" style="bg-primary text-white">
+          <Button type="submit" style="bg-third text-secondary font-extrabold">
             BOOK NOW
           </Button>
         </div>
@@ -87,8 +84,7 @@ const MovieDetail = () => {
           </div>
         </div>
       </form>
-      <Footer />
-    </main>
+    </>
   );
 };
 

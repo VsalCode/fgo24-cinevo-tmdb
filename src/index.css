@@ -1,19 +1,15 @@
 @import "tailwindcss";
 
 *{
-  
 }
 
 @theme {
   --font-sans: "DM Sans", Arial, Helvetica, sans-serif;
 
-  --color-primary: #E95102;
-  --color-secondary:  #0F100D;
-  --color-third: #FDECE3;
-  --color-fourth: #333333;
-  --color-fifth: #878786;
-  --color-sixth: #E0E0E0;
-
+  --color-primary: #16181E;
+  --color-secondary: #21242D;
+  --color-third: #00B9AE;
+  --color-white: #F9F9F9;
 }
 
 @layer base {
@@ -39,11 +35,11 @@
   }
 
   .universal-button {
-    @apply px-4 py-2 rounded-full font-bold cursor-pointer
+    @apply  px-4 py-2 rounded-full font-bold cursor-pointer
   }
 
   .button-icon {
-    @apply bg-primary text-white p-3 rounded-full cursor-pointer;
+    @apply bg-third text-primary p-3 rounded-full cursor-pointer;
   }
 
   .input-subscribe {
@@ -57,16 +53,16 @@
 }
 
 .scroll-x::-webkit-scrollbar {
-  height: 10px;
+  height: 7px;
 }
 
 .scroll-x::-webkit-scrollbar-track {
-  background: var(--color-sixth);
+  background: var(--color-white);
   border-radius: 4px;
 }
 
 .scroll-x::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
+  background: var(--color-third);
   border-radius: 4px;
 }
 

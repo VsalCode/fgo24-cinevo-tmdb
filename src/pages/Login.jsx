@@ -20,7 +20,7 @@ const Login = () => {
   }
 
   return (
-    <main className="sm:bg-sixth bg-white h-fit py-10 flex-center flex-col font-sans">
+    <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
       <img className="sm:w-50 w-40 sm:mb-3 mb-0" src="/src/assets/icon/logo.png" alt="" />
       <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form>
@@ -47,7 +47,7 @@ const Login = () => {
             <Link>Forgot Your Password?</Link>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button type="submit" className="bg-primary w-full text-white  py-3 rounded-lg mb-5">Login</button>
+            <button type="submit" className="bg-third w-full text-primary font-bold  py-3 rounded-lg mb-5">LOGIN</button>
             <p>
               Do Not Have an Account?{" "}
               <Link to="/signup" className="text-blue-600">

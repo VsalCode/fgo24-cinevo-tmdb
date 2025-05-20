@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-*{
-}
-
 @theme {
   --font-sans: "DM Sans", Arial, Helvetica, sans-serif;
 
@@ -26,12 +23,20 @@
     @apply flex justify-center items-center;
   }
 
+  .flex-row {
+    @apply flex flex-row
+  }
+  
   .flex-between {
-    @apply flex justify-between items-center;
+    @apply flex flex-row justify-between items-center;
   }
 
   .chip {
     @apply bg-third rounded-full text-primary font-bold text-base py-2 px-5; 
+  }
+
+  .genre {
+    @apply text-sm bg-secondary text-third font-medium px-2 py-1 rounded-full
   }
 
   .universal-button {

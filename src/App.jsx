@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import OrderPage from "./pages/OrderPage";
 import Layout from "./components/Layout";
+import Payment from "./pages/Payment";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,15 @@ const router = createBrowserRouter([
         path: "/movieDetail/:id",
         element: <MovieDetail />,
       },
+      {
+        path: "/order",
+        element: <OrderPage/>
+      },
+      {
+        path: "/payment",
+        element: <Payment/>
+      },
+
     ],
   },
   {
@@ -35,11 +45,6 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
-  },
-
-  {
-    path: "/order",
-    element: <OrderPage />,
   },
   {
     path: "/buyTicket",

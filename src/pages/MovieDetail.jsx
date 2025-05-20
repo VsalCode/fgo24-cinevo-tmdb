@@ -3,8 +3,15 @@ import Footer from "../components/Footer";
 import Button from "../components/Button";
 import { SelectOptions } from "../components/Input";
 import SponsorCheckbox from "../components/SponsorCheckbox";
+import { useNavigate } from "react-router-dom";
 
 const MovieDetail = () => {
+  const nav = useNavigate()
+
+  function handleBookTicket(){
+    nav('/order')
+  }
+
   return (
     <>
       <section className="flex flex-col justify-end mb-30 pt-25">
@@ -56,7 +63,7 @@ const MovieDetail = () => {
       <form className="bg-sixth p-20 h-screen">
         <div className="flex-between pb-15">
           <h3 className="font-semibold">Book Tickets</h3>
-          <Button type="submit" style="bg-third text-secondary font-extrabold">
+          <Button onClick={handleBookTicket} type="submit" style="bg-third text-secondary font-extrabold">
             BOOK NOW
           </Button>
         </div>

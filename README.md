@@ -1,4 +1,4 @@
-# Tickitz App
+# Tickys App
 
 <!-- This project is a Movie Ticket project -->
 
@@ -24,6 +24,7 @@ To run the web you can use the command :
 - Vite
 - Tailwind CSS
 - React Router DOM
+- React Icons
 
 ## How To Contribute
 

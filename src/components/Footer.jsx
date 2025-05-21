@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <footer className="flex lg:flex-row lg:justify-between flex-col bg-secondary text-white h-fit py-25 px-10 rounded-t-[48px]">
       <div className="grow lg:mb-0 mb-10">
-        <img className="md:w-45 w-30 pb-7" src="/src/assets/icon/logo.png" alt="logo-image" />
+        <img className="md:w-80 w-50 pb-7" src="/src/assets/icon/logo.png" alt="logo-image" />
         <p>Stop waiting in line. Buy tickets conveniently, watch movies quietly.</p>
       </div>
       <div className="flex md:flex-row md:justify-between md:grow flex-col gap-10">
@@ -35,19 +35,19 @@ const Footer = () => {
           <div className="flex flex-col gap-2">
             <div className="flex gap-2 items-center">
               <FaFacebook/>
-              <span>tickys.cinema.id</span>
+              <span>cinevo.id</span>
             </div>
             <div className="flex gap-2 items-center">
               <RiInstagramFill/>
-              <span>tickys.cinema.id</span>
+              <span>cinevo.id</span>
             </div>
             <div className="flex gap-2 items-center">
               <FaSquareXTwitter/>
-              <span>tickys.cinema.id</span>
+              <span>cinevo.id</span>
             </div>
             <div className="flex gap-2 items-center">
               <SiYoutube/>
-              <span>tickys.cinema.id</span>
+              <span>cinevo.id</span>
             </div>
           </div>
         </div>

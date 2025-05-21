@@ -25,6 +25,7 @@ To run the web you can use the command :
 - Tailwind CSS
 - React Router DOM
 - React Icons
+- React Hook Form
 
 ## How To Contribute
 

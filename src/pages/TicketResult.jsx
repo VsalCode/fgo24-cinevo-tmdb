@@ -1,5 +1,6 @@
 import React from "react";
 import { GiTicket } from "react-icons/gi";
+import { Link } from "react-router-dom";
 
 const TicketResult = () => {
   return (
@@ -9,9 +10,8 @@ const TicketResult = () => {
         <div className="bg-white shadow-2xl h-fit flex flex-col gap-7 px-5 py-7">
           <div className="flex flex-col items-center gap-2   text-primary text-center py-3 font-bold">
             <p className="flex items-center gap-2">
-              {" "}
               <GiTicket className="text-xl" />
-              Tickys.id
+              CINEVO.id
             </p>
             <img src="/src/assets/images/QR.svg" alt="" />
             <p>
@@ -51,8 +51,9 @@ const TicketResult = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col gap-4">
           <button className="bg-third text-primary md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer">Donwload Your Ticket</button>
+          <Link to="/" className="bg-secondary text-center text-white md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer">Back To Homepage</Link>
         </div>
       </div>
     </section>

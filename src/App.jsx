@@ -9,6 +9,7 @@ import SignUp from "./pages/SignUp";
 import OrderPage from "./pages/OrderPage";
 import Layout from "./components/Layout";
 import Payment from "./pages/Payment";
+import TicketResult from "./pages/TicketResult";
 
 const router = createBrowserRouter([
   {
@@ -35,7 +36,10 @@ const router = createBrowserRouter([
         path: "/payment",
         element: <Payment/>
       },
-
+      {
+        path: "/ticket",
+        element: <TicketResult/>
+      },
     ],
   },
   {

@@ -16,7 +16,7 @@ const Movies = () => {
 
   useEffect(() => {
     async function fetchData() {
-      const requestMovies = await axios.get(requests.fetchTrending);
+      const requestMovies = await axios.get(requests.fetchNowPlaying);
       const dataMovies = requestMovies.data.results;
       const requestGenres = await axios.get(requests.fetchMovieGenres);
       const movieGenres = requestGenres.data.genres;
@@ -73,12 +73,12 @@ const Movies = () => {
             </div>
           </div>
         </div>
-        <div className=" grid lg:grid-cols-4 md:grid-cols-4 sm:grid gap-7 justify-items-center pt-15">
+        <div className=" grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-7 justify-items-center pt-15">
           {movies.map((item) => (
-            <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col my-5">
+            <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between my-5">
               <div>
                 {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-xl px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
-                <img className="rounded-xl object-cover h-100 w-200" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+                <img className="rounded-xl object-contain h-100 w-200" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
               </div>
               <div className="flex flex-col pt-5 gap-2">
                 <div className="flex justify-center items-center text-center">
@@ -93,6 +93,7 @@ const Movies = () => {
                     ))}
                   </div>
                 </div>
+                <Link to={`/movieDetail/${item.id}`} className="bg-third text-primary text-center mt-3 font-bold p-2 rounded-md cursor-pointer">View Details</Link>
               </div>
             </Link>
           ))}

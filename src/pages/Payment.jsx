@@ -1,9 +1,9 @@
 import { FaCheck } from "react-icons/fa";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 const Payment = () => {
-  // const nav = useNavigate();
+  const nav = useNavigate();
   const [showModal, setShowModal] = useState(false);
 
   function handlePayment(e) {
@@ -28,7 +28,7 @@ const Payment = () => {
           <p>
             Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on June 23, 2023</span>. If the bill has not been paid by the specified time, it will be forfeited
           </p>
-          <button type="submit" className="bg-third text-secondary font-bold w-full py-4 rounded-md cursor-pointer mt-5">
+          <button onClick={() => { nav('/ticket') }} type="submit" className="bg-third text-secondary font-bold w-full py-4 rounded-md cursor-pointer mt-5">
             Pay Your Order
           </button>
           <button className="text-secondary font-bold mt-5 cursor-pointer" onClick={() => setShowModal(false)} >Pay Later</button>

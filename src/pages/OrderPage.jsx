@@ -56,8 +56,8 @@ const OrderPage = () => {
           <p>Payment</p>
         </div>
       </section>
-      <section className="flex lg:flex-row flex-col gap-5 mx-7">
-        <aside className="w-full lg:max-w-[732px] h-fit rounded-xl bg-secondary shadow-xl p-4">
+      <section className="flex lg:flex-row flex-col gap-5 sm:mx-7 mx-5 sm:bg-primary ">
+        <aside className="w-full sm:max-w-[700px] max-w-[500px] h-fit rounded-xl bg-secondary shadow-xl p-4">
           <div className="h-[143px] w-full flex-between p-3 gap-7">
             <div className="w-[184px] h-full object-cover overflow-hidden rounded-lg">
               <img src="/src/assets/images/placeholder-order.png" alt="poster_movie" />
@@ -71,7 +71,7 @@ const OrderPage = () => {
               <p>Regular - 13:00 PM</p>
             </div>
             <div>
-              <button className="bg-third text-primary font-bold p-2 rounded-md cursor-pointer">
+              <button className="bg-third text-primary md:text-base text-sm font-bold p-2 rounded-md cursor-pointer">
                 Change Now
               </button>
             </div>
@@ -92,7 +92,6 @@ const OrderPage = () => {
                     </div>
                   ))}
                 </div>
-                {/* Seat rows */}
                 {rows.map((row) => (
                   <div key={row} className="grid grid-cols-15 gap-1 items-center">
                     <div className="font-semibold">{row}</div>
@@ -105,7 +104,7 @@ const OrderPage = () => {
                         <button
                           key={seat}
                           onClick={() => handleSeatClick(seat)}
-                          className={`w-8 h-8 rounded cursor-pointer ${
+                          className={`md:size-8 sm:size-7 size-5 rounded cursor-pointer ${
                             isSold
                               ? "bg-gray-500 cursor-not-allowed"
                               : isLoveNest
@@ -145,7 +144,7 @@ const OrderPage = () => {
             </div>
           </div>
         </aside>
-        <aside className="w-full lg:max-w-[358px] h-[500px] flex flex-col gap-5">
+        <aside className="w-full md:max-w-[330px] h-[500px] flex flex-col gap-5">
           <div className="bg-secondary p-5 items-center rounded-lg">
             <div className="text-center text-2xl mb-8 font-bold text-third">
               <p>
@@ -178,7 +177,7 @@ const OrderPage = () => {
           </div>
           <button
             onClick={HandleCheckout}
-            className="bg-third text-primary font-bold w-full py-4 rounded-md cursor-pointer"
+            className="bg-third text-primary font-bold w-full py-4 rounded-md cursor-pointer md:text-base text-sm"
           >
             Checkout Now
           </button>

@@ -7,5 +7,8 @@ const instance = axios.create({
   headers: {
     Authorization: `Bearer ${API_KEY}`,
  },
+ params: {
+    api_key: API_KEY,
+  },
 });
 export default instance;

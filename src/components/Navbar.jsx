@@ -18,7 +18,7 @@ const Navbar = () => {
     <nav className="bg-secondary text-white z-100 fixed left-0 right-0 top-0 md:shadow shadow-xl  h-100px md:px-15 sm:px-10 px-7 py-4">
       <div className="flex-between">
         <div>
-          <img className="md:w-18 w-16" src="/src/assets/icon/logo.png" alt="logo" />
+          <img className="md:w-30 w-25" src="/src/assets/icon/logo.png" alt="logo" />
         </div>
         <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 md:flex md:gap-7 md:font-sans md:font-semibold md:text-lg hidden">
           <Link to="/">HOME</Link>

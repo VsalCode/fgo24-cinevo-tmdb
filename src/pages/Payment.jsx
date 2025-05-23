@@ -95,7 +95,7 @@ export const DetailInfo = ({ label, value, variant }) => {
   return (
     <div className="flex flex-col gap-3 my-10">
       <p className="font-bold">{label}</p>
-      <input className={`${variant} italic border-none outline-none`} value={value} />
+      <input className={`${variant} italic border-none outline-none`} name="payment" value={value} />
       <hr />
     </div>
   );

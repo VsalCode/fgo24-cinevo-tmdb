@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const TicketResult = () => {
   return (
     <section className="bg-primary text-white h-fit flex flex-col items-center py-35 gap-7 ">
-      <div className="w-[50svw] flex flex-col items-center gap-7">
-        <p className="text-3xl font-semibold text-third">Thankyou For Purchasing</p>
+      <div className="w-fit mx-5 flex flex-col items-center gap-7">
+        <p className="text-3xl font-semibold text-third text-center">Thankyou For Purchasing</p>
         <div className="bg-white shadow-2xl h-fit flex flex-col gap-7 px-5 py-7">
           <div className="flex flex-col items-center gap-2   text-primary text-center py-3 font-bold">
             <p className="flex items-center gap-2">

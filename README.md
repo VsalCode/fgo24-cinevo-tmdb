@@ -1,4 +1,4 @@
-# Tickys App
+# CINEVO App
 
 <!-- This project is a Movie Ticket project -->
 
@@ -21,11 +21,15 @@ To run the web you can use the command :
 ```npm run dev```
 
 ##  dependencies used
-- Vite
+- Vite + React
 - Tailwind CSS
 - React Router DOM
 - React Icons
 - React Hook Form
+- React Hook Form Resolvers
+- Sweet Alert 2
+- Redux Toolkit
+- Redux Persist
 
 ## How To Contribute
 

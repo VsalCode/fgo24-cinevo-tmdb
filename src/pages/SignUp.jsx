@@ -1,56 +1,134 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { addUser } from "../redux/reducer/auth";
+import Swal from "sweetalert2";
+
+const schema = yup
+  .object({
+    email: yup.string().email("Email Not Valid!").required("Email is required!"),
+    password: yup.string().min(6, "Password must be longer than 6 characters!").required("Password is required!"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("password"), null], "Password must match")
+      .required("You must confirm your password!"),
+    agreeToTerms: yup.boolean().oneOf([true], "You must accept the terms and conditions!"),
+  })
+  .required();
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+    defaultValues: {
+      agreeToTerms: false,
+    },
+  });
+  const dispatch = useDispatch();
+  const nav = useNavigate();
+
+  // console.log("agreeToTerms:", watch("agreeToTerms"));
 
   function handleShowPassword(e) {
     e.preventDefault();
+    setShowPassword(!showPassword);
+  }
 
-    if (showPassword === false) {
-      setShowPassword(true);
-    } else if (showPassword === true) {
-      setShowPassword(false);
+  function handleRegister(dataRegister) {
+    if (dataRegister) {
+      const formatAddUser = {
+        email: dataRegister.email,
+        password: window.btoa(dataRegister.password)
+      }
+      // console.log(formatAddUser);
+      dispatch(addUser(formatAddUser));
+
+      Swal.fire({
+        icon: "success",
+        title: "Register Success!",
+        text: "Welcome to CINEVO!",
+      });
+      nav("/login");
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Failed to Register",
+        text: "Something went wrong!",
+        footer: 'Please Try Again',
+      });
     }
   }
 
   return (
     <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
-      <img className="sm:w-50 w-40 sm:mb-3 mb-0" src="/src/assets/icon/logo.png" alt="" />
+      <img className="sm:w-50 w-40 mb-3" src="/src/assets/icon/logo.png" alt="" />
       <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
-        <form>
+        <form onSubmit={handleSubmit(handleRegister)}>
           <div className="pb-5">
             <p className="font-semibold pb-3 sm:text-4xl text-2xl">Sign Up</p>
             <p className="sm:text-xl text-base text-primary font-medium italic">Join for free now!</p>
           </div>
-          <div>
+          <div className="flex flex-col gap-3">
             <label htmlFor="email">Email</label>
-            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3  mt-3 mb-5   rounded-lg">
+            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg">
               <MdOutlineMail className="sm:text-xl text-base" />
-              <input className="border-0 outline-none grow sm:text-base text-sm" type="email" placeholder="Enter your email" />
+              <input {...register("email")} className="border-0 outline-none grow sm:text-base text-sm" type="email" placeholder="Enter your email" id="email" />
             </span>
+            {errors.email && <p className="text-error text-sm italic">{errors.email.message}</p>}
             <label htmlFor="password">Password</label>
-            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 mt-3 rounded-lg w-full">
+            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg w-full">
               <TbLockPassword className="sm:text-xl text-base" />
-              <input type={showPassword === false ? "password" : "text"} className="border-0 outline-none grow sm:text-base text-sm" name="password" placeholder="Enter your password" maxLength="8" />
+              <input {...register("password")} type={showPassword ? "text" : "password"} className="border-0 outline-none grow Knopftext-base text-sm" name="password" placeholder="Enter your password" maxLength="8" id="password" />
               <button className="cursor-pointer text-xl" onClick={handleShowPassword}>
-                {showPassword === false ? <LuEye className="sm:text-xl text-base" /> : <LuEyeClosed className="sm:text-xl text-base" />}
+                {showPassword ? <LuEyeClosed className="sm:text-xl text-base" /> : <LuEye className="sm:text-xl text-base" />}
               </button>
             </span>
+            {errors.password && <p className="text-error text-sm italic">{errors.password.message}</p>}
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg w-full">
+              <TbLockPassword className="sm:text-xl text-base" />
+              <input
+                {...register("confirmPassword")}
+                type={showPassword ? "text" : "password"}
+                className="border-0 outline-none grow sm:text-base text-sm"
+                name="confirmPassword"
+                placeholder="Confirm your password"
+                maxLength="8"
+                id="confirmPassword"
+              />
+              <button className="cursor-pointer text-xl" onClick={handleShowPassword}>
+                {showPassword ? <LuEyeClosed className="sm:text-xl text-base" /> : <LuEye className="sm:text-xl text-base" />}
+              </button>
+            </span>
+            {errors.confirmPassword && <p className="text-error text-sm italic">{errors.confirmPassword.message}</p>}
           </div>
-          <div className="flex items-center gap-3 py-3">
-            <input type="checkbox" name="terms" id="terms" />
+          <div className="flex items-center gap-3 pt-3">
+            <input {...register("agreeToTerms")} type="checkbox" name="agreeToTerms" id="terms" />
             <label htmlFor="terms">I agree to terms & conditions</label>
           </div>
-          <div className="text-center font-medium sm:text-base text-sm">
-            <button type="submit" className="bg-third font-bold w-full text-secondary  py-3 rounded-lg mb-5">JOIN</button>
+          {errors.agreeToTerms && <p className="text-error text-sm italic pt-1">{errors.agreeToTerms.message}</p>}
+          <div className="text-center font-medium sm:text-base text-sm pt-3">
+            <button type="submit" className="bg-third font-bold w-full text-secondary py-3 rounded-lg mb-5 cursor-pointer">
+              JOIN
+            </button>
             <p>
-              Already Have an Account? <Link to="/login" className="text-blue-600"> Login</Link>
+              Already Have an Account?{" "}
+              <Link to="/login" className="text-blue-600">
+                {" "}
+                Login{" "}
+              </Link>
             </p>
           </div>
           <div className="flex sm:flex-row flex-col gap-3 mt-5">

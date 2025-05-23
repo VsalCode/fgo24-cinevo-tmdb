@@ -7,6 +7,7 @@
   --color-secondary: #21242D;
   --color-third: #00B9AE;
   --color-white: #F9F9F9;
+  --color-error: #CB0404;
 }
 
 @layer base {

@@ -21,7 +21,7 @@ const Login = () => {
 
   return (
     <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
-      <img className="sm:w-50 w-40 sm:mb-3 mb-0" src="/src/assets/icon/logo.png" alt="" />
+      <img className="sm:w-50 w-40 mb-5" src="/src/assets/icon/logo.png" alt="" />
       <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form>
           <div className="pb-5">

@@ -10,6 +10,9 @@ import OrderPage from "./pages/OrderPage";
 import Layout from "./components/Layout";
 import Payment from "./pages/Payment";
 import TicketResult from "./pages/TicketResult";
+import { Provider } from "react-redux";
+import { store, persistor } from './redux/store' 
+import { PersistGate } from "redux-persist/integration/react";
 
 const router = createBrowserRouter([
   {
@@ -30,15 +33,15 @@ const router = createBrowserRouter([
       },
       {
         path: "/order",
-        element: <OrderPage/>
+        element: <OrderPage />,
       },
       {
         path: "/payment",
-        element: <Payment/>
+        element: <Payment />,
       },
       {
         path: "/ticket",
-        element: <TicketResult/>
+        element: <TicketResult />,
       },
     ],
   },
@@ -61,7 +64,13 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-  return <RouterProvider router={router} />;
+  return (
+    <Provider store={store} >
+      <PersistGate loading={null} persistor={persistor} >
+        <RouterProvider router={router} />;
+      </PersistGate>
+    </Provider>
+  );
 };
 
 export default App;

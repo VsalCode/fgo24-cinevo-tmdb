@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch } from "react-redux";
 import { addUser } from "../redux/reducer/auth";
-import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const schema = yup
   .object({
@@ -54,20 +54,10 @@ const SignUp = () => {
       }
       // console.log(formatAddUser);
       dispatch(addUser(formatAddUser));
-
-      Swal.fire({
-        icon: "success",
-        title: "Register Success!",
-        text: "Welcome to CINEVO!",
-      });
+      toast.success("Register Success!")
       nav("/login");
     } else {
-      Swal.fire({
-        icon: "error",
-        title: "Failed to Register",
-        text: "Something went wrong!",
-        footer: 'Please Try Again',
-      });
+      toast.error("Failed to Register!")
     }
   }
 

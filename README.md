@@ -27,7 +27,7 @@ To run the web you can use the command :
 - React Icons
 - React Hook Form
 - React Hook Form Resolvers
-- Sweet Alert 2
+- React Hot Toast
 - Redux Toolkit
 - Redux Persist
 

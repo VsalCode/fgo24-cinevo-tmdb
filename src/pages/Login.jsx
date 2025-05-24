@@ -2,52 +2,97 @@ import React, { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import toast, { Toaster } from "react-hot-toast";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+import { userLogin } from "../redux/reducer/auth";
+
+const schema = yup
+  .object({
+    email: yup.string().email("Email Not Valid!").required("Email is required!"),
+    password: yup.string().min(6, "Password must be longer than 6 characters!").required("Password is required!"),
+  })
+  .required();
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  const dataUsers = useSelector((state) => state.auth.users);
+  const dispatch = useDispatch();
+  const nav = useNavigate()
 
   function handleShowPassword(e) {
     e.preventDefault();
 
-    if (showPassword === false) {
-      setShowPassword(true);
-    } else if (showPassword === true) {
-      setShowPassword(false);
+    setShowPassword(!showPassword);
+  }
+
+  function handleLogin(dataLogin) {
+    const { email, password } = dataLogin;
+
+    let currentUser = dataUsers.find((users) => users.email === email && window.atob(users.password) === password);
+    if (currentUser) {
+      // console.log(currentUser);
+      dispatch(userLogin(currentUser));
+
+      setTimeout(() => {
+        toast.success("Successfully toasted!");
+        setTimeout(() => {
+          nav('/')
+        }, 0);
+      }, 0);
+    } else if (!currentUser) {
+      toast.error("Your account is not found!");
+    } else {
+      toast.error("Failed to Login!");
     }
   }
 
   return (
     <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
+      <Toaster />
       <img className="sm:w-50 w-40 mb-5" src="/src/assets/icon/logo.png" alt="" />
-      <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
-        <form>
+      <section className="max-w-[500px] w-full h-fit bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
+        <form onSubmit={handleSubmit(handleLogin)}>
           <div className="pb-5">
             <p className="font-semibold pb-3 sm:text-4xl text-2xl">Welcome Back</p>
             <p className="sm:text-xl text-base">Sign in with your data that you entered during your registration</p>
           </div>
-          <div>
+          <div className="flex flex-col gap-3">
             <label htmlFor="email">Email</label>
-            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3  mt-3 mb-5   rounded-lg">
+            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg">
               <MdOutlineMail className="sm:text-xl text-base" />
-              <input className="border-0 outline-none grow sm:text-base text-sm" type="email" placeholder="Enter your email" />
+              <input {...register("email")} className="border-0 outline-none grow sm:text-base text-sm" type="email" placeholder="Enter your email" />
             </span>
+            {errors.email && <p className="text-error text-sm italic">{errors.email.message}</p>}
             <label htmlFor="password">Password</label>
-            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 mt-3 rounded-lg w-full">
+            <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg w-full">
               <TbLockPassword className="sm:text-xl text-base" />
-              <input type={showPassword === false ? "password" : "text"} className="border-0 outline-none grow sm:text-base text-sm" name="password" placeholder="Enter your password" maxLength="8" />
-              <button className="cursor-pointer text-xl" onClick={handleShowPassword}>
+              <input {...register("password")} type={showPassword === false ? "password" : "text"} className="border-0 outline-none grow sm:text-base text-sm" name="password" placeholder="Enter your password" maxLength="8" />
+              <button type="button" className="cursor-pointer text-xl" onClick={handleShowPassword}>
                 {showPassword === false ? <LuEye className="sm:text-xl text-base" /> : <LuEyeClosed className="sm:text-xl text-base" />}
               </button>
             </span>
+            {errors.password && <p className="text-error text-sm italic">{errors.password.message}</p>}
           </div>
           <div className="text-blue-600 font-medium py-4 flex justify-end sm:text-base text-sm">
             <Link>Forgot Your Password?</Link>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button type="submit" className="bg-third w-full text-primary font-bold  py-3 rounded-lg mb-5">LOGIN</button>
+            <button type="submit" className="cursor-pointer bg-third w-full text-primary font-bold  py-3 rounded-lg mb-5">
+              LOGIN
+            </button>
             <p>
               Do Not Have an Account?{" "}
               <Link to="/signup" className="text-blue-600">

@@ -1,8 +1,15 @@
 import { createSlice} from "@reduxjs/toolkit";
 
 const initialState = {
-  users: [],
-  currentUser: null
+  users: [
+    {
+      email: 'admin@gmail.com',
+      password: window.btoa('admin123'),
+      role: 'admin'
+    }
+  ],
+  currentUser: null,
+  adminLogin: null
 }
 
 const auth = createSlice({
@@ -17,9 +24,12 @@ const auth = createSlice({
     },
     userLogout: (state, action ) => {
       state.currentUser = action.payload
+    },
+    adminLogin: (state, action) => {
+      state.adminLogin = action.payload
     }
   }
 })
 
-export const { addUser, userLogin, userLogout } = auth.actions
+export const { addUser, userLogin, userLogout, adminLogin } = auth.actions
 export default auth.reducer

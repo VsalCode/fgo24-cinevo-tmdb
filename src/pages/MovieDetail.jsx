@@ -21,13 +21,16 @@ const MovieDetail = () => {
   const currentUser = useSelector((state) => state.auth.currentUser);
 
   function handleBookTicket(value) {
+    const { cinema } = value
 
     if(currentUser === null){
       toast.error("You must Login or Register!");
+    } else if (cinema === null){
+      toast.error("You must choose one cinema!");
     }else {
-      // nav("/order");
       const { cinema, date } = value
       console.log(cinema, date);
+      // nav("/order");
       
     }
   }

@@ -16,6 +16,9 @@ import { PersistGate } from "redux-persist/integration/react";
 import AccountSettings from "./pages/AccountSettings";
 import LayoutProfile from "./layout/ProfileLayout";
 import OrderHistory from './pages/OrderHistory'
+import LayoutAdmin from "./layout/LayoutAdmin";
+import DashboardAdmin from "./pages/DashboardAdmin";
+import MovieAdmin from "./pages/MovieAdmin";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +64,20 @@ const router = createBrowserRouter([
         element: <OrderHistory/> ,
       },
     ],
+  },
+  {
+    path: "",
+    element: <LayoutAdmin/>,
+    children: [
+      {
+        path: "/dashboard-admin",
+        element: <DashboardAdmin/> ,
+      },
+      {
+        path: "/movies-admin",
+        element: <MovieAdmin/> ,
+      },
+    ]
   },
   {
     path: "/login",

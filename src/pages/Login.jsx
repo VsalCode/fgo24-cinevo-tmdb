@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { userLogin } from "../redux/reducer/auth";
+import { userLogin, adminLogin } from "../redux/reducer/auth";
 
 const schema = yup
   .object({
@@ -41,12 +41,18 @@ const Login = () => {
   function handleLogin(dataLogin) {
     const { email, password } = dataLogin;
 
-    let currentUser = dataUsers.find((users) => users.email === email && window.atob(users.password) === password);
-    console.log(currentUser);
-    
-    if (currentUser) {
+    let currentUser = dataUsers.find((users) => users.email === email && window.atob(users.password) === password && users.role === "user");
+    let admin = dataUsers.find((users) => users.email === email && window.atob(users.password) === password && users.role === "admin");
+
+    if (admin) {
+      toast("Halo Admin!", { icon: "🖐", });
+      dispatch(adminLogin(admin))
+      setTimeout(() => {
+        nav("/dashboard-admin");
+      }, 2000);
+    } else if (currentUser) {
       // console.log(currentUser);
-      dispatch(userLogin({email: email, password: window.btoa(password)}));
+      dispatch(userLogin({ email: email, password: window.btoa(password) }));
 
       toast.success("Login Succes!");
       setTimeout(() => {

@@ -8,9 +8,9 @@ import { FaFacebook } from "react-icons/fa";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/reducer/auth";
-import toast from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 
 const schema = yup
   .object({
@@ -36,6 +36,7 @@ const SignUp = () => {
       agreeToTerms: false,
     },
   });
+  let dataRegistUsers = useSelector((state) => state.auth.users);
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -47,24 +48,32 @@ const SignUp = () => {
   }
 
   function handleRegister(dataRegister) {
-    if (dataRegister) {
+    const { email } = dataRegister;
+
+    const checkAccAvailable = dataRegistUsers.find((e) => e.email === email);
+
+    if (checkAccAvailable) {
+      toast.error("email was registered!");
+    } else {
       const formatAddUser = {
         email: dataRegister.email,
-        password: window.btoa(dataRegister.password)
-      }
+        password: window.btoa(dataRegister.password),
+        role: 'user',
+      };
       // console.log(formatAddUser);
       dispatch(addUser(formatAddUser));
-      toast.success("Register Success!")
-      nav("/login");
-    } else {
-      toast.error("Failed to Register!")
+      toast.success("Register Success!");
+      setTimeout(() => {
+        nav("/login");
+      }, 2000);
     }
   }
 
   return (
     <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
-      <img className="sm:w-50 w-40 mb-3" src="/src/assets/icon/logo.png" alt="" />
-      <section className="max-w-[500px] w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
+      <Toaster />
+      <img className="sm:w-50 w-40 mb-3" src="/src/assets/icon/logo.png" alt="logo" />
+      <section className="max-w-[500px] h-fit w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="pb-5">
             <p className="font-semibold pb-3 sm:text-4xl text-2xl">Sign Up</p>

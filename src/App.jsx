@@ -7,12 +7,15 @@ import MovieDetail from "./pages/MovieDetail";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import OrderPage from "./pages/OrderPage";
-import Layout from "./components/Layout";
+import Layout from "./layout/Layout";
 import Payment from "./pages/Payment";
 import TicketResult from "./pages/TicketResult";
 import { Provider } from "react-redux";
-import { store, persistor } from './redux/store' 
+import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
+import AccountSettings from "./pages/AccountSettings";
+import LayoutProfile from "./layout/ProfileLayout";
+import OrderHistory from './pages/OrderHistory'
 
 const router = createBrowserRouter([
   {
@@ -46,6 +49,20 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "",
+    element: <LayoutProfile />,
+    children: [
+      {
+        path: "/account-settings",
+        element: <AccountSettings/> ,
+      },
+      {
+        path: "/order-history",
+        element: <OrderHistory/> ,
+      },
+    ],
+  },
+  {
     path: "/login",
     element: <Login />,
   },
@@ -65,9 +82,9 @@ const router = createBrowserRouter([
 
 const App = () => {
   return (
-    <Provider store={store} >
-      <PersistGate loading={null} persistor={persistor} >
-        <RouterProvider router={router} />;
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <RouterProvider router={router} />
       </PersistGate>
     </Provider>
   );

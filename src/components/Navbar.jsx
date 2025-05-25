@@ -2,9 +2,15 @@ import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { useDispatch, useSelector } from "react-redux";
+import { MdLogout } from "react-icons/md";
+import { userLogout } from "../redux/reducer/auth";
+import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
   const [showHamburger, setShowHamburger] = useState(false);
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const dispatch = useDispatch();
 
   function HandleHamburger() {
     if (showHamburger === true) {
@@ -14,8 +20,14 @@ const Navbar = () => {
     }
   }
 
+  function handleLogout() {
+    toast.success("Logout Success!");
+    dispatch(userLogout(null));
+  }
+
   return (
     <nav className="bg-secondary text-white z-100 fixed left-0 right-0 top-0 md:shadow shadow-xl  h-100px md:px-15 sm:px-10 px-7 py-4">
+      <Toaster />
       <div className="flex-between">
         <div>
           <img className="md:w-30 w-25" src="/src/assets/icon/logo.png" alt="logo" />
@@ -25,17 +37,35 @@ const Navbar = () => {
           <Link to="/movies">MOVIE</Link>
           <Link to="/buyTicket">BUY TICKET</Link>
         </div>
+        {currentUser === null ? (
+          <div className="md:flex md:gap-3 hidden">
+            <Link to="/login" className="universal-button border">
+              LOGIN
+            </Link>
+            <Link to="/signup" className="universal-button bg-third text-primary">
+              SIGN UP
+            </Link>
+          </div>
+        ) : (
+          <div className="md:flex md:items-center md:gap-3 hidden">
+            <div className="bg-[#EAEFEF] size-9 text-primary flex items-center justify-center rounded-full font-bold">
+              {currentUser.email && currentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase()}
+            </div>
+            <div>
+              <p className="text-xl">{currentUser?.email && currentUser.email?.split("@").splice(0, 1)}</p>
+              <Link to="/account-settings" className="text-sm mb-[-5px] text-third">
+                account settings
+              </Link>
+            </div>
+            <button onClick={handleLogout} aria-label="logout" className="ms-3 cursor-pointer flex flex-col justify-center items-center text-red-500">
+              <MdLogout className="text-2xl " />
+            </button>
+          </div>
+        )}
+
         <button className="md:hidden text-2xl" onClick={HandleHamburger}>
           {showHamburger === false ? <GiHamburgerMenu /> : <IoClose />}
         </button>
-        <div className="md:flex md:gap-3 hidden">
-          <Link to="/login" className="universal-button border">
-            LOGIN
-          </Link>
-          <Link to="/signup" className="universal-button bg-third text-primary">
-            SIGN UP
-          </Link>
-        </div>
       </div>
       {showHamburger === true && (
         <div className="flex flex-col h-fit rounded-b-xl text-center text-base font-bold py-7 gap-5">

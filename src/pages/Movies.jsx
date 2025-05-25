@@ -1,26 +1,26 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import axios from '../utils/axios';
-import requests from '../utils/Requests';
-import Subscribe from '../components/Subscribe';
-import Button from '../components/Button';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
-import Dropdown from '../components/Dropdown';
-import { IoSearchSharp } from 'react-icons/io5';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import axios from "../utils/axios";
+import requests from "../utils/Requests";
+import Subscribe from "../components/Subscribe";
+import Button from "../components/Button";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import Dropdown from "../components/Dropdown";
+import { IoSearchSharp } from "react-icons/io5";
+import { useForm } from "react-hook-form";
 
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState('');
+  const [selectedGenre, setSelectedGenre] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { register, handleSubmit } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query') || '';
+  const query = searchParams.get("query") || "";
 
   const moviesPerPage = 8;
 
@@ -33,9 +33,7 @@ const Movies = () => {
 
         let dataMovies = [];
         if (query) {
-          const searchMovies = await axios.get(
-            `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${currentPage}`
-          );
+          const searchMovies = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${currentPage}`);
           dataMovies = searchMovies.data.results;
         } else {
           const requestMovies = await axios.get(`${requests.fetchNowPlaying}&page=${currentPage}`);
@@ -54,7 +52,7 @@ const Movies = () => {
         setMovies(updatedMovies);
         setFilteredMovies(updatedMovies);
       } catch (error) {
-        console.error('Error fetching data:', error);
+        console.error("Error fetching data:", error);
       }
     }
     fetchData();
@@ -62,13 +60,11 @@ const Movies = () => {
 
   const handleGenreFilter = (genreId) => {
     setSelectedGenre(genreId);
-    setCurrentPage(1); 
-    if (genreId === '') {
+    setCurrentPage(1);
+    if (genreId === "") {
       setFilteredMovies(movies);
     } else {
-      const filtered = movies.filter((movie) =>
-        movie.genre_ids.some((genre) => genre.id === parseInt(genreId))
-      );
+      const filtered = movies.filter((movie) => movie.genre_ids.some((genre) => genre.id === parseInt(genreId)));
       setFilteredMovies(filtered);
     }
   };
@@ -103,11 +99,7 @@ const Movies = () => {
             </h3>
             <p className="text-sm sm:text-base font-medium">Sign up and get tickets with exclusive discounts</p>
           </div>
-          <img
-            className="w-full rounded-3xl object-cover h-64 sm:h-80 lg:h-96"
-            src="/src/assets/images/banner-movie.png"
-            alt="Movie Banner"
-          />
+          <img className="w-full rounded-3xl object-cover h-64 sm:h-80 lg:h-96" src="/src/assets/images/banner-movie.png" alt="Movie Banner" />
         </div>
       </section>
       <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-white bg-primary">
@@ -123,24 +115,14 @@ const Movies = () => {
                 <button type="submit">
                   <IoSearchSharp className="text-xl" />
                 </button>
-                <input
-                  type="text"
-                  className="outline-none border-0 ps-3 w-full grow text-secondary"
-                  placeholder="Search Movie..."
-                  defaultValue={query}
-                  {...register('query')}
-                />
+                <input type="text" className="outline-none border-0 ps-3 w-full grow text-secondary" placeholder="Search Movie..." defaultValue={query} {...register("query")} />
               </span>
             </form>
             <div className="w-full lg:w-1/2">
               <h6 className="font-bold mb-4 text-lg">Filters</h6>
               <div className="flex flex-wrap gap-3">
                 {genres.slice(0, 8).map((genre) => (
-                  <Button
-                    key={genre.id}
-                    style={`border ${selectedGenre === genre.id ? 'bg-third text-white' : 'text-gray-300'}`}
-                    onClick={() => handleGenreFilter(genre.id)}
-                  >
+                  <Button key={genre.id} style={`border ${selectedGenre === genre.id ? "bg-third text-white" : "text-gray-300"}`} onClick={() => handleGenreFilter(genre.id)}>
                     {genre.name.toUpperCase()}
                   </Button>
                 ))}
@@ -152,16 +134,8 @@ const Movies = () => {
               currentMovies.map((item) => (
                 <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-full max-w-xs transition-transform duration-300">
                   <div className="relative">
-                    {item.vote_average > 7 && (
-                      <div className="absolute font-semibold text-primary bg-third shadow-lg px-3 py-1 rounded-br-xl rounded-tl-lg">
-                        Recommended
-                      </div>
-                    )}
-                    <img
-                      className="rounded-xl object-cover w-full h-80 md:h-96"
-                      src={`https://image.tmdb.org/t/p/w500${item.poster_path}`}
-                      alt={item.title}
-                    />
+                    {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-lg px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
+                    <img className="rounded-xl object-cover w-full h-80 md:h-96" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />
                   </div>
                   <div className="flex flex-col pt-4 gap-3 text-center">
                     <h6 className="font-semibold text-base md:text-lg">{item.title || item.name}</h6>
@@ -172,10 +146,7 @@ const Movies = () => {
                         </div>
                       ))}
                     </div>
-                    <Link
-                      to={`/movieDetail/${item.id}`}
-                      className="bg-third text-primary text-sm md:text-base font-semibold py-2 px-4 rounded-md hover:bg-secondary hover:text-white transition-colors"
-                    >
+                    <Link to={`/movieDetail/${item.id}`} className="bg-third text-primary text-sm md:text-base font-semibold py-2 px-4 rounded-md hover:bg-secondary hover:text-white transition-colors">
                       View Details
                     </Link>
                   </div>
@@ -186,29 +157,19 @@ const Movies = () => {
             )}
           </div>
           <div className="flex justify-center items-center gap-3 mt-10 md:mt-12 text-lg">
-            <button
-              className="button-icon bg-third text-white p-2 rounded-full disabled:opacity-50"
-              onClick={() => handlePageChange(currentPage - 1)}
-              disabled={currentPage === 1}
-            >
+            <button className="button-icon bg-third text-white p-2 rounded-full disabled:opacity-50" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
               <FaArrowLeft />
             </button>
             {[...Array(totalPages)].map((_, index) => (
               <button
                 key={index + 1}
-                className={`flex-center text-sm md:text-base font-semibold rounded-full w-10 h-10 ${
-                  currentPage === index + 1 ? 'bg-third text-white' : 'border border-gray-600 text-gray-300'
-                }`}
+                className={`flex-center text-sm md:text-base font-semibold rounded-full w-10 h-10 ${currentPage === index + 1 ? "bg-third text-white" : "border border-gray-600 text-gray-300"}`}
                 onClick={() => handlePageChange(index + 1)}
               >
                 {index + 1}
               </button>
             ))}
-            <button
-              className="button-icon bg-third text-white p-2 rounded-full disabled:opacity-50"
-              onClick={() => handlePageChange(currentPage + 1)}
-              disabled={currentPage === totalPages}
-            >
+            <button className="button-icon bg-third text-white p-2 rounded-full disabled:opacity-50" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
               <FaArrowRight />
             </button>
           </div>

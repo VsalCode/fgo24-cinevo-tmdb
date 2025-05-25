@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -30,7 +30,7 @@ const Login = () => {
   });
   const dataUsers = useSelector((state) => state.auth.users);
   const dispatch = useDispatch();
-  const nav = useNavigate()
+  const nav = useNavigate();
 
   function handleShowPassword(e) {
     e.preventDefault();
@@ -42,16 +42,16 @@ const Login = () => {
     const { email, password } = dataLogin;
 
     let currentUser = dataUsers.find((users) => users.email === email && window.atob(users.password) === password);
+    console.log(currentUser);
+    
     if (currentUser) {
       // console.log(currentUser);
-      dispatch(userLogin(currentUser));
+      dispatch(userLogin({email: email, password: window.btoa(password)}));
 
+      toast.success("Login Succes!");
       setTimeout(() => {
-        toast.success("Successfully toasted!");
-        setTimeout(() => {
-          nav('/')
-        }, 0);
-      }, 0);
+        nav("/");
+      }, 2000);
     } else if (!currentUser) {
       toast.error("Your account is not found!");
     } else {
@@ -62,7 +62,7 @@ const Login = () => {
   return (
     <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
       <Toaster />
-      <img className="sm:w-50 w-40 mb-5" src="/src/assets/icon/logo.png" alt="" />
+      <img className="sm:w-50 w-40 mb-5" src="/src/assets/icon/logo.png" alt="logo" />
       <section className="max-w-[500px] w-full h-fit bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="pb-5">

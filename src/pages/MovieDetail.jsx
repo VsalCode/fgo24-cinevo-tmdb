@@ -1,19 +1,35 @@
 import Button from "../components/Button";
 import { SelectOptions } from "../components/Input";
-import SponsorCheckbox from "../components/SponsorCheckbox";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import toast, { Toaster } from "react-hot-toast";
+import { useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
 
 // const API_KEY = import.meta.env.VITE_TMDB_API_KEY
 
 const MovieDetail = () => {
-  const nav = useNavigate();
+  // const nav = useNavigate();
   const { id } = useParams();
   const [data, setData] = useState({});
+  const { register, handleSubmit} = useForm({
+    defaultValues: {
+      date: new Date().toISOString().substring(0, 10) 
+    }
+  })
+  const currentUser = useSelector((state) => state.auth.currentUser);
 
-  function handleBookTicket() {
-    nav("/order");
+  function handleBookTicket(value) {
+
+    if(currentUser === null){
+      toast.error("You must Login or Register!");
+    }else {
+      // nav("/order");
+      const { cinema, date } = value
+      console.log(cinema, date);
+      
+    }
   }
 
   useEffect(() => {
@@ -23,9 +39,8 @@ const MovieDetail = () => {
         // console.log(res.data);
         const getData = res.data
         
-        
         setData(getData);
-        console.log(getData);
+        // console.log(getData);
       } catch (error) {
         console.error(error);
       }
@@ -39,6 +54,7 @@ const MovieDetail = () => {
   return (
     <>
       <section className="flex flex-col justify-end mb-15 pt-25">
+        <Toaster/>
         <div className="flex justify-center relative">
           <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] h-full w-full rounded-[40px] absolute z-40"></div>
           <img className="h-[520px] object-cover w-full rounded-[40px] relative" src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`} alt="backdrop_path" />
@@ -91,17 +107,17 @@ const MovieDetail = () => {
           </div>
         </div>
       </section>
-      <form className="bg-sixth p-20 h-screen">
+      <form onSubmit={handleSubmit(handleBookTicket)} className="bg-sixth p-20 h-screen">
         <div className="flex-between pb-15">
           <h3 className="font-semibold">Book Tickets</h3>
-          <Button onClick={handleBookTicket} type="submit" style="bg-third text-secondary font-extrabold">
+          <Button type="submit" style="bg-third text-secondary font-extrabold">
             BOOK NOW
           </Button>
         </div>
         <div className="flex-between gap-10">
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Date</h5>
-            <SelectOptions type="date" id="date" name="date" value="2025-05-22" min="2025-05-22" max="2025-07-01" />
+            <SelectOptions {...register('date')} type="date" id="date" name="date" />
           </div>
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Time</h5>
@@ -115,10 +131,10 @@ const MovieDetail = () => {
         <div>
           <h5 className="font-semibold pb-10 pt-15">Choose Cinema</h5>
           <div className="flex-between ">
-            <SponsorCheckbox cinema="ebu.id" />
-            <SponsorCheckbox cinema="hiflix" />
-            <SponsorCheckbox cinema="CineOne21" />
-            <SponsorCheckbox cinema="idlix" />
+            <SponsorCheckbox cinema="ebv.id" {...register('cinema')} />
+            <SponsorCheckbox cinema="hiflix" {...register('cinema')} />
+            <SponsorCheckbox cinema="CineOne21" {...register('cinema')} />
+            <SponsorCheckbox cinema="idlix" {...register('cinema')} />
           </div>
         </div>
       </form>
@@ -127,3 +143,16 @@ const MovieDetail = () => {
 };
 
 export default MovieDetail;
+
+
+function SponsorCheckbox({ cinema, ...props }) {
+  return (
+    <label className={`w-[269px] h-[153px] px-5 flex flex-col justify-center  gap-7 rounded-xl cursor-pointer border text-fourth has-checked:bg-third has-checked:text-secondary relative`}>
+      <div className="flex justify-end">
+        <input type="radio" name="cinema" value={`${cinema}`} {...props} />
+      </div>
+      <h2 className="font-semibold">{cinema}</h2>
+    </label>
+  );
+}
+

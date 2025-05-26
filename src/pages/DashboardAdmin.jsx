@@ -3,7 +3,7 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 
 const DashboardAdmin = () => {
   return (
-    <main className="bg-primary h-fit py-30 flex-center flex-col gap-7 sm:px-10 px-7">
+    <>
       <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[70svw] w-full h-fit p-8">
         <p className="text-3xl font-medium">Sales Chart</p>
         <div className="flex sm:flex-row flex-col sm:items-center items-start gap-3 text-primary">
@@ -36,7 +36,7 @@ const DashboardAdmin = () => {
         <p className="text-xl">Adventure, Purwokerto</p>
         <img className="rounded-2xl" src="/src/assets/images/sales-chart.png" alt="sales-chart" />
       </section>
-    </main>
+    </>
   );
 };
 

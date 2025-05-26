@@ -19,6 +19,7 @@ import OrderHistory from './pages/OrderHistory'
 import LayoutAdmin from "./layout/LayoutAdmin";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import MovieAdmin from "./pages/MovieAdmin";
+import AddMovie from './pages/AddMovie'
 
 const router = createBrowserRouter([
   {
@@ -76,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "/movies-admin",
         element: <MovieAdmin/> ,
+      },
+      {
+        path: "/add-movie",
+        element: <AddMovie /> ,
       },
     ]
   },

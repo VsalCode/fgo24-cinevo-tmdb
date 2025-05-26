@@ -12,11 +12,7 @@ const NavbarAdmin = () => {
   const dispatch = useDispatch();
 
   function HandleHamburger() {
-    if (showHamburger === true) {
-      setShowHamburger(false);
-    } else if (showHamburger === false) {
-      setShowHamburger(true);
-    }
+    setShowHamburger(!showHamburger)
   }
   
 

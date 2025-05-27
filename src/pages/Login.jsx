@@ -88,7 +88,7 @@ const Login = () => {
             <label htmlFor="password">Password</label>
             <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg w-full">
               <TbLockPassword className="sm:text-xl text-base" />
-              <input {...register("password")} type={showPassword === false ? "password" : "text"} className="border-0 outline-none grow sm:text-base text-sm" name="password" placeholder="Enter your password" maxLength="8" />
+              <input {...register("password")} type={showPassword === false ? "password" : "text"} className="border-0 outline-none grow sm:text-base text-sm" name="password" placeholder="Enter your password"/>
               <button type="button" className="cursor-pointer text-xl" onClick={handleShowPassword}>
                 {showPassword === false ? <LuEye className="sm:text-xl text-base" /> : <LuEyeClosed className="sm:text-xl text-base" />}
               </button>

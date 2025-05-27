@@ -13,7 +13,7 @@ const LayoutProfile = () => {
     <main className="bg-primary h-fit text-white">
       <Toaster />
       <Navbar />
-      <section className="flex md:flex-row md:justify-center flex-col sm:px-15 px-5 gap-5 py-30">
+      <section className="flex lg:flex-row lg:justify-center flex-col sm:px-15 px-5 gap-5 py-30">
         <aside className="bg-secondary h-fit md:min-w-[25vw] rounded-4xl px-6 py-10 flex flex-col gap-7">
           <div className="flex justify-between items-center">
             <p className="font-semibold">INFO</p>
@@ -37,7 +37,7 @@ const LayoutProfile = () => {
             </div>
           </div>
         </aside>
-        <aside className="h-fit md:w-[50vw] flex flex-col gap-7">
+        <aside className="h-fit lg:w-[50vw] w-full flex flex-col gap-7">
           <Outlet />
         </aside>
       </section>

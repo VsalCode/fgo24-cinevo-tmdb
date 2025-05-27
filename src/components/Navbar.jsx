@@ -22,7 +22,7 @@ const Navbar = () => {
 
   function handleLogout() {
     toast.success("Logout Success!");
-    dispatch(userLogout(null));
+    dispatch(userLogout());
   }
 
   return (
@@ -49,10 +49,10 @@ const Navbar = () => {
         ) : (
           <div className="md:flex md:items-center md:gap-3 hidden">
             <div className="bg-[#EAEFEF] size-9 text-primary flex items-center justify-center rounded-full font-bold">
-              {currentUser.email && currentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase()}
+              {currentUser.fullname ? currentUser.fullname.split("").slice(0, 2).join("") : currentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase()}
             </div>
             <div>
-              <p className="text-xl">{currentUser?.email && currentUser.email?.split("@").splice(0, 1)}</p>
+              <p className="text-xl">{currentUser?.fullname ? currentUser.fullname : currentUser.email?.split("@").splice(0, 1)}</p>
               <Link to="/account-settings" className="text-sm mb-[-5px] text-third">
                 account settings
               </Link>

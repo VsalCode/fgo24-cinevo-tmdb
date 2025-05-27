@@ -1,36 +1,77 @@
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { userLogin } from "../redux/reducer/auth";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    email: yup.string().email("Email Not Valid!"),
+    newPassword: yup.string().min(6, "Password must be longer than 6 characters!"),
+    phone: yup.number("Phone must be a number").required("Input your phone number"),
+    confirmPassword: yup
+      .string()
+      .oneOf([yup.ref("newPassword"), null], "Password must match")
+      .required("You must confirm your password!"),
+  })
+  .required();
 
 const AccountSettings = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm({resolver: yupResolver(schema)});
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const dispatch = useDispatch()
+
+  function handleChangeAcc(value) {
+    console.log(value);
+
+    const { fullname, email, newPassword, phone } = value
+  
+    let newObj = {
+      ...currentUser,
+        fullname: fullname,
+        email: email,
+        password: newPassword,
+        phone: phone
+    }
+    // console.log(newObj);
+    dispatch(userLogin(newObj))
+  }
+
   return (
     <>
       <section className="bg-secondary w-full rounded-xl grid grid-cols-2">
-        <Link to="/account-settings" className="text-center py-5 cursor-pointer font-medium border-b-third border-b-4 hover:opacity-70 transition-colors">Account Settings</Link>
-        <Link to="/order-history" className="text-center py-5 cursor-pointerhover:text-third font-medium hover:opacity-70 transition-colors">Order History</Link>
+        <Link to="/account-settings" className="text-center py-5 cursor-pointer font-medium border-b-third border-b-4 hover:opacity-70 transition-colors">
+          Account Settings
+        </Link>
+        <Link to="/order-history" className="text-center py-5 cursor-pointerhover:text-third font-medium hover:opacity-70 transition-colors">
+          Order History
+        </Link>
       </section>
-      <form className="flex flex-col gap-6" action="">
+      <form className="flex flex-col gap-6" onSubmit={handleSubmit(handleChangeAcc)}>
         <section className="bg-secondary w-full rounded-xl h-fit px-5 py-7">
           <p className="mb-5 text-lg font-semibold text-third">Details Information</p>
-          <div className="flex sm:flex-row flex-col gap-5">
-            <aside className="flex-1 flex flex-col gap-3">
-              <label htmlFor="firstname" className="font-semibold">
-                Firstname
-              </label>
-              <input type="text" id="firstname" placeholder="Enter your First Name" className=" p-3 bg-[#283246] rounded-xl " />
-              <label htmlFor="email" className="font-semibold">
-                Email
-              </label>
-              <input type="email" id="email" placeholder="Enter your email" className=" p-3 bg-[#283246] rounded-xl " />
-            </aside>
-            <aside className="flex-1 flex flex-col gap-3">
-              <label htmlFor="lastname" className="font-semibold">
-                Lastname
-              </label>
-              <input type="text" id="lastname" placeholder="Enter your Last Name" className=" p-3 bg-[#283246] rounded-xl " />
-              <label htmlFor="email" className="font-semibold">
-                Phone Number
-              </label>
-              <input type="number" id="email" placeholder="Enter your phone number" className=" p-3 bg-[#283246] rounded-xl " />
-            </aside>
+          <div className="flex flex-col gap-5">
+            <label htmlFor="fullname" className="font-semibold">
+              Fullname
+            </label>
+            <input {...register("fullname")} type="text" id="fullname" placeholder="Enter your Fullname" className=" p-3 bg-[#283246] rounded-xl " />
+            <div className="flex md:flex-row flex-col md:gap-5 gap-2">
+              <div className="flex-1 flex flex-col gap-5">
+                <label htmlFor="email" className="font-semibold">
+                  Email
+                </label>
+                <input defaultValue={currentUser?.email} {...register("email")} type="email" id="email" placeholder="Enter your email" className=" p-3 bg-[#283246] rounded-xl " />
+                {errors.email && <p className="text-error text-sm italic">{errors.email.message}</p>}
+              </div>
+              <div className="flex-1 flex flex-col gap-5">
+                <label htmlFor="phone" className="font-semibold">
+                  Phone Number
+                </label>
+                <input {...register("phone")} type="number" id="phone" placeholder="Enter phone number" className=" p-3 bg-[#283246] rounded-xl " />
+                {errors.phone && <p className="text-error text-sm italic">{errors.phone.message}</p>}
+              </div>
+            </div>
           </div>
         </section>
         <section className="bg-secondary w-full rounded-xl h-fit px-5 py-7">
@@ -40,13 +81,15 @@ const AccountSettings = () => {
               <label htmlFor="newPassword" className="font-semibold">
                 New Password
               </label>
-              <input type="text" id="newPassword" placeholder="Enter your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              <input defaultValue={window.atob(currentUser.password)} {...register("newPassword")} type="password" id="newPassword" placeholder="Enter your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              {errors.newPassword && <p className="text-error text-sm italic">{errors.newPassword.message}</p>}
             </div>
             <div className="flex-1 flex flex-col gap-3">
               <label htmlFor="confirmNewPassword" className="font-semibold">
                 Confirm New Password
               </label>
-              <input type="text" id="confirmNewPassword" placeholder="Confirm your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              <input {...register("confirmPassword")} type="password" id="confirmNewPassword" placeholder="Confirm your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              {errors.confirmPassword && <p className="text-error text-sm italic">{errors.confirmPassword.message}</p>}
             </div>
           </div>
         </section>

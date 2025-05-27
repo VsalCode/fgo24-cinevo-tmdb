@@ -1,4 +1,4 @@
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import BuyTicket from "./pages/BuyTicket";
 import NotFound from "./pages/NotFound";
 import HomePage from "./pages/HomePage";
@@ -15,11 +15,17 @@ import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import AccountSettings from "./pages/AccountSettings";
 import LayoutProfile from "./layout/ProfileLayout";
-import OrderHistory from './pages/OrderHistory'
+import OrderHistory from "./pages/OrderHistory";
 import LayoutAdmin from "./layout/LayoutAdmin";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import MovieAdmin from "./pages/MovieAdmin";
-import AddMovie from './pages/AddMovie'
+import AddMovie from "./pages/AddMovie";
+import { useCheckUserAuth } from "./lib/checkUserAuth";
+
+function PrivateRoute() {
+  const isAuthenticated = useCheckUserAuth();
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+}
 
 const router = createBrowserRouter([
   {
@@ -39,16 +45,22 @@ const router = createBrowserRouter([
         element: <MovieDetail />,
       },
       {
-        path: "/order/:id",
-        element: <OrderPage />,
-      },
-      {
-        path: "/payment/:queryId",
-        element: <Payment />,
-      },
-      {
-        path: "/ticket/:queryId",
-        element: <TicketResult />,
+        path: "",
+        element: <PrivateRoute />,
+        children: [
+          {
+            path: "/order/:id",
+            element: <OrderPage />,
+          },
+          {
+            path: "/payment/:queryId",
+            element: <Payment />,
+          },
+          {
+            path: "/ticket/:queryId",
+            element: <TicketResult />,
+          },
+        ],
       },
     ],
   },
@@ -58,31 +70,31 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/account-settings",
-        element: <AccountSettings/> ,
+        element: <AccountSettings />,
       },
       {
         path: "/order-history",
-        element: <OrderHistory/> ,
+        element: <OrderHistory />,
       },
     ],
   },
   {
     path: "",
-    element: <LayoutAdmin/>,
+    element: <LayoutAdmin />,
     children: [
       {
         path: "/dashboard-admin",
-        element: <DashboardAdmin/> ,
+        element: <DashboardAdmin />,
       },
       {
         path: "/movies-admin",
-        element: <MovieAdmin/> ,
+        element: <MovieAdmin />,
       },
       {
         path: "/add-movie",
-        element: <AddMovie /> ,
+        element: <AddMovie />,
       },
-    ]
+    ],
   },
   {
     path: "/login",

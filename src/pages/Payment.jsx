@@ -26,6 +26,7 @@ const Payment = () => {
       email: email,
       paymentMethod: paymentMethod,
       phone: phone,
+      status: 'paid'
     };
 
     setDataPayment(dataPayment)
@@ -94,7 +95,7 @@ const Payment = () => {
             <DetailInfo label="SEAT" value={filtered.seat} />
             <DetailInfo label="TOTAL PAYMENT" value={"$ " + filtered.total} variant="text-third font-bold" />
             <p className="text-4xl font-semibold text-star text-third">People Information</p>
-            <InputPayment label="Fullname" type="text" defaultValue={currentUser.fullnam ? "fullname" : currentUser?.email && currentUser.email?.split("@").splice(0, 1)} {...register("fullname")} />
+            <InputPayment label="Fullname" type="text" defaultValue={currentUser.fullname ? currentUser.fullname : currentUser?.email && currentUser.email?.split("@").splice(0, 1)} {...register("fullname")} />
             <InputPayment label="Email" type="email" defaultValue={currentUser.email} {...register("email")} />
             <InputPayment label="Phone Number" type="number" placeholder="Input your phone number.." {...register("phone")} />
             <p className="text-4xl font-semibold text-star text-third">Payment Method</p>

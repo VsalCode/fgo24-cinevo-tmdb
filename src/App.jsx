@@ -1,4 +1,4 @@
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, Outlet, RouterProvider } from "react-router-dom";
 import BuyTicket from "./pages/BuyTicket";
 import NotFound from "./pages/NotFound";
 import HomePage from "./pages/HomePage";
@@ -10,7 +10,7 @@ import OrderPage from "./pages/OrderPage";
 import Layout from "./layout/Layout";
 import Payment from "./pages/Payment";
 import TicketResult from "./pages/TicketResult";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
 import AccountSettings from "./pages/AccountSettings";
@@ -20,12 +20,11 @@ import LayoutAdmin from "./layout/LayoutAdmin";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import MovieAdmin from "./pages/MovieAdmin";
 import AddMovie from "./pages/AddMovie";
-import { useCheckUserAuth } from "./lib/checkUserAuth";
 
-function PrivateRoute() {
-  const isAuthenticated = useCheckUserAuth();
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
-}
+const PrivateRoute = ({ children }) => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  return currentUser ? children : <Navigate to="/login" replace />;
+};
 
 const router = createBrowserRouter([
   {
@@ -45,22 +44,28 @@ const router = createBrowserRouter([
         element: <MovieDetail />,
       },
       {
-        path: "",
-        element: <PrivateRoute />,
-        children: [
-          {
-            path: "/order/:id",
-            element: <OrderPage />,
-          },
-          {
-            path: "/payment/:queryId",
-            element: <Payment />,
-          },
-          {
-            path: "/ticket/:queryId",
-            element: <TicketResult />,
-          },
-        ],
+        path: "/order/:id",
+        element: (
+          <PrivateRoute>
+            <OrderPage />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/payment/:queryId",
+        element: (
+          <PrivateRoute>
+            <Payment />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/ticket/:queryId",
+        element: (
+          <PrivateRoute>
+            <TicketResult />
+          </PrivateRoute>
+        ),
       },
     ],
   },

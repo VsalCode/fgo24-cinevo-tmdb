@@ -39,4 +39,4 @@ Please make sure to update tests as appropriate.
 
 ## License
 
-[ISC](https://opensource.org/license/isc-license-txt)
+[MIT](https://opensource.org/license/mit)

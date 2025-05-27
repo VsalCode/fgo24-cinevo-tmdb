@@ -14,15 +14,14 @@ const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
 const Movies = () => {
   const [movies, setMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
   const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const { register, handleSubmit } = useForm();
   const [searchParams, setSearchParams] = useSearchParams();
+  const { register, handleSubmit } = useForm();
   const query = searchParams.get("query") || "";
-
-  const moviesPerPage = 8;
+  const page = Number(searchParams.get("page")) || 1;
+  const limit = Number(searchParams.get("limit")) || 8;
+  const offset = (page - 1) * limit;
+  const totalPages = Math.ceil(movies.length / limit);
 
   useEffect(() => {
     async function fetchData() {
@@ -33,15 +32,15 @@ const Movies = () => {
 
         let dataMovies = [];
         if (query) {
-          const searchMovies = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${currentPage}`);
+          const searchMovies = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`);
           dataMovies = searchMovies.data.results;
         } else {
-          const requestMovies = await axios.get(`${requests.fetchNowPlaying}&page=${currentPage}`);
+          const requestMovies = await axios.get(`${requests.fetchNowPlaying}&page=${page}`);
           dataMovies = requestMovies.data.results;
         }
 
         const updatedMovies = dataMovies.map((movie) => {
-          const genreNames = movie.genre_ids.map((id) => movieGenres.find((e) => e.id === id)).filter(Boolean);
+          const genreNames = movie.genre_ids.map((id) => movieGenres.find((e) => e.id === id));
 
           return {
             ...movie,
@@ -50,42 +49,20 @@ const Movies = () => {
         });
 
         setMovies(updatedMovies);
-        setFilteredMovies(updatedMovies);
       } catch (error) {
-        console.error("Error fetching data:", error);
+        console.error(error);
       }
     }
     fetchData();
-  }, [currentPage, query]);
-
-  const handleGenreFilter = (genreId) => {
-    setSelectedGenre(genreId);
-    setCurrentPage(1);
-    if (genreId === "") {
-      setFilteredMovies(movies);
-    } else {
-      const filtered = movies.filter((movie) => movie.genre_ids.some((genre) => genre.id === parseInt(genreId)));
-      setFilteredMovies(filtered);
-    }
-  };
+  }, [page, query]);
 
   const handleSearch = (data) => {
     const { query: searchQuery } = data;
     if (searchQuery) {
-      setSearchParams({ query: searchQuery });
+      setSearchParams({ query: searchQuery, page: "1", limit: String(limit) });
     } else {
-      setSearchParams();
+      setSearchParams({ page: "1", limit: String(limit) });
     }
-  };
-
-  // Pagination
-  const totalPages = Math.ceil(filteredMovies.length / moviesPerPage);
-  const indexOfLastMovie = currentPage * moviesPerPage;
-  const indexOfFirstMovie = indexOfLastMovie - moviesPerPage;
-  const currentMovies = filteredMovies.slice(indexOfFirstMovie, indexOfLastMovie);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
   };
 
   return (
@@ -122,7 +99,7 @@ const Movies = () => {
               <h6 className="font-bold mb-4 text-lg">Filters</h6>
               <div className="flex flex-wrap gap-3">
                 {genres.slice(0, 8).map((genre) => (
-                  <Button key={genre.id} style={`border ${selectedGenre === genre.id ? "bg-third text-white" : "text-gray-300"}`} onClick={() => handleGenreFilter(genre.id)}>
+                  <Button key={genre.id} style="border text-gray-300">
                     {genre.name.toUpperCase()}
                   </Button>
                 ))}
@@ -130,8 +107,8 @@ const Movies = () => {
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-between">
-            {currentMovies.length > 0 ? (
-              currentMovies.map((item) => (
+            {movies.slice(offset, limit * page).length > 0 ? (
+              movies.slice(offset, limit * page).map((item) => (
                 <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-full max-w-xs transition-transform duration-300">
                   <div className="relative">
                     {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-lg px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
@@ -156,22 +133,31 @@ const Movies = () => {
               <p className="text-center col-span-full">Movie Not Found</p>
             )}
           </div>
-          <div className="flex justify-center items-center gap-3 mt-10 md:mt-12 text-lg">
-            <button className="button-icon bg-third text-white p-2 rounded-full disabled:opacity-50" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
-              <FaArrowLeft />
-            </button>
-            {[...Array(totalPages)].map((_, index) => (
-              <button
-                key={index + 1}
-                className={`flex-center text-sm md:text-base font-semibold rounded-full w-10 h-10 ${currentPage === index + 1 ? "bg-third text-white" : "border border-gray-600 text-gray-300"}`}
-                onClick={() => handlePageChange(index + 1)}
-              >
-                {index + 1}
-              </button>
-            ))}
-            <button className="button-icon bg-third text-white p-2 rounded-full disabled:opacity-50" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages}>
+          <div className="flex flex-row justify-center items-center gap-5 mt-10 md:mt-12">
+            <Button
+              className="button-icon md:text-lg text-sm bg-third"
+              disabled={page === 1}
+              onClick={() =>
+                setSearchParams({
+                  page: String(page - 1),
+                  ...(query && { query }),
+                })
+              }
+            >
+             <FaArrowLeft />
+            </Button>
+            <Button
+              className="button-icon md:text-lg text-sm bg-third"
+              disabled={page === totalPages}
+              onClick={() =>
+                setSearchParams({
+                  page: String(page + 1),
+                  ...(query && { query }),
+                })
+              }
+            >
               <FaArrowRight />
-            </button>
+            </Button>
           </div>
         </div>
       </section>

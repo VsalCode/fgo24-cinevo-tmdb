@@ -1,19 +1,19 @@
-import { createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   users: [
     {
-      email: 'admin@gmail.com',
-      password: window.btoa('admin123'),
-      role: 'admin'
-    }
+      email: "admin@gmail.com",
+      password: window.btoa("admin123"),
+      role: "admin",
+    },
   ],
   currentUser: null,
-  adminLogin: null
-}
+  adminLogin: null,
+};
 
 const auth = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     addUser: (state, action) => {
@@ -24,13 +24,11 @@ const auth = createSlice({
     },
     userLogout: (state) => {
       if (state.currentUser) {
-        const userIndex = state.users.findIndex(
-          (user) =>  user.id === state.currentUser.id && user.email === state.currentUser.email
-        );
+        const userIndex = state.users.findIndex((user) => user.id === state.currentUser.id && user.email === state.currentUser.email);
         if (userIndex !== -1) {
           state.users[userIndex] = {
-            ...state.users[userIndex], // (1) Pertama, ambil semua data user yang lama
-            ...state.currentUser, // (2) Lalu timpa dengan data terbaru dari currentUser
+            ...state.users[userIndex],
+            ...state.currentUser,
           };
         }
       }
@@ -42,5 +40,5 @@ const auth = createSlice({
   },
 });
 
-export const { addUser, userLogin, userLogout, adminLogin } = auth.actions
-export default auth.reducer
+export const { addUser, userLogin, userLogout, adminLogin } = auth.actions;
+export default auth.reducer;

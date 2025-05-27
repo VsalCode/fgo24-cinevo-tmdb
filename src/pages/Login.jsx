@@ -41,7 +41,10 @@ const Login = () => {
   function handleLogin(dataLogin) {
     const { email, password } = dataLogin;
 
-    let currentUser = dataUsers.find((users) => users.email === email && window.atob(users.password) === password && users.role === "user");
+    let currentUser = dataUsers.filter((users) => users.id !== null && users.email === email && window.atob(users.password) === password && users.role === "user")[0]
+
+    console.log(currentUser);
+    
     let admin = dataUsers.find((users) => users.email === email && window.atob(users.password) === password && users.role === "admin");
 
     if (admin) {
@@ -52,7 +55,7 @@ const Login = () => {
       }, 2000);
     } else if (currentUser) {
       // console.log(currentUser);
-      dispatch(userLogin({ email: email, password: window.btoa(password) }));
+      dispatch(userLogin({ id: currentUser.id, email: currentUser.email, password: currentUser.password }));
 
       toast.success("Login Succes!");
       setTimeout(() => {

@@ -11,6 +11,7 @@ import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser } from "../redux/reducer/auth";
 import toast, { Toaster } from "react-hot-toast";
+import { nanoid } from "@reduxjs/toolkit";
 
 const schema = yup
   .object({
@@ -56,6 +57,7 @@ const SignUp = () => {
       toast.error("email was registered!");
     } else {
       const formatAddUser = {
+        id: nanoid(),
         email: dataRegister.email,
         password: window.btoa(dataRegister.password),
         role: 'user',

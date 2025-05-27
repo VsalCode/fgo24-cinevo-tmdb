@@ -1,22 +1,27 @@
 import { FaCheck } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { bookTicketActions } from "../redux/reducer/ticket";
+import toast, { Toaster } from "react-hot-toast";
 
 const OrderPage = () => {
   const nav = useNavigate();
-
   const [selectedSeats, setSelectedSeats] = useState([]);
-
+  const { id } = useParams();
+  const dispatch = useDispatch()
+  const dataBookingTicket = useSelector((state) => state.ticket.historyBooking);
+  const filtered = dataBookingTicket?.filter((e) => e?.idTransaction === id)[0]
+  
   const rows = ["A", "B", "C", "D", "E", "F", "G"];
   const columns = Array.from({ length: 14 }, (_, i) => i + 1);
-
-  const soldSeats = ["C1", "C2", "C3", "F9"]
-  const loveNestSeats = ["E8", "E9"]; 
+  const soldSeats = ["C1", "C2", "C3", "F9"];
+  const loveNestSeats = ["E8", "E9"];
 
   const handleSeatClick = (seat) => {
     if (soldSeats.includes(seat) || loveNestSeats.includes(seat)) {
       return;
-    } 
+    }
 
     if (selectedSeats.includes(seat)) {
       setSelectedSeats(selectedSeats.filter((s) => s !== seat));
@@ -25,19 +30,29 @@ const OrderPage = () => {
     }
   };
 
-  const ticketPrice = 10; 
+  const ticketPrice = 10;
   const totalPayment = selectedSeats.length * ticketPrice;
 
   function HandleCheckout() {
     if (selectedSeats.length === 0) {
-      alert("Anda Belum Memilih Kursi!");
+      toast.error("Anda Belum Memilih Kursi!")
       return;
     }
-    nav("/payment");
+
+    let newInfoBook = {
+      ...filtered,
+      seat: String(selectedSeats.length > 0 ? selectedSeats.join(", ") : selectedSeats.join("")),
+      total: totalPayment
+    }
+    const queryId = newInfoBook.idTransaction
+    dispatch(bookTicketActions(newInfoBook))
+
+    nav(`/payment/${queryId}`);
   }
 
   return (
     <section className="bg-primary text-white flex flex-col items-center gap-10 py-30">
+      <Toaster/>
       <section className="flex items-center">
         <div className="flex-col flex-center gap-3">
           <div className="bg-green-700 text-white font-semibold rounded-full w-9 h-9 flex-center">
@@ -63,17 +78,19 @@ const OrderPage = () => {
               <img src="/src/assets/images/placeholder-order.png" alt="poster_movie" />
             </div>
             <div className="flex flex-col items-start justify-center gap-4">
-              <p className="text-xl font-semibold">Spider-Man: Homecoming</p>
+              <p className="text-xl font-semibold">{filtered.title}</p>
               <div className="flex gap-2">
-                <div className="genre border">Action</div>
-                <div className="genre border">Adventure</div>
+                {filtered.genres?.map((item) => 
+                  <div key={`list-genre-${item.id}`} className="genre border">
+                    {item.name}
+                  </div>
+                 )}
+                  
               </div>
               <p>Regular - 13:00 PM</p>
             </div>
             <div>
-              <button className="bg-third text-primary md:text-base text-sm font-bold p-2 rounded-md cursor-pointer">
-                Change Now
-              </button>
+              <button className="bg-third text-primary md:text-base text-sm font-bold p-2 rounded-md cursor-pointer">Change Now</button>
             </div>
           </div>
           <div className="p-3 mt-10">
@@ -84,10 +101,7 @@ const OrderPage = () => {
                 <div className="grid grid-cols-15 gap-1">
                   <div></div>
                   {columns.map((col, index) => (
-                    <div
-                      key={col}
-                      className={`text-center font-semibold ${index === 7 ? "ml-4" : ""}`}
-                    >
+                    <div key={col} className={`text-center font-semibold ${index === 7 ? "ml-4" : ""}`}>
                       {col}
                     </div>
                   ))}
@@ -105,13 +119,7 @@ const OrderPage = () => {
                           key={seat}
                           onClick={() => handleSeatClick(seat)}
                           className={`md:size-8 sm:size-7 size-5 rounded cursor-pointer ${
-                            isSold
-                              ? "bg-gray-500 cursor-not-allowed"
-                              : isLoveNest
-                              ? "bg-pink-400 cursor-not-allowed"
-                              : isSelected
-                              ? "bg-blue-500"
-                              : "bg-gray-200 hover:bg-gray-300"
+                            isSold ? "bg-gray-500 cursor-not-allowed" : isLoveNest ? "bg-pink-400 cursor-not-allowed" : isSelected ? "bg-blue-500" : "bg-gray-200 hover:bg-gray-300"
                           } `}
                           disabled={isSold || isLoveNest}
                         ></button>
@@ -144,20 +152,20 @@ const OrderPage = () => {
             </div>
           </div>
         </aside>
-        <aside className="w-full md:max-w-[330px] h-[500px] flex flex-col gap-5">
+        <aside className=" md:min-w-[330px] w-full h-[500px] flex flex-col gap-5">
           <div className="bg-secondary p-5 items-center rounded-lg">
             <div className="text-center text-2xl mb-8 font-bold text-third">
               <p>
-                <span>CineOne21</span> Cinema
+                <span>{filtered.cinema}</span>
               </p>
             </div>
             <div className="grid grid-cols-2 mb-8">
               <span className="text-start">Movie selected</span>
-              <span className="text-end font-semibold">Spider-Man: Homecoming</span>
+              <span className="text-end font-semibold">{filtered.title}</span>
             </div>
             <div className="grid grid-cols-2 mb-8">
-              <span className="text-start">Tuesday, 07 July 2020</span>
-              <span className="text-end font-semibold">13:00pm</span>
+              <span className="text-start">{filtered.date}</span>
+              <span className="text-end font-semibold">{filtered.time}</span>
             </div>
             <div className="grid grid-cols-2 mb-8">
               <span className="text-start">One ticket price</span>
@@ -165,9 +173,7 @@ const OrderPage = () => {
             </div>
             <div className="grid grid-cols-2 mb-8">
               <span className="text-start">Seat choosed</span>
-              <span className="text-end font-semibold">
-                {selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}
-              </span>
+              <span className="text-end font-semibold">{selectedSeats.length > 0 ? selectedSeats.join(", ") : "None"}</span>
             </div>
             <hr />
             <div className="grid grid-cols-2 my-5 text-xl font-bold">
@@ -175,10 +181,7 @@ const OrderPage = () => {
               <span className="text-end font-semibold text-third">${totalPayment}</span>
             </div>
           </div>
-          <button
-            onClick={HandleCheckout}
-            className="bg-third text-primary font-bold w-full py-4 rounded-md cursor-pointer md:text-base text-sm"
-          >
+          <button onClick={HandleCheckout} className="bg-third text-primary font-bold w-full py-4 rounded-md cursor-pointer md:text-base text-sm">
             Checkout Now
           </button>
         </aside>

@@ -1,39 +1,68 @@
 import { FaCheck } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useForm } from "react-hook-form";
+import { paymentAction } from "../redux/reducer/ticket";
 
 const Payment = () => {
   const nav = useNavigate();
+  const [dataPayment, setDataPayment] = useState({})
+  const dispatch = useDispatch();
+  const { queryId } = useParams();
   const [showModal, setShowModal] = useState(false);
+  const { register, handleSubmit } = useForm();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const dataBookingTicket = useSelector((state) => state.ticket.historyBooking);
+  const filtered = dataBookingTicket?.filter((e) => e?.idTransaction === queryId && e.seat && e.total)[0];
 
-  function handlePayment(e) {
-    e.preventDefault()
 
+  function handlePayment(value) {
+    const { email, fullname, paymentMethod, phone } = value;
+
+    const dataPayment = {
+      ...filtered,
+      fullname: fullname,
+      email: email,
+      paymentMethod: paymentMethod,
+      phone: phone,
+    };
+
+    setDataPayment(dataPayment)
     setShowModal(true);
+  }
+
+  function confirmPayment() {
+    dispatch(paymentAction(dataPayment));
+    nav(`/ticket/${queryId}`);
   }
 
   return (
     <>
-      { showModal === true && <section className="z-100 position fixed w-full h-full TOP-0 bg-[#00000099] flex-center">
-        <div className="bg-white h-fit lg:w-[40%] sm:w-[70%] w-[90%] sm:text-sm text-[10px] rounded-4xl text-primary flex flex-col p-7">
-          <p className="sm:text-2xl text-sm text-center font-semibold mb-5">Payment Info</p>
-          <div className="text-lg grid grid-cols-2 mb-8  sm:text-sm text-[12px]">
-            <span className="text-start text-[#8692A6]">No. Rekening Virtual:</span>
-            <span className="text-end font-semibold">12321328913829724</span>
+      {showModal === true && (
+        <section className="z-100 position fixed w-full h-full TOP-0 bg-[#00000099] flex-center">
+          <div className="bg-white h-fit lg:w-[40%] sm:w-[70%] w-[90%] sm:text-sm text-[10px] rounded-4xl text-primary flex flex-col p-7">
+            <p className="sm:text-2xl text-sm text-center font-semibold mb-5">Payment Info</p>
+            <div className="text-lg grid grid-cols-2 mb-8  sm:text-sm text-[12px]">
+              <span className="text-start text-[#8692A6]">No. Rekening Virtual:</span>
+              <span className="text-end font-semibold">12321328913829724</span>
+            </div>
+            <div className="text-lg grid grid-cols-2 mb-8 sm:text-sm text-[12px]">
+              <span className="text-start text-[#8692A6]">Total Payment: </span>
+              <span className="text-end font-bold">$30</span>
+            </div>
+            <p>
+              Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on June 23, 2023</span>. If the bill has not been paid by the specified time, it will be forfeited
+            </p>
+            <button onClick={confirmPayment} type="submit" className="bg-third text-secondary font-bold w-full py-4 rounded-md cursor-pointer mt-5">
+              Pay Your Order
+            </button>
+            <button className="text-secondary font-bold mt-5 cursor-pointer" onClick={() => setShowModal(false)}>
+              Pay Later
+            </button>
           </div>
-          <div className="text-lg grid grid-cols-2 mb-8 sm:text-sm text-[12px]">
-            <span className="text-start text-[#8692A6]">Total Payment: </span>
-            <span className="text-end font-bold">$30</span>
-          </div>
-          <p>
-            Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on June 23, 2023</span>. If the bill has not been paid by the specified time, it will be forfeited
-          </p>
-          <button onClick={() => { nav('/ticket') }} type="submit" className="bg-third text-secondary font-bold w-full py-4 rounded-md cursor-pointer mt-5">
-            Pay Your Order
-          </button>
-          <button className="text-secondary font-bold mt-5 cursor-pointer" onClick={() => setShowModal(false)} >Pay Later</button>
-        </div>
-      </section> }
+        </section>
+      )}
 
       <section className="bg-primary text-white flex flex-col items-center gap-10 py-30">
         <div className="flex items-center ">
@@ -57,27 +86,27 @@ const Payment = () => {
           </div>
         </div>
         <div className="flex lg:flex-row flex-col gap-5 mx-7">
-          <form onSubmit={handlePayment} className="w-full md:min-w-[732px] sm:min-w-[500px] h-fit bg-secondary rounded-2xl shadow-xl px-10 py-7">
+          <form onSubmit={handleSubmit(handlePayment)} className="w-full md:min-w-[732px] sm:min-w-[500px] h-fit bg-secondary rounded-2xl shadow-xl px-10 py-7">
             <p className="text-4xl font-semibold text-third">Payment Information</p>
-            <DetailInfo label="DATE & TIME" value="Tuesday, 07 July 2020 at 02:00pm" />
-            <DetailInfo label="MOVIE TITLE" value="Spider-Man: Homecoming" />
-            <DetailInfo label="CINEMA NAME" value="CineOne21 Cinema" />
-            <DetailInfo label="NUMBER OF TICKETS" value="3 pieces" />
-            <DetailInfo label="TOTAL PAYMENT" value="$30,00" variant="text-third font-bold" />
+            <DetailInfo label="DATE & TIME" value={filtered.date + ", " + filtered.time} />
+            <DetailInfo label="MOVIE TITLE" value={filtered.title} />
+            <DetailInfo label="CINEMA NAME" value={filtered.cinema} />
+            <DetailInfo label="SEAT" value={filtered.seat} />
+            <DetailInfo label="TOTAL PAYMENT" value={"$ " + filtered.total} variant="text-third font-bold" />
             <p className="text-4xl font-semibold text-star text-third">People Information</p>
-            <InputPayment label="Fullname" type="text" defaultValue="Jonas El Rodriguez" />
-            <InputPayment label="Email" type="email" defaultValue="jonasrodri123@gmail.com" />
-            <InputPayment label="Phone Number" type="number" defaultValue="081445687121" />
+            <InputPayment label="Fullname" type="text" defaultValue={currentUser.fullnam ? "fullname" : currentUser?.email && currentUser.email?.split("@").splice(0, 1)} {...register("fullname")} />
+            <InputPayment label="Email" type="email" defaultValue={currentUser.email} {...register("email")} />
+            <InputPayment label="Phone Number" type="number" placeholder="Input your phone number.." {...register("phone")} />
             <p className="text-4xl font-semibold text-star text-third">Payment Method</p>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 mt-10 relative">
-              <PaymentKey srcImage="/src/assets/images/dana.svg" />
-              <PaymentKey srcImage="/src/assets/images/googlePay.svg" />
-              <PaymentKey srcImage="/src/assets/images/bca.svg" />
-              <PaymentKey srcImage="/src/assets/images/ovo.svg" />
-              <PaymentKey srcImage="/src/assets/images/paypal.svg" />
-              <PaymentKey srcImage="/src/assets/images/gopay.svg" />
-              <PaymentKey srcImage="/src/assets/images/visa.svg" />
-              <PaymentKey srcImage="/src/assets/images/bri.svg" />
+              <PaymentKey srcImage="/src/assets/images/dana.svg" value="dana" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/googlePay.svg" value="googlePay" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/bca.svg" value="bca" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/ovo.svg" value="ovo" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/paypal.svg" value="paypal" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/gopay.svg" value="gopay" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/visa.svg" value="visa" {...register("paymentMethod")} />
+              <PaymentKey srcImage="/src/assets/images/bri.svg" value="bri" {...register("paymentMethod")} />
             </div>
             <button type="submit" className="bg-third text-primary font-bold w-full py-4 rounded-md cursor-pointer mt-10">
               Pay Your Order
@@ -110,10 +139,10 @@ export const InputPayment = ({ label, type, ...props }) => {
   );
 };
 
-export const PaymentKey = ({ srcImage }) => {
+export const PaymentKey = ({ srcImage, ...props }) => {
   return (
-    <label className="bg-white border border-third border-2 opacity-30 rounded-xl py-2 flex justify-center items-center cursor-pointer has-checked:opacity-80">
-      <input type="radio" name="payment" className="peer hidden" id="payment-method" />
+    <label className="bg-white border-third border-2 opacity-30 rounded-xl py-2 flex justify-center items-center cursor-pointer has-checked:opacity-80">
+      <input type="radio" name="payment" className="peer hidden" id="payment-method" {...props} />
       <img className="object-scale-down" src={`${srcImage}`} alt="payment_method" />
     </label>
   );

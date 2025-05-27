@@ -39,15 +39,15 @@ const router = createBrowserRouter([
         element: <MovieDetail />,
       },
       {
-        path: "/order",
+        path: "/order/:id",
         element: <OrderPage />,
       },
       {
-        path: "/payment",
+        path: "/payment/:queryId",
         element: <Payment />,
       },
       {
-        path: "/ticket",
+        path: "/ticket/:queryId",
         element: <TicketResult />,
       },
     ],

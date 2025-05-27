@@ -1,8 +1,14 @@
 import React from "react";
 import { GiTicket } from "react-icons/gi";
-import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 
 const TicketResult = () => {
+  const { queryId } = useParams();
+  const dataHistoryPayment = useSelector((state) => state.ticket.historyPayment);
+  const filtered = dataHistoryPayment?.filter((e) => e?.idTransaction === queryId )[0];
+  // console.log(filtered);
+
   return (
     <section className="bg-primary text-white h-fit flex flex-col items-center py-35 gap-7 ">
       <div className="w-fit mx-5 flex flex-col items-center gap-7">
@@ -15,7 +21,7 @@ const TicketResult = () => {
             </p>
             <img src="/src/assets/images/QR.svg" alt="" />
             <p>
-              Total : <span className="bg-third text-secondary font-bold rounded-xl px-2 py-1">$30.00</span>
+              Total : <span className="bg-third text-secondary font-bold rounded-xl px-2 py-1">$ {filtered.total}</span>
             </p>
           </div>
           <div className=" grid grid-cols-3 gap-7 text-primary  ">
@@ -26,27 +32,27 @@ const TicketResult = () => {
               </div>
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Category</p>
-                <p className=" italic border-none outline-none pb-5 ">PG-13</p>
+                <p className=" italic border-none outline-none pb-5 ">{filtered.genres.map((e) => e.name).join(',')}</p>
               </div>
             </div>
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Date</p>
-                <p className=" italic border-none outline-none pb-5 ">07 Jul</p>
+                <p className=" italic border-none outline-none pb-5 ">{filtered.date}</p>
               </div>
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Time</p>
-                <p className=" italic border-none outline-none pb-5 ">2:00pm</p>
+                <p className=" italic border-none outline-none pb-5 ">{filtered.time}</p>
               </div>
             </div>
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Count</p>
-                <p className=" italic border-none outline-none pb-5 ">3 pcs</p>
+                <p className=" italic border-none outline-none pb-5 ">{filtered.seat.split(",").length}</p>
               </div>
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Seats</p>
-                <p className=" italic border-none outline-none pb-5 ">C4, C5, C6</p>
+                <p className=" italic border-none outline-none pb-5 ">{filtered.seat}</p>
               </div>
             </div>
           </div>

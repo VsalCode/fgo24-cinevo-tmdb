@@ -29,6 +29,8 @@ const MovieDetail = () => {
       toast.error("You must Login or Register!");
     } else if (cinema === null) {
       toast.error("You must choose one cinema!");
+    } else if (time === "") {
+      toast.error("You must choose time!");
     } else {
       const idTransaction = String(nanoid());
 
@@ -136,7 +138,7 @@ const MovieDetail = () => {
           </div>
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Time</h5>
-            <SelectOptions {...register("time")} type="time" id="time" name="time" value="09:00" min="09:00" max="21:00" />
+            <SelectOptions {...register("time")} type="time" id="time" name="time" min="09:00" max="21:00" />
           </div>
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Location</h5>
@@ -153,6 +155,7 @@ const MovieDetail = () => {
           </div>
         </div>
       </form>
+      
     </>
   );
 };

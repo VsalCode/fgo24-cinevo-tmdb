@@ -1,4 +1,5 @@
 import React from "react";
+import toast, { Toaster } from "react-hot-toast";
 import { GiTicket } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
@@ -7,11 +8,11 @@ const TicketResult = () => {
   const { queryId } = useParams();
   const dataHistoryPayment = useSelector((state) => state.ticket.historyPayment);
   const filtered = dataHistoryPayment?.filter((e) => e?.idTransaction === queryId )[0];
-  // console.log(filtered);
 
   return (
     <section className="bg-primary text-white h-fit flex flex-col items-center py-35 gap-7 ">
       <div className="w-fit mx-5 flex flex-col items-center gap-7">
+      <Toaster/>
         <p className="text-3xl font-semibold text-third text-center">Thankyou For Purchasing</p>
         <div className="bg-white shadow-2xl h-fit flex flex-col gap-7 px-5 py-7">
           <div className="flex flex-col items-center gap-2   text-primary text-center py-3 font-bold">
@@ -58,7 +59,7 @@ const TicketResult = () => {
           </div>
         </div>
         <div className="flex flex-col gap-4">
-          <button className="bg-third text-primary md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer">Donwload Your Ticket</button>
+          <button onClick={() => { toast.success("Ticket Donwloaded!") }} className="bg-third text-primary md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer"  >Donwload Your Ticket</button>
           <Link to="/" className="bg-secondary text-center text-white md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer">Back To Homepage</Link>
         </div>
       </div>

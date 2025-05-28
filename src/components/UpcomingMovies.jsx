@@ -1,6 +1,6 @@
 import axios from "../utils/axios";
 import requests from "../utils/Requests";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "./Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -21,10 +21,15 @@ const UpcomingMovies = () => {
     fetchData();
   }, []);
 
+  const ref = useRef(null);
+  const scroll = (scrollOffset) => {
+    ref.current.scrollLeft += scrollOffset;
+  };
+
   return (
     <section className="text-white max-h-[1440px] h-fit bg-sixth  py-20">
       <div className="flex lg:flex-row flex-col-reverse lg:px-15 md:px-10 px-5  ">
-        <div className="scroll-x overflow-x-auto flex justify-items-center flex-3">
+        <div className="scroll-x overflow-x-auto scroll-smooth flex justify-items-center flex-3" ref={ref}>
           {movies.map((item) => (
             <div key={item.id} className="flex items-center justify-between flex-col pb-10">
               <div className="relative w-50">
@@ -62,14 +67,14 @@ const UpcomingMovies = () => {
           <Button style="border">SCIFI</Button>
         </div>
         <div className="lg:flex-between flex justify-center gap-5">
-          <button className="button-icon">
+          <button onClick={() => { scroll(-400) }} className="button-icon">
             <FaArrowLeft className="md:text-lg text-sm" />
           </button>
           <Link to="/movies" className="flex items-center gap-5 bg-third text-primary font-bold rounded-full px-4 py-2">
-            <span >VIEW ALL</span>
+            <span>VIEW ALL</span>
             <FaArrowRight className="md:text-lg text-sm" />
           </Link>
-          <button className="button-icon">
+          <button onClick={() => { scroll(400) }} className="button-icon">
             <FaArrowRight />
           </button>
         </div>

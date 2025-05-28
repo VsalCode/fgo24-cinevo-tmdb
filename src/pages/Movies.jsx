@@ -135,7 +135,7 @@ const Movies = () => {
           </div>
           <div className="flex flex-row justify-center items-center gap-5 mt-10 md:mt-12">
             <Button
-              className="button-icon md:text-lg text-sm bg-third disabled:bg-gray-400"
+              className="button-icon md:text-lg text-sm bg-third disabled:bg-gray-700 disabled:text-third"
               disabled={page === 1}
               onClick={() =>
                 setSearchParams({
@@ -149,7 +149,7 @@ const Movies = () => {
             {Array.from({ length: totalPages }).map((_, index) => (
               <Button
               key={index}
-                className="cursor-pointer font-bold size-10 rounded-md md:text-lg text-sm bg-third text-primary disabled:bg-gray-400"
+                className="cursor-pointer font-bold size-10 rounded-md md:text-lg text-sm bg-third text-primary disabled:bg-gray-700 disabled:text-third"
                 disabled={page === index + 1}
                 onClick={() =>
                   setSearchParams({
@@ -162,7 +162,7 @@ const Movies = () => {
               </Button>
             ))}
             <Button
-              className="button-icon md:text-lg text-sm bg-third disabled:bg-gray-400"
+              className="button-icon md:text-lg text-sm bg-third disabled:bg-gray-700 disabled:text-third"
               disabled={page === totalPages}
               onClick={() =>
                 setSearchParams({
@@ -177,6 +177,7 @@ const Movies = () => {
         </div>
       </section>
       <Subscribe />
+      
     </>
   );
 };

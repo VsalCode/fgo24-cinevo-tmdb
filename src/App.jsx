@@ -1,4 +1,4 @@
-import { createBrowserRouter, Navigate, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Navigate, RouterProvider, ScrollRestoration } from "react-router-dom";
 import BuyTicket from "./pages/BuyTicket";
 import NotFound from "./pages/NotFound";
 import HomePage from "./pages/HomePage";

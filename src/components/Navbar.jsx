@@ -35,7 +35,7 @@ const Navbar = () => {
         <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 md:flex md:gap-7 md:font-sans md:font-semibold md:text-lg hidden">
           <Link to="/">HOME</Link>
           <Link to="/movies">MOVIE</Link>
-          <Link to="/buyTicket">BUY TICKET</Link>
+          <Link to="/movies">BUY TICKET</Link>
         </div>
         {currentUser === null ? (
           <div className="md:flex md:gap-3 hidden">
@@ -71,7 +71,7 @@ const Navbar = () => {
         <div className=" flex flex-col h-fit rounded-b-xl text-center text-base font-bold py-7 gap-5">
           <Link to="/">HOME</Link>
           <Link to="/movies">MOVIE</Link>
-          <Link to="/buyTicket">BUY TICKET</Link>
+          <Link to="/movies">BUY TICKET</Link>
           {currentUser === null ? (
             <div className="flex-between gap-3">
               <Link to="/login" className="grow universal-button border text-base">

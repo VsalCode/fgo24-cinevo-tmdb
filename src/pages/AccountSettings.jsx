@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { userLogin } from "../redux/reducer/auth";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { LuEye, LuEyeClosed } from "react-icons/lu";
+import { useState } from "react";
 
 const schema = yup
   .object({
@@ -18,24 +20,29 @@ const schema = yup
   .required();
 
 const AccountSettings = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm({resolver: yupResolver(schema)});
+  const [showPassword, setShowPassword] = useState(false)
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: yupResolver(schema) });
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   function handleChangeAcc(value) {
     console.log(value);
 
-    const { fullname, email, newPassword, phone } = value
-  
+    const { fullname, email, newPassword, phone } = value;
+
     let newObj = {
       ...currentUser,
-        fullname: fullname,
-        email: email,
-        password: newPassword,
-        phone: phone
-    }
+      fullname: fullname,
+      email: email,
+      password: newPassword,
+      phone: phone,
+    };
     // console.log(newObj);
-    dispatch(userLogin(newObj))
+    dispatch(userLogin(newObj));
   }
 
   return (
@@ -81,14 +88,24 @@ const AccountSettings = () => {
               <label htmlFor="newPassword" className="font-semibold">
                 New Password
               </label>
-              <input defaultValue={window.atob(currentUser.password)} {...register("newPassword")} type="text" id="newPassword" placeholder="Enter your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              <span className="flex-between gap-4 p-3 bg-[#283246] rounded-xl ">
+                <input className="flex-1 outline-none" {...register("newPassword")} type={showPassword === true ? "text" : "password"} id="newPassword" placeholder="Enter New Password" />
+                <button type="button" className="cursor-pointer" onClick={() => { setShowPassword(!showPassword) }} >
+                  {showPassword === true ? <LuEyeClosed className="text-xl" /> : <LuEye className="text-xl" /> }
+                </button>
+              </span>
               {errors.newPassword && <p className="text-error text-sm italic">{errors.newPassword.message}</p>}
             </div>
             <div className="flex-1 flex flex-col gap-3">
               <label htmlFor="confirmNewPassword" className="font-semibold">
                 Confirm New Password
               </label>
-              <input {...register("confirmPassword")} type="text" id="confirmNewPassword" placeholder="Confirm your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              <span className="flex-between gap-4 p-3 bg-[#283246] rounded-xl ">
+                <input className="flex-1 outline-none" {...register("confirmPassword")} type={showPassword === true ? "text" : "password"} id="confirmNewPassword" placeholder="Confirm your New Password" />
+                <button type="button" className="cursor-pointer" onClick={() => { setShowPassword(!showPassword) }} >
+                  {showPassword === true ? <LuEyeClosed className="text-xl" /> : <LuEye className="text-xl" /> }
+                </button>
+              </span>
               {errors.confirmPassword && <p className="text-error text-sm italic">{errors.confirmPassword.message}</p>}
             </div>
           </div>

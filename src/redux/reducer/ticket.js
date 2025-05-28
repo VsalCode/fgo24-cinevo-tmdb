@@ -9,8 +9,8 @@ const ticket = createSlice({
   name: 'ticket',
   initialState,
   reducers: {
-    bookTicketActions: (state, actions) => {
-      state.historyBooking.push(actions.payload)
+    bookTicketActions: (state, action) => {
+      state.historyBooking.push(action.payload)
     },
     paymentAction:  (state, action) => {
       state.historyPayment.push(action.payload)

@@ -75,11 +75,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/account-settings",
-        element: <AccountSettings />,
+        element: (
+          <PrivateRoute>
+            <AccountSettings />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/order-history",
-        element: <OrderHistory />,
+        element: (
+          <PrivateRoute>
+            <OrderHistory />
+          </PrivateRoute>
+        ),
       },
     ],
   },

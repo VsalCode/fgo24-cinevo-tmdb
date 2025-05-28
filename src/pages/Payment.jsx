@@ -97,7 +97,7 @@ const Payment = () => {
             <p className="text-4xl font-semibold text-star text-third">People Information</p>
             <InputPayment label="Fullname" type="text" defaultValue={currentUser.fullname ? currentUser.fullname : currentUser?.email && currentUser.email?.split("@").splice(0, 1)} {...register("fullname")} />
             <InputPayment label="Email" type="email" defaultValue={currentUser.email} {...register("email")} />
-            <InputPayment label="Phone Number" type="number" placeholder="Input your phone number.." {...register("phone")} />
+            <InputPayment label="Phone Number" type="number" defaultValue={currentUser?.phone} placeholder="Input your phone number.." {...register("phone")} />
             <p className="text-4xl font-semibold text-star text-third">Payment Method</p>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 mt-10 relative">
               <PaymentKey srcImage="/src/assets/images/dana.svg" value="dana" {...register("paymentMethod")} />

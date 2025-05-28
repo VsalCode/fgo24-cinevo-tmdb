@@ -75,7 +75,7 @@ const OrderPage = () => {
         <aside className="w-full sm:max-w-[700px] max-w-[500px] h-fit rounded-xl bg-secondary shadow-xl p-4">
           <div className="h-[143px] w-full flex-between p-3 gap-7">
             <div className="w-[184px] h-full object-cover overflow-hidden rounded-lg">
-              <img src="/src/assets/images/placeholder-order.png" alt="poster_movie" />
+              <img src={`https://image.tmdb.org/t/p/w500${filtered.poster}`} alt="poster_movie" />
             </div>
             <div className="flex flex-col items-start justify-center gap-4">
               <p className="text-xl font-semibold">{filtered.title}</p>

@@ -81,14 +81,14 @@ const AccountSettings = () => {
               <label htmlFor="newPassword" className="font-semibold">
                 New Password
               </label>
-              <input defaultValue={window.atob(currentUser.password)} {...register("newPassword")} type="password" id="newPassword" placeholder="Enter your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              <input defaultValue={window.atob(currentUser.password)} {...register("newPassword")} type="text" id="newPassword" placeholder="Enter your New Password" className=" p-3 bg-[#283246] rounded-xl " />
               {errors.newPassword && <p className="text-error text-sm italic">{errors.newPassword.message}</p>}
             </div>
             <div className="flex-1 flex flex-col gap-3">
               <label htmlFor="confirmNewPassword" className="font-semibold">
                 Confirm New Password
               </label>
-              <input {...register("confirmPassword")} type="password" id="confirmNewPassword" placeholder="Confirm your New Password" className=" p-3 bg-[#283246] rounded-xl " />
+              <input {...register("confirmPassword")} type="text" id="confirmNewPassword" placeholder="Confirm your New Password" className=" p-3 bg-[#283246] rounded-xl " />
               {errors.confirmPassword && <p className="text-error text-sm italic">{errors.confirmPassword.message}</p>}
             </div>
           </div>

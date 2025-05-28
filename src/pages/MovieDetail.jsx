@@ -40,6 +40,7 @@ const MovieDetail = () => {
         cinema: cinema,
         date: date,
         time: time,
+        poster: data?.poster_path
       };
 
       dispatch(bookTicketActions(bookTicket));

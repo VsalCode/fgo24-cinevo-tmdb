@@ -35,7 +35,7 @@ const Payment = () => {
 
   function confirmPayment() {
     dispatch(paymentAction(dataPayment));
-    nav(`/ticket/${queryId}`);
+    nav(`/ticket/${queryId}`, {replace: true});
   }
 
   return (

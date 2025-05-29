@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { MdOutlineMail } from "react-icons/md";
 import { TbLockPassword } from "react-icons/tb";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 import { useForm } from "react-hook-form";
@@ -59,7 +59,7 @@ const Login = () => {
 
       toast.success("Login Succes!");
       setTimeout(() => {
-        nav("/");
+        nav("/",{replace: true });
       }, 2000);
     } else if (!currentUser) {
       toast.error("Your account is not found!");

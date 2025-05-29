@@ -7,7 +7,7 @@ import Button from "../components/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Dropdown from "../components/Dropdown";
-import { IoSearchSharp } from "react-icons/io5";
+import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -22,6 +22,7 @@ const Movies = () => {
   const limit = Number(searchParams.get("limit")) || 8;
   const offset = (page - 1) * limit;
   const totalPages = Math.ceil(movies.length / limit);
+  const [currentGenre, setCurrentGenre] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -34,6 +35,9 @@ const Movies = () => {
         if (query) {
           const searchMovies = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`);
           dataMovies = searchMovies.data.results;
+        } else if (currentGenre) {
+          const genresFilter = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${currentGenre}`);
+          dataMovies = genresFilter.data.results;
         } else {
           const requestMovies = await axios.get(`${requests.fetchNowPlaying}&page=${page}`);
           dataMovies = requestMovies.data.results;
@@ -54,16 +58,31 @@ const Movies = () => {
       }
     }
     fetchData();
-  }, [page, query]);
+  }, [page, query, currentGenre]);
 
   const handleSearch = (data) => {
     const { query: searchQuery } = data;
     if (searchQuery) {
       setSearchParams({ query: searchQuery, page: "1", limit: String(limit) });
+    } else if(searchQuery === undefined || searchQuery === null || searchQuery === ""){
+      setMovies(movies)
     } else {
       setSearchParams({ page: "1", limit: String(limit) });
     }
   };
+
+  function handleGenreFilter(value) {
+    const { genre } = value;
+    if (genre.length > 0) {
+      const sendCurrentGenre = genre.join("%2C");
+      setCurrentGenre(sendCurrentGenre);
+      // console.log(sendCurrentGenre);
+    } else {
+      const sendCurrentGenre = genre.join("");
+      setCurrentGenre(sendCurrentGenre);
+      // console.log(sendCurrentGenre);
+    }
+  }
 
   return (
     <>
@@ -97,13 +116,18 @@ const Movies = () => {
             </form>
             <div className="w-full lg:w-1/2">
               <h6 className="font-bold mb-4 text-lg">Filters</h6>
-              <div className="flex flex-wrap gap-3">
-                {genres.slice(0, 8).map((genre) => (
-                  <Button key={genre.id} style="border text-gray-300">
-                    {genre.name.toUpperCase()}
-                  </Button>
+              <form onSubmit={handleSubmit(handleGenreFilter)} className="flex flex-wrap gap-3">
+                {genres.slice(0, 8).map((genre, index) => (
+                  <label htmlFor={`${genre.id}`} className="border-white border-1 md:px-4 md:py-2 px-2 rounded-full font-bold cursor-pointer has-checked:bg-gray-700 has-checked:text-third has-checked:border-none">
+                    <input className="appearance-none" id={`${genre.id}`} value={`${genre.id}`} {...register(`genre`)} type="checkbox" key={`list-genre-${index}`} />
+                    <span htmlFor="">{genre.name.toUpperCase()}</span>
+                  </label>
                 ))}
-              </div>
+                <Button type="submit" style="flex items-center gap-2 border bg-third text-primary text-gray-300">
+                  <IoFilterSharp className="text-xl" />
+                  <span>FILTER GENRES</span>
+                </Button>
+              </form>
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-between">
@@ -148,7 +172,7 @@ const Movies = () => {
             </Button>
             {Array.from({ length: totalPages }).map((_, index) => (
               <Button
-              key={index}
+                key={index}
                 className="cursor-pointer font-bold size-10 rounded-md md:text-lg text-sm bg-third text-primary disabled:bg-gray-700 disabled:text-third"
                 disabled={page === index + 1}
                 onClick={() =>
@@ -177,7 +201,6 @@ const Movies = () => {
         </div>
       </section>
       <Subscribe />
-      
     </>
   );
 };

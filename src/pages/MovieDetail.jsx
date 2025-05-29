@@ -81,13 +81,13 @@ const MovieDetail = () => {
           <img className="h-[520px] object-cover w-full rounded-[40px] relative" src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`} alt="backdrop_path" />
         </div>
 
-        <div className="flex flex-row justify-between gap-15 px-20 mt-[-220px] z-50">
-          <div className="flex-center w-[25vw]">
+        <div className="flex lg:flex-row lg:justify-between flex-col items-center gap-15 px-20 mt-[-220px] z-50">
+          <div className="flex-center lg:w-[25vw]">
             <img className="rounded-2xl h-100 w-250 object-contain" src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`} alt="Poster_Movie" />
           </div>
           <div className="flex flex-col gap-15 py-2 h-fit text-white w-[75vw]">
             <div id="movie-overview" className="flex flex-col items-start justify-center gap-3">
-              <p className="font-bold text-3xl bg-third text-primary rounded-sm px-5 py-1">{data.title}</p>
+              <p className="font-bold md:text-3xl text-2xl bg-third text-primary rounded-sm px-5 py-1">{data.title}</p>
               <p className="text-base font-medium">{data.overview}</p>
               <div id="movie-information" className="flex gap-3">
                 {data.genres &&
@@ -124,21 +124,21 @@ const MovieDetail = () => {
           </div>
         </div>
       </section>
-      <form onSubmit={handleSubmit(handleBookTicket)} className="bg-sixth p-20 h-screen">
+      <form onSubmit={handleSubmit(handleBookTicket)} className="bg-sixth p-20 h-fit flex flex-col">
         <div className="flex-between pb-15">
           <h3 className="font-semibold">Book Tickets</h3>
           <Button type="submit" style="bg-third text-secondary font-extrabold">
             BOOK NOW
           </Button>
         </div>
-        <div className="flex-between gap-10">
+        <div className="flex lg:flex-row flex-col gap-10">
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Date</h5>
             <SelectOptions {...register("date")} type="date" id="date" name="date" />
           </div>
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Time</h5>
-            <SelectOptions {...register("time")} type="time" id="time" name="time" min="09:00" max="21:00" />
+            <SelectOptions {...register("time")} type="time" id="time" name="time" />
           </div>
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Location</h5>
@@ -147,7 +147,7 @@ const MovieDetail = () => {
         </div>
         <div>
           <h5 className="font-semibold pb-10 pt-15">Choose Cinema</h5>
-          <div className="flex-between ">
+          <div className="flex lg:flex-row flex-col gap-5">
             <SponsorCheckbox cinema="ebv.id" {...register("cinema")} />
             <SponsorCheckbox cinema="hiflix" {...register("cinema")} />
             <SponsorCheckbox cinema="CineOne21" {...register("cinema")} />

@@ -5,10 +5,16 @@ import { useSelector } from "react-redux";
 
 const LayoutAdmin = () => {
   const checkAdminLogin = useSelector((state) => state.auth.adminLogin);
+  const checkUserLogin = useSelector((state) => state.auth.currentUser);
 
-  if (checkAdminLogin === null) {
+  if(checkUserLogin !== null){
     toast.error("You must login as admin!");
-    return <Navigate to="/login" />
+    return <Navigate to="/" replace />
+  }
+
+  if (checkAdminLogin === null ) {
+    toast.error("You must login as admin!");
+    return <Navigate to="/login" replace />
   }
 
   return (

@@ -59,24 +59,26 @@ const UpcomingMovies = () => {
         </div>
       </div>
 
-      <div className="flex lg:flex-row flex-col lg:justify-between lg:gap-0 gap-10  pt-10 overflow-hidden lg:px-15 px-7">
-        <div className="scroll-genre flex gap-3 justify-center flex-wrap">
-          <Button style="bg-third text-primary ">ACTION</Button>
-          <Button style="border">ADVENTURE</Button>
-          <Button style="border">COMEDY</Button>
-          <Button style="border">SCIFI</Button>
-        </div>
-        <div className="lg:flex-between flex justify-center gap-5">
-          <button onClick={() => { scroll(-400) }} className="button-icon">
+      <div className="flex justify-between pt-10 overflow-hidden md:px-15 px-7">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => {scroll(-400)}}
+            className="button-icon"
+          >
             <FaArrowLeft className="md:text-lg text-sm" />
           </button>
+          <button
+            onClick={() => {scroll(400)}}
+            className="button-icon"
+          >
+            <FaArrowRight />
+          </button>
+        </div>
+        <div className="lg:flex-between flex justify-center gap-5">
           <Link to="/movies" className="flex items-center gap-5 bg-third text-primary font-bold rounded-full px-4 py-2">
             <span>VIEW ALL</span>
             <FaArrowRight className="md:text-lg text-sm" />
           </Link>
-          <button onClick={() => { scroll(400) }} className="button-icon">
-            <FaArrowRight />
-          </button>
         </div>
       </div>
     </section>

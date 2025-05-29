@@ -6,7 +6,6 @@ import Subscribe from "../components/Subscribe";
 import Button from "../components/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Dropdown from "../components/Dropdown";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 
@@ -23,6 +22,7 @@ const Movies = () => {
   const offset = (page - 1) * limit;
   const totalPages = Math.ceil(movies.length / limit);
   const [currentGenre, setCurrentGenre] = useState("");
+  const [currentSort, setCurrentSort] = useState("")
 
   useEffect(() => {
     async function fetchData() {
@@ -35,9 +35,9 @@ const Movies = () => {
         if (query) {
           const searchMovies = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`);
           dataMovies = searchMovies.data.results;
-        } else if (currentGenre) {
-          const genresFilter = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${currentGenre}`);
-          dataMovies = genresFilter.data.results;
+        } else if (currentGenre || currentSort || currentGenre && currentSort) {
+          const filtered = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${currentGenre}&sort_by=${currentSort}`);
+          dataMovies = filtered.data.results;
         } else {
           const requestMovies = await axios.get(`${requests.fetchNowPlaying}&page=${page}`);
           dataMovies = requestMovies.data.results;
@@ -58,18 +58,23 @@ const Movies = () => {
       }
     }
     fetchData();
-  }, [page, query, currentGenre]);
+  }, [page, query, currentGenre, currentSort]);
 
   const handleSearch = (data) => {
     const { query: searchQuery } = data;
     if (searchQuery) {
       setSearchParams({ query: searchQuery, page: "1", limit: String(limit) });
-    } else if(searchQuery === undefined || searchQuery === null || searchQuery === ""){
-      setMovies(movies)
+    } else if (searchQuery === undefined || searchQuery === null || searchQuery === "") {
+      setMovies(movies);
     } else {
       setSearchParams({ page: "1", limit: String(limit) });
     }
   };
+
+  function handleSort(e){
+    const value = e.target.value
+    setCurrentSort(value)
+  }
 
   function handleGenreFilter(value) {
     const { genre } = value;
@@ -102,7 +107,22 @@ const Movies = () => {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:justify-between gap-6 md:gap-10 mb-8 md:mb-12">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">Now Showing in Cinemas</h2>
-            <Dropdown />
+            <label className="bg-third text-primary font-extrabold flex items-center rounded-full px-5 py-3">
+              <select id="filter" name="filter" className="grow cursor-pointer outline-none" onChange={handleSort} >
+                <option className="text-secondary" value="popularity.desc" selected>
+                  POPULARITY
+                </option>
+                <option className="text-secondary" value="vote_average.desc">
+                  HIGHEST RATING
+                </option>
+                <option className="text-secondary" value="title.asc">
+                  Name (A-Z)
+                </option>
+                <option className="text-secondary" value="title.desc">
+                  Name (Z-A)
+                </option>
+              </select>
+            </label>
           </div>
           <div className="flex flex-col lg:flex-row gap-6 md:gap-8 mb-8 md:mb-12">
             <form onSubmit={handleSubmit(handleSearch)} className="w-full lg:w-1/2">
@@ -114,18 +134,18 @@ const Movies = () => {
                 <input type="text" className="outline-none border-0 ps-3 w-full grow text-secondary" placeholder="Search Movie..." defaultValue={query} {...register("query")} />
               </span>
             </form>
-            <div className="w-full lg:w-1/2">
+            <div className="w-full lg:w-3/4/3">
               <h6 className="font-bold mb-4 text-lg">Filters</h6>
               <form onSubmit={handleSubmit(handleGenreFilter)} className="flex flex-wrap gap-3">
-                {genres.slice(0, 8).map((genre, index) => (
-                  <label htmlFor={`${genre.id}`} className="border-white border-1 md:px-4 md:py-2 px-2 rounded-full font-bold cursor-pointer has-checked:bg-gray-700 has-checked:text-third has-checked:border-none">
+                {genres.map((genre, index) => (
+                  <label htmlFor={`${genre.id}`} className="border-white border-1 md:px-4 md:py-1 px-2 rounded-full font-bold cursor-pointer has-checked:bg-gray-700 has-checked:text-third has-checked:border-none flex-center">
                     <input className="appearance-none" id={`${genre.id}`} value={`${genre.id}`} {...register(`genre`)} type="checkbox" key={`list-genre-${index}`} />
-                    <span htmlFor="">{genre.name.toUpperCase()}</span>
+                    <span className="text-sm" >{genre.name.toUpperCase()}</span>
                   </label>
                 ))}
                 <Button type="submit" style="flex items-center gap-2 border bg-third text-primary text-gray-300">
-                  <IoFilterSharp className="text-xl" />
-                  <span>FILTER GENRES</span>
+                  <IoFilterSharp />
+                  <span className="text-sm" >FILTER GENRES</span>
                 </Button>
               </form>
             </div>
@@ -173,7 +193,7 @@ const Movies = () => {
             {Array.from({ length: totalPages }).map((_, index) => (
               <Button
                 key={index}
-                className="cursor-pointer font-bold size-10 rounded-md md:text-lg text-sm bg-third text-primary disabled:bg-gray-700 disabled:text-third"
+                className="cursor-pointer font-bold size-10 rounded-full md:text-lg text-sm bg-third text-primary disabled:bg-gray-700 disabled:text-third"
                 disabled={page === index + 1}
                 onClick={() =>
                   setSearchParams({

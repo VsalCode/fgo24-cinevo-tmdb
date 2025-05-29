@@ -125,9 +125,9 @@ const MovieDetail = () => {
         </div>
       </section>
       <form onSubmit={handleSubmit(handleBookTicket)} className="bg-sixth p-20 h-fit flex flex-col">
-        <div className="flex-between pb-15">
-          <h3 className="font-semibold">Book Tickets</h3>
-          <Button type="submit" style="bg-third text-secondary font-extrabold">
+        <div className="flex md:flex-row md:justify-between flex-col pb-15">
+          <h3 className="font-semibold md:mb-0 mb-5">Book Tickets</h3>
+          <Button type="submit" style="bg-third text-secondary font-extrabold md:py-0 py-2">
             BOOK NOW
           </Button>
         </div>

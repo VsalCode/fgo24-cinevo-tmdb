@@ -10,7 +10,15 @@ const ticket = createSlice({
   initialState,
   reducers: {
     bookTicketActions: (state, action) => {
-      state.historyBooking.push(action.payload)
+      const existingIndex = state.historyBooking.findIndex(
+        booking => booking.idTransaction === action.payload.idTransaction
+      );
+      
+      if (existingIndex === -1) {
+        state.historyBooking.push(action.payload);
+      } else {
+        state.historyBooking[existingIndex] = action.payload;
+      }
     },
     paymentAction:  (state, action) => {
       state.historyPayment.push(action.payload)

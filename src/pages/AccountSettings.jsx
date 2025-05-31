@@ -8,7 +8,6 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
 
-// Validation schema with conditional logic
 const schema = yup.object().shape({
   fullname: yup.string().optional(),
   email: yup.string().email("Invalid email format").optional(),

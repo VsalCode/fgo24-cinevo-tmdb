@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from "react-router-dom";
+import { Outlet, Navigate, ScrollRestoration } from "react-router-dom";
 import NavbarAdmin from "../components/NavbarAdmin";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
@@ -19,6 +19,7 @@ const LayoutAdmin = () => {
 
   return (
     <main className="bg-primary h-fit py-30 flex-center flex-col gap-7 sm:px-10 px-7">
+      <ScrollRestoration/>
       <Toaster />
       <NavbarAdmin />
       <Outlet />

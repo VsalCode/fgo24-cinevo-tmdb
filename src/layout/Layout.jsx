@@ -1,6 +1,6 @@
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration} from "react-router-dom";
 
 const Layout = () => {
 
@@ -8,8 +8,8 @@ const Layout = () => {
     <main className="bg-primary text-white">
       <Navbar />
       <Outlet />
-      <ScrollRestoration />
       <Footer />
+      <ScrollRestoration/>
     </main>
   );
 };

@@ -22,8 +22,8 @@ const Movies = () => {
   const offset = (page - 1) * limit;
   const totalPages = Math.ceil(movies.length / limit);
   const [currentGenre, setCurrentGenre] = useState("");
-  const [currentSort, setCurrentSort] = useState("")
-
+  const [currentSort, setCurrentSort] = useState("");
+  
   useEffect(() => {
     async function fetchData() {
       try {
@@ -35,7 +35,7 @@ const Movies = () => {
         if (query) {
           const searchMovies = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&query=${query}&page=${page}`);
           dataMovies = searchMovies.data.results;
-        } else if (currentGenre || currentSort || currentGenre && currentSort) {
+        } else if (currentGenre || currentSort || (currentGenre && currentSort)) {
           const filtered = await axios.get(`https://api.themoviedb.org/3/discover/movie?api_key=${API_KEY}&with_genres=${currentGenre}&sort_by=${currentSort}`);
           dataMovies = filtered.data.results;
         } else {
@@ -53,6 +53,8 @@ const Movies = () => {
         });
 
         setMovies(updatedMovies);
+
+
       } catch (error) {
         console.error(error);
       }
@@ -60,20 +62,19 @@ const Movies = () => {
     fetchData();
   }, [page, query, currentGenre, currentSort]);
 
+
   const handleSearch = (data) => {
     const { query: searchQuery } = data;
     if (searchQuery) {
       setSearchParams({ query: searchQuery, page: "1", limit: String(limit) });
-    } else if (searchQuery === undefined || searchQuery === null || searchQuery === "") {
-      setMovies(movies);
     } else {
       setSearchParams({ page: "1", limit: String(limit) });
     }
   };
 
-  function handleSort(e){
-    const value = e.target.value
-    setCurrentSort(value)
+  function handleSort(e) {
+    const value = e.target.value;
+    setCurrentSort(value);
   }
 
   function handleGenreFilter(value) {
@@ -91,7 +92,7 @@ const Movies = () => {
 
   return (
     <>
-      <section className="pt-16 md:pt-20 lg:pt-24 flex justify-center text-white bg-primary">
+      <section className="relative pt-16 md:pt-20 lg:pt-24 flex justify-center text-white bg-primary">
         <div className="relative w-full max-w-7xl mx-4 sm:mx-6 lg:mx-8">
           <div className="bg-gradient-to-b from-transparent to-gray-900/80 absolute z-10 rounded-3xl w-full h-full flex flex-col items-start gap-4 sm:gap-6 justify-end p-6 sm:p-8 lg:p-12">
             <div className="chip bg-third text-white px-3 py-1 rounded-full text-sm">LIST MOVIE OF THE WEEK</div>
@@ -108,7 +109,7 @@ const Movies = () => {
           <div className="flex flex-col md:flex-row md:justify-between gap-6 md:gap-10 mb-8 md:mb-12">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold">Now Showing in Cinemas</h2>
             <label className="bg-third text-primary font-extrabold flex items-center rounded-full px-5 py-3">
-              <select id="filter" name="filter" className="grow cursor-pointer outline-none" onChange={handleSort} >
+              <select id="filter" name="filter" className="grow cursor-pointer outline-none" onChange={handleSort}>
                 <option className="text-secondary" value="popularity.desc" selected>
                   POPULARITY
                 </option>
@@ -140,23 +141,23 @@ const Movies = () => {
                 {genres.map((genre, index) => (
                   <label htmlFor={`${genre.id}`} className="border-white border-1 md:px-4 md:py-1 px-2 rounded-full font-bold cursor-pointer has-checked:bg-gray-700 has-checked:text-third has-checked:border-none flex-center">
                     <input className="appearance-none" id={`${genre.id}`} value={`${genre.id}`} {...register(`genre`)} type="checkbox" key={`list-genre-${index}`} />
-                    <span className="text-sm" >{genre.name.toUpperCase()}</span>
+                    <span className="text-sm">{genre.name.toUpperCase()}</span>
                   </label>
                 ))}
                 <Button type="submit" style="flex items-center gap-2 border bg-third text-primary text-gray-300">
                   <IoFilterSharp />
-                  <span className="text-sm" >FILTER GENRES</span>
+                  <span className="text-sm">FILTER GENRES</span>
                 </Button>
               </form>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-between">
+          <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-between">
             {movies.slice(offset, limit * page).length > 0 ? (
               movies.slice(offset, limit * page).map((item) => (
                 <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-full max-w-xs transition-transform duration-300">
-                  <div className="relative">
+                  <div className="relative transition-transform duration-300 hover:scale-102">
                     {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-lg px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
-                    <img className="rounded-xl object-cover w-full h-80 md:h-96" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />
+                    <img className="rounded-xl object-cover w-full h-80 md:h-96 " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />
                   </div>
                   <div className="flex flex-col pt-4 gap-3 text-center">
                     <h6 className="font-semibold text-base md:text-lg">{item.title || item.name}</h6>

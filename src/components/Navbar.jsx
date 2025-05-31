@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { useState } from "react";
+import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
@@ -9,16 +9,22 @@ import toast, { Toaster } from "react-hot-toast";
 
 const Navbar = () => {
   const [showHamburger, setShowHamburger] = useState(false);
-  const currentUser = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
+  const [currentUser, setCurrentUser] = useState(null)
+  const userLogin = useSelector((state) => state.auth.currentUser);
+  const checkDataUsers = useSelector((state) => state.users.users);
 
-  function HandleHamburger() {
-    if (showHamburger === true) {
-      setShowHamburger(false);
-    } else if (showHamburger === false) {
-      setShowHamburger(true);
-    }
+  React.useEffect(() => {
+  if (userLogin !== null) {
+    const filtered = checkDataUsers.filter(
+      (e) => e.id === userLogin.id && userLogin.email === e.email
+    )[0]
+    setCurrentUser(filtered);
+  } else {
+    setCurrentUser(null);
   }
+}, [userLogin, checkDataUsers]);
+
 
   function handleLogout() {
     toast.success("Logout Success!");
@@ -37,16 +43,7 @@ const Navbar = () => {
           <Link to="/movies">MOVIE</Link>
           <Link to="/movies">BUY TICKET</Link>
         </div>
-        {currentUser === null ? (
-          <div className="md:flex md:gap-3 hidden">
-            <Link to="/login" className="universal-button border">
-              LOGIN
-            </Link>
-            <Link to="/signup" className="universal-button bg-third text-primary">
-              SIGN UP
-            </Link>
-          </div>
-        ) : (
+        {currentUser ? (
           <div className="md:flex md:items-center md:gap-3 hidden">
             <div className="bg-[#EAEFEF] size-9 text-primary flex items-center justify-center rounded-full font-bold">
               {currentUser.fullname ? currentUser.fullname.split("").slice(0, 2).join("").toUpperCase() : currentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase()}
@@ -61,9 +58,23 @@ const Navbar = () => {
               <MdLogout className="text-2xl " />
             </button>
           </div>
+        ) : (
+          <div className="md:flex md:gap-3 hidden">
+            <Link to="/login" className="universal-button border">
+              LOGIN
+            </Link>
+            <Link to="/signup" className="universal-button bg-third text-primary">
+              SIGN UP
+            </Link>
+          </div>
         )}
 
-        <button className="cursor-pointer md:hidden text-2xl" onClick={HandleHamburger}>
+        <button
+          className="cursor-pointer md:hidden text-2xl"
+          onClick={() => {
+            setShowHamburger(!showHamburger);
+          }}
+        >
           {showHamburger === false ? <GiHamburgerMenu /> : <IoClose />}
         </button>
       </div>
@@ -72,18 +83,9 @@ const Navbar = () => {
           <Link to="/">HOME</Link>
           <Link to="/movies">MOVIE</Link>
           <Link to="/movies">BUY TICKET</Link>
-          {currentUser === null ? (
-            <div className="flex-between gap-3">
-              <Link to="/login" className="grow universal-button border text-base">
-                LOGIN
-              </Link>
-              <Link to="/signup" className="grow universal-button bg-third text-base">
-                SIGN UP
-              </Link>
-            </div>
-          ) : (
+          {currentUser ? (
             <div className="flex-between gap-3 bg-primary p-5 rounded-2xl">
-              <div className="flex items-center gap-4" >
+              <div className="flex items-center gap-4">
                 <div className="bg-[#EAEFEF] size-9 text-primary flex items-center justify-center rounded-full font-bold">
                   {currentUser.fullname ? currentUser.fullname.split("").slice(0, 2).join("").toUpperCase() : currentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase()}
                 </div>
@@ -99,6 +101,15 @@ const Navbar = () => {
                   <MdLogout className="text-2xl " />
                 </button>
               </div>
+            </div>  
+          ) : (
+            <div className="flex-between gap-3">
+              <Link to="/login" className="grow universal-button border text-base">
+                LOGIN
+              </Link>
+              <Link to="/signup" className="grow universal-button bg-third text-base">
+                SIGN UP
+              </Link>
             </div>
           )}
         </div>

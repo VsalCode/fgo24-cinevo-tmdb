@@ -4,10 +4,21 @@ import { Toaster } from "react-hot-toast";
 import { SlOptions } from "react-icons/sl";
 import { BsBookmarkStarFill } from "react-icons/bs";
 import { Outlet } from "react-router-dom";
+import React from "react";
 
 const LayoutProfile = () => {
-  const checkCurrentUser = useSelector((state) => state.auth.currentUser);
+  const [currentUser, setCurrentUser] = React.useState(null);
+  const userLogin = useSelector((state) => state.auth.currentUser);
+  const checkDataUsers = useSelector((state) => state.users.users);
 
+  React.useEffect(() => {
+    if (userLogin !== null) {
+      const filtered = checkDataUsers.filter((e) => e.id === userLogin.id && userLogin.email === e.email)[0];
+      setCurrentUser(filtered);
+    } else {
+      setCurrentUser(null);
+    }
+  }, [userLogin, checkDataUsers]);
 
   return (
     <main className="bg-primary h-fit text-white">
@@ -21,9 +32,9 @@ const LayoutProfile = () => {
           </div>
           <div className="flex-center flex-col">
             <div className="bg-[#EAEFEF] size-40 text-5xl text-primary flex items-center justify-center rounded-full font-bold">
-              {checkCurrentUser?.email ? checkCurrentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase() : "U"}
+              {currentUser.fullname ? currentUser.fullname.split("").splice(0, 2).join("").toUpperCase() : currentUser.email?.split("@").splice(0, 1).join("").split("").slice(0, 2).join("").toUpperCase()}
             </div>
-            <p className="pt-7 pb-3 text-3xl font-semibold">{checkCurrentUser?.email ? checkCurrentUser.email?.split("@").splice(0, 1) : "Unknown"}</p>
+            <p className="pt-7 pb-3 text-3xl font-semibold">{currentUser.fullname ? currentUser.fullname : currentUser.email?.split("@").splice(0, 1)}</p>
             <p className="text-xl text-third italic">Moviegoers</p>
           </div>
           <div>

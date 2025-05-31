@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../redux/reducer/auth";
+import { addUser } from "../redux/reducer/users";
 import toast, { Toaster } from "react-hot-toast";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -37,7 +37,7 @@ const SignUp = () => {
       agreeToTerms: false,
     },
   });
-  let dataRegistUsers = useSelector((state) => state.auth.users);
+  let dataRegistUsers = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -60,7 +60,7 @@ const SignUp = () => {
         id: nanoid(),
         email: dataRegister.email,
         password: window.btoa(dataRegister.password),
-        role: 'user',
+        role: "user",
       };
       // console.log(formatAddUser);
       dispatch(addUser(formatAddUser));
@@ -91,7 +91,7 @@ const SignUp = () => {
             <label htmlFor="password">Password</label>
             <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg w-full">
               <TbLockPassword className="sm:text-xl text-base" />
-              <input {...register("password")} type={showPassword ? "text" : "password"} className="border-0 outline-none grow Knopftext-base text-sm" name="password" placeholder="Enter your password"  id="password" />
+              <input {...register("password")} type={showPassword ? "text" : "password"} className="border-0 outline-none grow Knopftext-base text-sm" name="password" placeholder="Enter your password" id="password" />
               <button className="cursor-pointer text-xl" onClick={handleShowPassword}>
                 {showPassword ? <LuEyeClosed className="sm:text-xl text-base" /> : <LuEye className="sm:text-xl text-base" />}
               </button>

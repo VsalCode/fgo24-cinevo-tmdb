@@ -28,15 +28,9 @@ const Login = () => {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  const dataUsers = useSelector((state) => state.auth.users);
+  const dataUsers = useSelector((state) => state.users.users);
   const dispatch = useDispatch();
   const nav = useNavigate();
-
-  function handleShowPassword(e) {
-    e.preventDefault();
-
-    setShowPassword(!showPassword);
-  }
 
   function handleLogin(dataLogin) {
     const { email, password } = dataLogin;
@@ -89,7 +83,7 @@ const Login = () => {
             <span className="flex items-center gap-4 border sm:px-5 px-2 py-3 rounded-lg w-full">
               <TbLockPassword className="sm:text-xl text-base" />
               <input {...register("password")} type={showPassword === false ? "password" : "text"} className="border-0 outline-none grow sm:text-base text-sm" name="password" placeholder="Enter your password"/>
-              <button type="button" className="cursor-pointer text-xl" onClick={handleShowPassword}>
+              <button type="button" className="cursor-pointer text-xl" onClick={() => { setShowPassword(!showPassword) }}>
                 {showPassword === false ? <LuEye className="sm:text-xl text-base" /> : <LuEyeClosed className="sm:text-xl text-base" />}
               </button>
             </span>

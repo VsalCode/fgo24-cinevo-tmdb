@@ -8,7 +8,9 @@ import { IoSearch } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import { bookTicketActions } from "../redux/reducer/ticket";
 import { nanoid } from "@reduxjs/toolkit";
-// const API_KEY = import.meta.env.VITE_TMDB_API_KEY
+import fallback from '../assets/images/fallback.png'
+import fallbackBackdrop from '../assets/images/fallback_backdrop.png'
+
 
 const MovieDetail = () => {
   const nav = useNavigate();
@@ -78,12 +80,12 @@ const MovieDetail = () => {
         <Toaster />
         <div className="flex justify-center relative">
           <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] h-full w-full rounded-[40px] absolute z-40"></div>
-          <img className="h-[520px] object-cover w-full rounded-[40px] relative" src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`} alt="backdrop_path" />
+          <img className="h-[520px] object-cover w-full rounded-[40px] relative" src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`} onError={(e) => { e.currentTarget.src = fallbackBackdrop } } alt="backdrop_path" />
         </div>
 
         <div className="flex lg:flex-row lg:justify-between flex-col items-center gap-15 px-20 mt-[-220px] z-50">
           <div className="flex-center lg:w-[25vw]">
-            <img className="rounded-2xl h-100 w-250 object-contain" src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`} alt="Poster_Movie" />
+            <img className="rounded-2xl h-100 w-250 object-contain" src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`} alt="Poster_Movie" onError={(e) => { e.currentTarget.src = fallback } } />
           </div>
           <div className="flex flex-col gap-15 py-2 h-fit text-white w-[75vw]">
             <div id="movie-overview" className="flex flex-col items-start justify-center gap-3">
@@ -117,7 +119,7 @@ const MovieDetail = () => {
               <div>
                 <div>
                   <p className="text-third">Cast</p>
-                  <p className=" text-sm">{data.credits?.cast?.map((cast) => cast.name).join(" , ")}</p>
+                  <p className=" text-sm">{data.credits?.cast ? data.credits?.cast?.map((cast) => cast.name).join(" , ") : "-" }</p>
                 </div>
               </div>
             </div>

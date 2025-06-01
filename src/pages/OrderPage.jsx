@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bookTicketActions } from "../redux/reducer/ticket";
 import toast, { Toaster } from "react-hot-toast";
+import fallback from '../assets/images/fallback.png'
 
 const OrderPage = () => {
   const nav = useNavigate();
@@ -51,9 +52,9 @@ const OrderPage = () => {
   }
 
   return (
-    <section className="bg-primary text-white flex flex-col items-center gap-10 py-30">
+    <section className="bg-primary text-white flex flex-col items-center gap-10 sm:py-30 py-20">
       <Toaster/>
-      <section className="flex items-center">
+      <section className="sm:flex items-center hidden">
         <div className="flex-col flex-center gap-3">
           <div className="bg-green-700 text-white font-semibold rounded-full w-9 h-9 flex-center">
             <FaCheck />
@@ -72,15 +73,15 @@ const OrderPage = () => {
         </div>
       </section>
       <section className="flex lg:flex-row flex-col gap-5 sm:mx-7 mx-5 sm:bg-primary ">
-        <aside className="w-full sm:max-w-[700px] max-w-[500px] h-fit rounded-xl bg-secondary shadow-xl p-4">
-          <div className="h-[143px] w-full flex-between p-3 gap-7">
+        <aside className="sm:min-w-[600px] w-full h-fit rounded-xl sm:bg-secondary bg-primary shadow-xl p-4">
+          <div className="sm:h-[143px] h-fit w-full flex sm:flex-row sm:justify-between-between sm:items-center flex-col p-3 gap-7">
             <div className="w-[184px] h-full object-cover overflow-hidden rounded-lg">
-              <img src={`https://image.tmdb.org/t/p/w500${filtered.poster}`} alt="poster_movie" />
+              <img src={`https://image.tmdb.org/t/p/w500${filtered.poster}`} onError={(e) => { e.currentTarget.src = fallback } } alt="poster_movie" />
             </div>
             <div className="flex flex-col items-start justify-center gap-4">
               <p className="text-xl font-semibold">{filtered.title}</p>
               <div className="flex gap-2">
-                {filtered.genres?.map((item) => 
+                {filtered.genres?.slice(0, 2).map((item) => 
                   <div key={`list-genre-${item.id}`} className="genre border">
                     {item.name}
                   </div>
@@ -153,7 +154,7 @@ const OrderPage = () => {
           </div>
         </aside>
         <aside className=" md:min-w-[330px] w-full h-[500px] flex flex-col gap-5">
-          <div className="bg-secondary p-5 items-center rounded-lg">
+          <div className="sm:bg-secondary bg-primary p-5 items-center rounded-lg">
             <div className="text-center text-2xl mb-8 font-bold text-third">
               <p>
                 <span>{filtered.cinema}</span>

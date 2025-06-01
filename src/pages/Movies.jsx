@@ -8,6 +8,7 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { useForm } from "react-hook-form";
+import fallback from '../assets/images//fallback.png'
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -157,7 +158,7 @@ const Movies = () => {
                 <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-full max-w-xs transition-transform duration-300">
                   <div className="relative transition-transform duration-300 hover:scale-102">
                     {item.vote_average > 7 && <div className="absolute font-semibold text-primary bg-third shadow-lg px-3 py-1 rounded-br-xl rounded-tl-lg">Recommended</div>}
-                    <img className="rounded-xl object-cover w-full h-80 md:h-96 " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} />
+                    <img className="rounded-xl object-cover w-full h-80 md:h-96 " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} onError={(e) => { e.currentTarget.src = fallback } } />
                   </div>
                   <div className="flex flex-col pt-4 gap-3 text-center">
                     <h6 className="font-semibold text-base md:text-lg">{item.title || item.name}</h6>

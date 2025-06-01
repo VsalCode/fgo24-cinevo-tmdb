@@ -1,5 +1,6 @@
 import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import salesChart from "../assets/images/sales-chart.png"
 
 const DashboardAdmin = () => {
   return (
@@ -18,7 +19,7 @@ const DashboardAdmin = () => {
           </button>
         </div>
         <p className="text-xl">Avengers: End Game</p>
-        <img className="rounded-2xl" src="/src/assets/images/sales-chart.png" alt="sales-chart" />
+        <img className="rounded-2xl" src={salesChart} alt="sales-chart" />
       </section>
       <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[70svw] w-full h-fit p-8">
         <p className="text-3xl font-medium">Ticket Sales</p>
@@ -34,7 +35,7 @@ const DashboardAdmin = () => {
           </button>
         </div>
         <p className="text-xl">Adventure, Purwokerto</p>
-        <img className="rounded-2xl" src="/src/assets/images/sales-chart.png" alt="sales-chart" />
+        <img className="rounded-2xl" src={salesChart} alt="sales-chart" />
       </section>
     </>
   );

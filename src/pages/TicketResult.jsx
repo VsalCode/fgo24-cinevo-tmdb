@@ -3,6 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { GiTicket } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+import qr from "../assets/images/QR.svg"
 
 const TicketResult = () => {
   const { queryId } = useParams();
@@ -20,7 +21,7 @@ const TicketResult = () => {
               <GiTicket className="text-xl" />
               CINEVO.id
             </p>
-            <img src="/src/assets/images/QR.svg" alt="" />
+            <img src={qr} alt="" />
             <p>
               Total : <span className="bg-third text-secondary font-bold rounded-xl px-2 py-1">$ {filtered.total}</span>
             </p>

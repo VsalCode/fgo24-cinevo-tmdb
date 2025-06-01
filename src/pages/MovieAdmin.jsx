@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import { Link } from "react-router-dom";
+import placeholder from "../assets/images/thumbnail_movie_admin.png"
 
 const MovieAdmin = () => {
   return (
@@ -35,7 +36,7 @@ const MovieAdmin = () => {
             <tr className="text-center" >
               <td>1.</td>
               <td className="flex-center py-4">
-                <img className="size-13" src="/src/assets/images/thumbnail_movie_admin.png" alt="" />
+                <img className="size-13" src={placeholder} alt="" />
               </td>
               <td><p>Spiderman HomeComing</p></td>
               <td><p>Action, Adventure</p></td>
@@ -50,7 +51,7 @@ const MovieAdmin = () => {
             <tr className="text-center" >
               <td>2.</td>
               <td className="flex-center py-4">
-                <img className="size-13" src="/src/assets/images/thumbnail_movie_admin.png" alt="" />
+                <img className="size-13" src={placeholder} alt="" />
               </td>
               <td><p>Spiderman Not Coming</p></td>
               <td><p>Action, Adventure</p></td>
@@ -65,7 +66,7 @@ const MovieAdmin = () => {
             <tr className="text-center" >
               <td>3.</td>
               <td className="flex-center py-4">
-                <img className="size-13" src="/src/assets/images/thumbnail_movie_admin.png" alt="" />
+                <img className="size-13" src={placeholder} alt="" />
               </td>
               <td><p>Spiderman On The Way</p></td>
               <td><p>Action, Adventure</p></td>

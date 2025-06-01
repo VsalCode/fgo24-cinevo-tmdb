@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
 import { useForm } from "react-hook-form";
 import fallback from '../assets/images//fallback.png'
+import banner from "../assets/images/banner-movie.png"
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
@@ -102,7 +103,7 @@ const Movies = () => {
             </h3>
             <p className="text-sm sm:text-base font-medium">Sign up and get tickets with exclusive discounts</p>
           </div>
-          <img className="w-full rounded-3xl object-cover h-64 sm:h-80 lg:h-96" src="/src/assets/images/banner-movie.png" alt="Movie Banner" />
+          <img className="w-full rounded-3xl object-cover h-64 sm:h-80 lg:h-96" src={banner} alt="Movie Banner" />
         </div>
       </section>
       <section className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 lg:px-8 text-white bg-primary">

@@ -58,7 +58,7 @@ const NowShowingMovies = () => {
       </div>
       <div className="scroll-x overflow-x-auto scroll-smooth flex gap-5 justify-items-center py-10 " ref={ref}>
         {movies.map((item) => (
-          <div key={item.id} className="flex flex-col justify-between w-500">
+          <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-500 hover:scale-102 transition-transform duration-300">
             <div className="relative lg:w-70 w-50">
               {item.vote_average > 7 && <div className="absolute text-primary bg-third font-bold px-2 py-1 rounded-b-lg ">Recommended</div>}
               <img className="rounded-xl object-cover " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
@@ -83,7 +83,7 @@ const NowShowingMovies = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
       <div className="flex-center mt-7">

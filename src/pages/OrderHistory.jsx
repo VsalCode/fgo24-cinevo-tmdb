@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import qr from "../assets/images/QR.svg"
 
 const HistoryItem = ({ item, index }) => {
   const [showDetails, setShowDetails] = useState(false);
@@ -34,7 +35,7 @@ const HistoryItem = ({ item, index }) => {
           <p className="font-semibold text-xl text-third pb-3">Ticket Information</p>
           <div className="flex gap-5">
             <div className="bg-white">
-              <img src="/src/assets/images/QR.svg" alt="" />
+              <img src={qr} alt="" />
             </div>
             <div className="flex flex-col justify-center gap-2">
               <p>

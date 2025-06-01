@@ -21,10 +21,20 @@ const MovieDetail = () => {
     },
   });
   const dispatch = useDispatch();
+  const [currentUser, setCurrentUser] = useState(null)
   const userLogin = useSelector((state) => state.auth.currentUser);
   const checkDataUsers = useSelector((state) => state.users.users);
 
-  const currentUser = checkDataUsers.filter((e) => e.id === userLogin.id && userLogin.email === e.email)[0];
+  useEffect(() => {
+  if (userLogin !== null) {
+    const filtered = checkDataUsers.filter(
+      (e) => e.id === userLogin.id && userLogin.email === e.email
+    )[0]
+    setCurrentUser(filtered);
+  } else {
+    setCurrentUser(null);
+  }
+}, [userLogin, checkDataUsers]);
 
   function handleBookTicket(value) {
     const { cinema, date, time } = value;
@@ -102,7 +112,7 @@ const MovieDetail = () => {
             <div id="movie-overview" className="flex flex-col items-start justify-center gap-3">
               <p className="font-bold md:text-3xl text-2xl bg-third text-primary rounded-sm px-5 py-1">{data.title}</p>
               <p className="text-base font-medium">{data.overview}</p>
-              <div id="movie-information" className="flex gap-3">
+              <div id="movie-information" className="flex sm:flex-row flex-col gap-3">
                 {data.genres &&
                   data.genres?.map((genre) => (
                     <div key={genre.id} className="text-third border-2 font-medium px-3 py-1 rounded-full">

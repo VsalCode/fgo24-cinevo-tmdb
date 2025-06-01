@@ -5,6 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { paymentAction } from "../redux/reducer/ticket";
 import toast, { Toaster } from "react-hot-toast";
+import bca from "../assets/images/bca.svg";
+import bri from "../assets/images/bri.svg";
+import dana from "../assets/images/dana.svg";
+import googlePay from "../assets/images/googlePay.svg";
+import gopay from "../assets/images/gopay.svg";
+import ovo from "../assets/images/ovo.svg";
+import paypal from "../assets/images/paypal.svg";
+import visa from "../assets/images/visa.svg";
 
 const Payment = () => {
   const nav = useNavigate();
@@ -13,22 +21,24 @@ const Payment = () => {
   const { queryId } = useParams();
   const [showModal, setShowModal] = useState(false);
   const { register, handleSubmit } = useForm();
-  const currentUser = useSelector((state) => state.auth.currentUser);
+  const userLogin = useSelector((state) => state.auth.currentUser);
+  const checkDataUsers = useSelector((state) => state.users.users);
   const dataBookingTicket = useSelector((state) => state.ticket.historyBooking);
+  const currentUser = checkDataUsers.filter((e) => e.id === userLogin.id && userLogin.email === e.email)[0];
   const filtered = dataBookingTicket?.filter((e) => e?.idTransaction === queryId && e.seat && e.total)[0];
 
   function handlePayment(value) {
     const { email, fullname, paymentMethod, phone } = value;
 
     if (paymentMethod === null) {
-      toast.error("You must choose one of Payment Method!")
-      return
+      toast.error("You must choose one of Payment Method!");
+      return;
     }
 
-    if(phone === ""){
-      toast.error("You must Input Your Phone Number!")
-      return
-    }    
+    if (phone === "") {
+      toast.error("You must Input Your Phone Number!");
+      return;
+    }
 
     const dataPayment = {
       ...filtered,
@@ -57,7 +67,7 @@ const Payment = () => {
     <>
       {showModal === true && (
         <section className="z-100 position fixed w-full h-full TOP-0 bg-[#00000099] flex-center">
-          <Toaster/>
+          <Toaster />
           <div className="bg-white h-fit lg:w-[40%] sm:w-[70%] w-[90%] sm:text-sm text-[10px] rounded-4xl text-primary flex flex-col p-7">
             <p className="sm:text-2xl text-sm text-center font-semibold mb-5">Payment Info</p>
             <div className="text-lg grid grid-cols-2 mb-8  sm:text-sm text-[12px]">
@@ -69,7 +79,7 @@ const Payment = () => {
               <span className="text-end font-bold">${filtered.total}</span>
             </div>
             <p>
-              Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on {(tanggal + 2) + '-' + (bulan + 1) + '-' + tahun}</span>. If the bill has not been paid by the specified time, it will be forfeited
+              Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on {tanggal + 2 + "-" + (bulan + 1) + "-" + tahun}</span>. If the bill has not been paid by the specified time, it will be forfeited
             </p>
             <button onClick={confirmPayment} type="submit" className="bg-third text-secondary font-bold w-full py-4 rounded-md cursor-pointer mt-5">
               Pay Your Order
@@ -113,17 +123,17 @@ const Payment = () => {
             <p className="text-4xl font-semibold text-star text-third">People Information</p>
             <InputPayment label="Fullname" type="text" defaultValue={currentUser.fullname ? currentUser.fullname : currentUser?.email && currentUser.email?.split("@").splice(0, 1)} {...register("fullname")} />
             <InputPayment label="Email" type="email" defaultValue={currentUser.email} {...register("email")} />
-            <InputPayment label="Phone Number" type="number" defaultValue={currentUser?.phone} placeholder="Input your phone number.." {...register("phone")} />
+            <InputPayment label="Phone Number" type="number" defaultValue={currentUser.phone} placeholder="Input your phone number.." {...register("phone")} />
             <p className="text-4xl font-semibold text-star text-third">Payment Method</p>
             <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mt-10 relative">
-              <PaymentKey srcImage="/src/assets/images/dana.svg" value="dana" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/googlePay.svg" value="googlePay" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/bca.svg" value="bca" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/ovo.svg" value="ovo" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/paypal.svg" value="paypal" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/gopay.svg" value="gopay" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/visa.svg" value="visa" {...register("paymentMethod")} />
-              <PaymentKey srcImage="/src/assets/images/bri.svg" value="bri" {...register("paymentMethod")} />
+              <PaymentKey srcImage={dana} value="dana" {...register("paymentMethod")} />
+              <PaymentKey srcImage={googlePay} value="googlePay" {...register("paymentMethod")} />
+              <PaymentKey srcImage={bca} value="bca" {...register("paymentMethod")} />
+              <PaymentKey srcImage={ovo} value="ovo" {...register("paymentMethod")} />
+              <PaymentKey srcImage={paypal} value="paypal" {...register("paymentMethod")} />
+              <PaymentKey srcImage={gopay} value="gopay" {...register("paymentMethod")} />
+              <PaymentKey srcImage={visa} value="visa" {...register("paymentMethod")} />
+              <PaymentKey srcImage={bri} value="bri" {...register("paymentMethod")} />
             </div>
             <button type="submit" className="bg-third text-primary font-bold w-full py-4 rounded-md cursor-pointer mt-10">
               Pay Your Order

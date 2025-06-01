@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MdLogout } from "react-icons/md";
 import { userLogout } from "../redux/reducer/auth";
 import toast, { Toaster } from "react-hot-toast";
+import logo from '../assets/icon/logo.png'
 
 const Navbar = () => {
   const [showHamburger, setShowHamburger] = useState(false);
@@ -36,7 +37,7 @@ const Navbar = () => {
       <Toaster />
       <div className="flex-between">
         <div>
-          <img className="md:w-20 w-17" src="/src/assets/icon/logo.png" alt="logo" />
+          <img className="md:w-20 w-17" src={logo} alt="logo" />
         </div>
         <div className="lg:absolute lg:left-1/2 lg:transform lg:-translate-x-1/2 md:flex md:gap-7 md:font-sans md:font-semibold md:text-lg hidden">
           <Link to="/">HOME</Link>

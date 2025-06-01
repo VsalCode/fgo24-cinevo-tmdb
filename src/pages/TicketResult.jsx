@@ -11,7 +11,7 @@ const TicketResult = () => {
 
   return (
     <section className="bg-primary text-white h-fit flex flex-col items-center py-35 gap-7 ">
-      <div className="w-fit mx-5 flex flex-col items-center gap-7">
+      <div className="w-fit sm:mx-5 mx-0 flex flex-col items-center gap-7">
       <Toaster/>
         <p className="text-3xl font-semibold text-third text-center">Thankyou For Purchasing</p>
         <div className="bg-white shadow-2xl h-fit flex flex-col gap-7 px-5 py-7">
@@ -25,7 +25,7 @@ const TicketResult = () => {
               Total : <span className="bg-third text-secondary font-bold rounded-xl px-2 py-1">$ {filtered.total}</span>
             </p>
           </div>
-          <div className=" grid grid-cols-3 gap-7 text-primary  ">
+          <div className=" grid sm:grid-cols-3  gap-7 text-primary  ">
             <div className="flex flex-col gap-10">
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Movie</p>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
@@ -23,11 +23,8 @@ const HistoryItem = ({ item, index }) => {
           <button className="text-green bg-[#00BA8833] w-full py-1">Paid</button>
         </div>
         <div className="flex-1 flex justify-end">
-          <button
-            onClick={() => setShowDetails(!showDetails)}
-            className="cursor-pointer flex-between"
-          >
-            <span>Show Details</span> 
+          <button onClick={() => setShowDetails(!showDetails)} className="cursor-pointer flex-between">
+            <span>Show Details</span>
             {showDetails ? <RiArrowDropDownLine className="text-3xl" /> : <RiArrowDropUpLine className="text-3xl" />}
           </button>
         </div>
@@ -69,7 +66,9 @@ const HistoryItem = ({ item, index }) => {
 };
 
 const OrderHistory = () => {
+  const userLogin = useSelector((state) => state.auth.currentUser);
   const dataHistoryPayment = useSelector((state) => state.ticket.historyPayment);
+  const filtered = dataHistoryPayment.filter((e) => e.userId === userLogin.id);
 
   return (
     <>
@@ -81,11 +80,18 @@ const OrderHistory = () => {
           Order History
         </Link>
       </section>
-      <section className="flex flex-col-reverse gap-7">
-        {dataHistoryPayment.map((item, index) => (
+      {filtered.length !== 0 ? (
+        <section className="flex flex-col-reverse gap-7">
+        {filtered.map((item, index) => (
           <HistoryItem key={`history-payment-${index}`} item={item} index={index} />
         ))}
       </section>
+      ) : (
+        <section className="text-center py-10">
+          <p>You do not have a ticket booking history yet</p>
+        </section>
+      )}
+      
     </>
   );
 };

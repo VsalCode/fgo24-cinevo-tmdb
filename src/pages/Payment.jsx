@@ -4,10 +4,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { paymentAction } from "../redux/reducer/ticket";
+import toast, { Toaster } from "react-hot-toast";
 
 const Payment = () => {
   const nav = useNavigate();
-  const [dataPayment, setDataPayment] = useState({})
+  const [dataPayment, setDataPayment] = useState({});
   const dispatch = useDispatch();
   const { queryId } = useParams();
   const [showModal, setShowModal] = useState(false);
@@ -16,9 +17,18 @@ const Payment = () => {
   const dataBookingTicket = useSelector((state) => state.ticket.historyBooking);
   const filtered = dataBookingTicket?.filter((e) => e?.idTransaction === queryId && e.seat && e.total)[0];
 
-
   function handlePayment(value) {
     const { email, fullname, paymentMethod, phone } = value;
+
+    if (paymentMethod === null) {
+      toast.error("You must choose one of Payment Method!")
+      return
+    }
+
+    if(phone === ""){
+      toast.error("You must Input Your Phone Number!")
+      return
+    }    
 
     const dataPayment = {
       ...filtered,
@@ -26,22 +36,28 @@ const Payment = () => {
       email: email,
       paymentMethod: paymentMethod,
       phone: phone,
-      status: 'paid'
+      status: "paid",
     };
 
-    setDataPayment(dataPayment)
+    setDataPayment(dataPayment);
     setShowModal(true);
   }
 
   function confirmPayment() {
     dispatch(paymentAction(dataPayment));
-    nav(`/ticket/${queryId}`, {replace: true});
+    nav(`/ticket/${queryId}`, { replace: true });
   }
+
+  const date = new Date();
+  const tahun = date.getFullYear();
+  const bulan = date.getMonth();
+  const tanggal = date.getDate();
 
   return (
     <>
       {showModal === true && (
         <section className="z-100 position fixed w-full h-full TOP-0 bg-[#00000099] flex-center">
+          <Toaster/>
           <div className="bg-white h-fit lg:w-[40%] sm:w-[70%] w-[90%] sm:text-sm text-[10px] rounded-4xl text-primary flex flex-col p-7">
             <p className="sm:text-2xl text-sm text-center font-semibold mb-5">Payment Info</p>
             <div className="text-lg grid grid-cols-2 mb-8  sm:text-sm text-[12px]">
@@ -50,10 +66,10 @@ const Payment = () => {
             </div>
             <div className="text-lg grid grid-cols-2 mb-8 sm:text-sm text-[12px]">
               <span className="text-start text-[#8692A6]">Total Payment: </span>
-              <span className="text-end font-bold">$30</span>
+              <span className="text-end font-bold">${filtered.total}</span>
             </div>
             <p>
-              Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on June 23, 2023</span>. If the bill has not been paid by the specified time, it will be forfeited
+              Pay this payment bill before it is due, <span className="text-[#a51414] font-bold">on {(tanggal + 2) + '-' + (bulan + 1) + '-' + tahun}</span>. If the bill has not been paid by the specified time, it will be forfeited
             </p>
             <button onClick={confirmPayment} type="submit" className="bg-third text-secondary font-bold w-full py-4 rounded-md cursor-pointer mt-5">
               Pay Your Order
@@ -66,7 +82,7 @@ const Payment = () => {
       )}
 
       <section className="bg-primary text-white flex flex-col items-center gap-10 py-30">
-        <div className="flex items-center ">
+        <div className="sm:flex sm:flex-row items-center hidden">
           <div className="flex-col flex-center gap-3">
             <div className="bg-green-700 text-white font-semibold rounded-full md:text-md text-sm sm:size-9 size-7 flex-center">
               <FaCheck />
@@ -87,7 +103,7 @@ const Payment = () => {
           </div>
         </div>
         <div className="flex lg:flex-row flex-col gap-5 mx-7">
-          <form onSubmit={handleSubmit(handlePayment)} className="w-full md:min-w-[732px] sm:min-w-[500px] h-fit bg-secondary rounded-2xl shadow-xl px-10 py-7">
+          <form onSubmit={handleSubmit(handlePayment)} className="w-full md:min-w-[732px] sm:min-w-[500px] h-fit sm:bg-secondary bg-primary rounded-2xl shadow-xl sm:px-10 px-3 py-7">
             <p className="text-4xl font-semibold text-third">Payment Information</p>
             <DetailInfo label="DATE & TIME" value={filtered.date + ", " + filtered.time} />
             <DetailInfo label="MOVIE TITLE" value={filtered.title} />
@@ -99,7 +115,7 @@ const Payment = () => {
             <InputPayment label="Email" type="email" defaultValue={currentUser.email} {...register("email")} />
             <InputPayment label="Phone Number" type="number" defaultValue={currentUser?.phone} placeholder="Input your phone number.." {...register("phone")} />
             <p className="text-4xl font-semibold text-star text-third">Payment Method</p>
-            <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5 mt-10 relative">
+            <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-5 mt-10 relative">
               <PaymentKey srcImage="/src/assets/images/dana.svg" value="dana" {...register("paymentMethod")} />
               <PaymentKey srcImage="/src/assets/images/googlePay.svg" value="googlePay" {...register("paymentMethod")} />
               <PaymentKey srcImage="/src/assets/images/bca.svg" value="bca" {...register("paymentMethod")} />

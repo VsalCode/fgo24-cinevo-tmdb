@@ -72,10 +72,9 @@ const SignUp = () => {
   }
 
   return (
-    <main className="sm:bg-sixth bg-primary h-fit py-5 flex-center flex-col font-sans">
+    <main className="sm:bg-sixth sm:bg-primary bg-white h-fit py-5 flex-center flex-col font-sans">
       <Toaster />
-      <img className="sm:w-50 w-40 mb-5" src="/src/assets/icon/logo.png" alt="logo" />
-      <section className="max-w-[500px] h-fit w-full bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
+      <section className="max-w-[500px] h-fit w-full bg-white sm:px-10 p-7 rounded-2xl sm:shadow-2xl">
         <form onSubmit={handleSubmit(handleRegister)}>
           <div className="pb-5">
             <p className="font-semibold pb-3 sm:text-4xl text-2xl">Sign Up</p>

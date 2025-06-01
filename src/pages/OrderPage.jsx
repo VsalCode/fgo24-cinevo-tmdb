@@ -73,7 +73,7 @@ const OrderPage = () => {
         </div>
       </section>
       <section className="flex lg:flex-row flex-col gap-5 sm:mx-7 mx-5 sm:bg-primary ">
-        <aside className="sm:min-w-[600px] w-full h-fit rounded-xl sm:bg-secondary bg-primary shadow-xl p-4">
+        <aside className="sm:min-w-[600px] w-full h-fit rounded-xl sm:bg-secondary bg-primary shadow-xl sm:p-4 p-0">
           <div className="sm:h-[143px] h-fit w-full flex sm:flex-row sm:justify-between-between sm:items-center flex-col p-3 gap-7">
             <div className="w-[184px] h-full object-cover overflow-hidden rounded-lg">
               <img src={`https://image.tmdb.org/t/p/w500${filtered.poster}`} onError={(e) => { e.currentTarget.src = fallback } } alt="poster_movie" />
@@ -101,8 +101,8 @@ const OrderPage = () => {
               <div className="flex flex-col gap-2">
                 <div className="grid grid-cols-15 gap-1">
                   <div></div>
-                  {columns.map((col, index) => (
-                    <div key={col} className={`text-center font-semibold ${index === 7 ? "ml-4" : ""}`}>
+                  {columns.map((col) => (
+                    <div key={col} className={`text-center font-semibold `}>
                       {col}
                     </div>
                   ))}
@@ -119,7 +119,7 @@ const OrderPage = () => {
                         <button
                           key={seat}
                           onClick={() => handleSeatClick(seat)}
-                          className={`md:size-8 sm:size-7 size-5 rounded cursor-pointer ${
+                          className={`md:size-8 sm:size-7 size-4 rounded cursor-pointer ${
                             isSold ? "bg-gray-500 cursor-not-allowed" : isLoveNest ? "bg-pink-400 cursor-not-allowed" : isSelected ? "bg-blue-500" : "bg-gray-200 hover:bg-gray-300"
                           } `}
                           disabled={isSold || isLoveNest}
@@ -131,7 +131,7 @@ const OrderPage = () => {
               </div>
               <div className="mt-5">
                 <p className="font-semibold">Seating Key</p>
-                <div className="flex gap-3 mt-2">
+                <div className="flex sm:flex-row flex-col gap-3 mt-2">
                   <div className="flex items-center gap-1">
                     <div className="w-4 h-4 bg-gray-200 rounded"></div>
                     <span>Available</span>

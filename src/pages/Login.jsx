@@ -36,8 +36,6 @@ const Login = () => {
     const { email, password } = dataLogin;
 
     let currentUser = dataUsers.filter((users) => users.id !== null && users.email === email && window.atob(users.password) === password && users.role === "user")[0]
-
-    console.log(currentUser);
     
     let admin = dataUsers.find((users) => users.email === email && window.atob(users.password) === password && users.role === "admin");
 
@@ -63,9 +61,8 @@ const Login = () => {
   }
 
   return (
-    <main className="sm:bg-sixth bg-primary h-fit py-10 flex-center flex-col font-sans">
+    <main className="sm:bg-sixth sm:bg-primary bg-white h-fit py-10 flex-center flex-col font-sans">
       <Toaster />
-      <img className="sm:w-50 w-40 mb-5" src="/src/assets/icon/logo.png" alt="logo" />
       <section className="max-w-[500px] w-full h-fit bg-white sm:p-10 p-7 rounded-2xl sm:shadow-2xl">
         <form onSubmit={handleSubmit(handleLogin)}>
           <div className="pb-5">

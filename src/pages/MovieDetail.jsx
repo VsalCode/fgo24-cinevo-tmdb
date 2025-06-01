@@ -1,5 +1,5 @@
 import Button from "../components/Button";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,9 +8,8 @@ import { IoSearch } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import { bookTicketActions } from "../redux/reducer/ticket";
 import { nanoid } from "@reduxjs/toolkit";
-import fallback from '../assets/images/fallback.png'
-import fallbackBackdrop from '../assets/images/fallback_backdrop.png'
-
+import fallback from "../assets/images/fallback.png";
+import fallbackBackdrop from "../assets/images/fallback_backdrop.png";
 
 const MovieDetail = () => {
   const nav = useNavigate();
@@ -22,7 +21,10 @@ const MovieDetail = () => {
     },
   });
   const dispatch = useDispatch();
-  const currentUser = useSelector((state) => state.auth.currentUser);
+  const userLogin = useSelector((state) => state.auth.currentUser);
+  const checkDataUsers = useSelector((state) => state.users.users);
+
+  const currentUser = checkDataUsers.filter((e) => e.id === userLogin.id && userLogin.email === e.email)[0];
 
   function handleBookTicket(value) {
     const { cinema, date, time } = value;
@@ -44,7 +46,7 @@ const MovieDetail = () => {
         cinema: cinema,
         date: date,
         time: time,
-        poster: data?.poster_path
+        poster: data?.poster_path,
       };
 
       dispatch(bookTicketActions(bookTicket));
@@ -54,7 +56,6 @@ const MovieDetail = () => {
       //   pathname: "/order",
       //   search: `${idTransaction}`,
       // });
-      
     }
   }
 
@@ -80,12 +81,22 @@ const MovieDetail = () => {
         <Toaster />
         <div className="flex justify-center relative">
           <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] h-full w-full rounded-[40px] absolute z-40"></div>
-          <img className="h-[520px] object-cover w-full rounded-[40px] relative" src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`} onError={(e) => { e.currentTarget.src = fallbackBackdrop } } alt="backdrop_path" />
+          <img
+            className="h-[520px] object-cover w-full rounded-[40px] relative"
+            src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
+            onError={(e) => { e.currentTarget.src = fallbackBackdrop }}
+            alt="backdrop_path"
+          />
         </div>
 
         <div className="flex lg:flex-row lg:justify-between flex-col items-center gap-15 px-20 mt-[-220px] z-50">
           <div className="flex-center lg:w-[25vw]">
-            <img className="rounded-2xl h-100 w-250 object-contain" src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`} alt="Poster_Movie" onError={(e) => { e.currentTarget.src = fallback } } />
+            <img
+              className="rounded-2xl h-100 w-250 object-contain"
+              src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
+              alt="Poster_Movie"
+              onError={(e) => { e.currentTarget.src = fallback }}
+            />
           </div>
           <div className="flex flex-col gap-15 py-2 h-fit text-white w-[75vw]">
             <div id="movie-overview" className="flex flex-col items-start justify-center gap-3">
@@ -102,16 +113,16 @@ const MovieDetail = () => {
             </div>
 
             <div className="text-white text-base flex flex-col gap-4">
-              <div className="grid grid-cols-3">
-                <div className="flex flex-col justify-end">
+              <div className="grid sm:grid-cols-3 grid-rows-3">
+                <div className="flex flex-col justify-end sm:pb-0 pb-5">
                   <p className="text-third">Release Date</p>
                   <p className="font-bold">{data.release_date}</p>
                 </div>
-                <div className=" flex flex-col justify-end">
+                <div className=" flex flex-col justify-end sm:pb-0 pb-5">
                   <p className="text-third">Duration</p>
                   <p className="font-bold">{data.runtime} minute</p>
                 </div>
-                <div className=" flex flex-col justify-end">
+                <div className=" flex flex-col justify-end sm:pb-0 pb-5">
                   <p className="text-third">Directed By</p>
                   <p className="font-bold">{director?.name}</p>
                 </div>
@@ -119,14 +130,14 @@ const MovieDetail = () => {
               <div>
                 <div>
                   <p className="text-third">Cast</p>
-                  <p className=" text-sm">{data.credits?.cast ? data.credits?.cast?.map((cast) => cast.name).join(" , ") : "-" }</p>
+                  <p className=" text-sm">{data.credits?.cast ? data.credits?.cast?.map((cast) => cast.name).join(" , ") : "-"}</p>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <form onSubmit={handleSubmit(handleBookTicket)} className="bg-sixth p-20 h-fit flex flex-col">
+      <form onSubmit={handleSubmit(handleBookTicket)} className="bg-sixth sm:p-20 p-10 h-fit flex flex-col">
         <div className="flex md:flex-row md:justify-between flex-col pb-15">
           <h3 className="font-semibold md:mb-0 mb-5">Book Tickets</h3>
           <Button type="submit" style="bg-third text-secondary font-extrabold md:py-0 py-2">
@@ -157,7 +168,6 @@ const MovieDetail = () => {
           </div>
         </div>
       </form>
-      
     </>
   );
 };
@@ -166,11 +176,11 @@ export default MovieDetail;
 
 function SponsorCheckbox({ cinema, ...props }) {
   return (
-    <label className={`w-[269px] h-[153px] px-5 flex flex-col justify-center  gap-7 rounded-xl cursor-pointer border text-fourth has-checked:bg-third has-checked:text-secondary relative`}>
+    <label className={`sm:w-[269px] w-full h-[153px] px-5 flex flex-col justify-center  gap-7 rounded-xl cursor-pointer border text-fourth has-checked:bg-third has-checked:text-secondary relative`}>
       <div className="flex justify-end">
         <input type="radio" name="cinema" value={`${cinema}`} {...props} />
       </div>
-      <h2 className="font-semibold">{cinema}</h2>
+      <h2 className="font-semibold sm:text-4xl text-3xl">{cinema}</h2>
     </label>
   );
 }

@@ -120,15 +120,11 @@ const SignUp = () => {
           </div>
           {errors.agreeToTerms && <p className="text-error text-sm italic pt-1">{errors.agreeToTerms.message}</p>}
           <div className="text-center font-medium sm:text-base text-sm pt-3">
-            <button type="submit" className="bg-third font-bold w-full text-secondary py-3 rounded-lg mb-5 cursor-pointer">
+            <button type="submit" className="bg-third font-bold w-full text-secondary py-3 rounded-lg mb-5 cursor-pointer hover:bg-secondary hover:text-white transition-colors">
               JOIN
             </button>
             <p>
-              Already Have an Account?{" "}
-              <Link to="/login" className="text-blue-600">
-                {" "}
-                Login{" "}
-              </Link>
+              Already Have an Account? <Link to="/login" className="text-blue-600">Login</Link>
             </p>
           </div>
           <div className="flex sm:flex-row flex-col gap-3 mt-5">

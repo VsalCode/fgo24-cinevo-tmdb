@@ -90,7 +90,7 @@ const Login = () => {
             <Link>Forgot Your Password?</Link>
           </div>
           <div className="text-center font-medium sm:text-base text-sm">
-            <button type="submit" className="cursor-pointer bg-third w-full text-primary font-bold  py-3 rounded-lg mb-5">
+            <button type="submit" className="cursor-pointer bg-third w-full text-primary font-bold  py-3 rounded-lg mb-5 hover:bg-secondary hover:text-white transition-colors">
               LOGIN
             </button>
             <p>

@@ -61,16 +61,16 @@ const NowShowingMovies = () => {
           <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-500 hover:scale-102 transition-transform duration-300">
             <div className="relative lg:w-70 w-50">
               {item.vote_average > 7 && <div className="absolute text-primary bg-third font-bold px-2 py-1 rounded-b-lg ">Recommended</div>}
-              <img className="rounded-xl object-cover " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
+              <img className="rounded-xl object-cover lg:h-105 h-80 w-full" src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt="" />
             </div>
-            <div className="flex flex-col pt-5 gap-2">
+            <div className="flex flex-col pt-5 gap-2 w-full">
               <div className="flex justify-center items-center text-center">
-                <h6 className="font-semibold">{item.title || item.name}</h6>
+                <h6 className="font-semibold line-clamp-1">{item.title || item.name}</h6>
               </div>
               <div className="flex justify-center items-center gap-2 ">
-                <div className="flex-center gap-2 pt-4">
-                  {item.genre_ids.length > 3
-                    ? item.genre_ids.slice(2).map((genre) => (
+                <div className="flex-wrap flex-center gap-2 pt-4">
+                  {item.genre_ids.length > 2
+                    ? item.genre_ids.slice(0, 2).map((genre) => (
                         <div key={genre?.id} className="text-sm bg-secondary text-third font-medium px-2 py-1 rounded-full">
                           {genre.name}
                         </div>

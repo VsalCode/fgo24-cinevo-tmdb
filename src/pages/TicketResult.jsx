@@ -34,7 +34,7 @@ const TicketResult = () => {
               </div>
               <div className="flex flex-col gap-3 border-b-1">
                 <p className="font-bold">Category</p>
-                <p className=" italic border-none outline-none pb-5 ">{filtered.genres.map((e) => e.name).join(',')}</p>
+                <p className=" italic border-none outline-none pb-5 flex-wrap">{filtered.genres.map((e) => e.name).join(', ')}</p>
               </div>
             </div>
             <div className="flex flex-col gap-10">

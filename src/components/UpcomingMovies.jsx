@@ -37,13 +37,13 @@ const UpcomingMovies = () => {
               </div>
               <div className="flex-center flex-col text-center py-4">
                 <div className="flex-center text-center">
-                  <p className="text-lg text-center font-semibold">{item.title || item.name}</p>
+                  <p className="text-lg text-center font-semibold line-clamp-1">{item.title || item.name}</p>
                 </div>
               </div>
               <div>
                 <div className="flex-center gap-2">
                   <div className="flex-center gap-2">
-                    <div className="chip">{item.release_date}</div>
+                    <div className="text-base bg-secondary text-third font-medium px-2 py-1 rounded-full">{item.release_date}</div>
                   </div>
                 </div>
               </div>

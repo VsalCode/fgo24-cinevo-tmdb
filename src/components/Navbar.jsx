@@ -108,7 +108,7 @@ const Navbar = () => {
               <Link to="/login" className="grow universal-button border text-base">
                 LOGIN
               </Link>
-              <Link to="/signup" className="grow universal-button bg-third text-base">
+              <Link to="/signup" className="grow universal-button bg-third text-primary text-base">
                 SIGN UP
               </Link>
             </div>

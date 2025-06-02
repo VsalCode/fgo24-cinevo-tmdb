@@ -99,7 +99,7 @@ const MovieDetail = () => {
           />
         </div>
 
-        <div className="flex lg:flex-row lg:justify-between flex-col items-center gap-15 px-20 mt-[-220px] z-50">
+        <div className="flex lg:flex-row lg:justify-between flex-col items-center sm:gap-15 px-20 mt-[-220px] z-50">
           <div className="flex-center lg:w-[25vw]">
             <img
               className="rounded-2xl h-100 w-250 object-contain"
@@ -115,7 +115,7 @@ const MovieDetail = () => {
               <div id="movie-information" className="flex sm:flex-row flex-col gap-3">
                 {data.genres &&
                   data.genres?.map((genre) => (
-                    <div key={genre.id} className="text-third border-2 font-medium px-3 py-1 rounded-full">
+                    <div key={genre.id} className="text-third border-2 font-medium px-3 py-1 rounded-full sm:text-base text-sm">
                       {genre.name}
                     </div>
                   ))}
@@ -123,7 +123,7 @@ const MovieDetail = () => {
             </div>
 
             <div className="text-white text-base flex flex-col gap-4">
-              <div className="grid sm:grid-cols-3 grid-rows-3">
+              <div className="grid sm:grid-cols-3 ">
                 <div className="flex flex-col justify-end sm:pb-0 pb-5">
                   <p className="text-third">Release Date</p>
                   <p className="font-bold">{data.release_date}</p>

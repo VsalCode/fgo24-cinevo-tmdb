@@ -96,7 +96,7 @@ const Movies = () => {
     <>
       <section className="relative pt-16 md:pt-20 lg:pt-24 flex justify-center text-white bg-primary">
         <div className="relative w-full max-w-7xl mx-4 sm:mx-6 lg:mx-8">
-          <div className="bg-gradient-to-b from-transparent to-gray-900/80 absolute z-10 rounded-3xl w-full h-full flex flex-col items-start gap-4 sm:gap-6 justify-end p-6 sm:p-8 lg:p-12">
+          <div className="bg-gradient-to-b from-transparent to-primary absolute z-10 rounded-3xl w-full h-full flex flex-col items-start gap-4 sm:gap-6 justify-end p-6 sm:p-8 lg:p-12">
             <div className="chip bg-third text-white px-3 py-1 rounded-full text-sm">LIST MOVIE OF THE WEEK</div>
             <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold">
               Experience the Magic of Cinema: <span className="text-third">Book Your Tickets Today</span>
@@ -162,13 +162,19 @@ const Movies = () => {
                     <img className="rounded-xl object-cover w-full h-80 md:h-96 " src={`https://image.tmdb.org/t/p/w500${item.poster_path}`} alt={item.title} onError={(e) => { e.currentTarget.src = fallback } } />
                   </div>
                   <div className="flex flex-col pt-4 gap-3 text-center">
-                    <h6 className="font-semibold text-base md:text-lg">{item.title || item.name}</h6>
+                    <h6 className="font-semibold text-base md:text-lg line-clamp-1">{item.title || item.name}</h6>
                     <div className="flex justify-center gap-2 flex-wrap">
-                      {item.genre_ids.map((genre) => (
+                      {item.genre_ids.length > 4  ? item.genre_ids.slice(0, 5).map((genre) => (
                         <div key={genre?.id} className="text-xs bg-gray-700 text-third font-medium px-2 py-1 rounded-full">
                           {genre.name}
                         </div>
-                      ))}
+                      )) :
+                        item.genre_ids.map((genre) => (
+                        <div key={genre?.id} className="text-xs bg-gray-700 text-third font-medium px-2 py-1 rounded-full">
+                          {genre.name}
+                        </div>
+                      ))
+                      }
                     </div>
                     <Link to={`/movieDetail/${item.id}`} className="bg-third text-primary text-sm md:text-base font-semibold py-2 px-4 rounded-md hover:bg-secondary hover:text-white transition-colors">
                       View Details

@@ -5,85 +5,93 @@ import { FaEye } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import placeholder from "../assets/images/thumbnail_movie_admin.png"
+import placeholder from "../assets/images/thumbnail_movie_admin.png";
+
+const placeholderMovies = [
+  {
+    id: 1,
+    title: "Spiderman HomeComing",
+    category: "Action, Adventure",
+    date: "07/05/2023",
+    duration: "2 Hours 15 Minute",
+  },
+  {
+    id: 2,
+    title: "Spiderman Not Coming",
+    category: "Action, Adventure",
+    date: "07/05/2023",
+    duration: "2 Hours 15 Minute",
+  },
+  {
+    id: 3,
+    title: "Spiderman On The Way",
+    category: "Action, Adventure",
+    date: "07/05/2023",
+    duration: "2 Hours 15 Minute",
+  },
+];
 
 const MovieAdmin = () => {
   return (
     <>
-      <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[75svw] w-full h-fit p-8">
-        <div className="flex justify-between">
+      <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[75svw] w-full h-fit md:p-8 px-5 py-8">
+        <div className="flex md:flex-row md:justify-between md:gap-0 flex-col gap-5">
           <p className="text-3xl font-medium">List Movie</p>
-          <div className="flex gap-4 text-primary" >
+          <div className="flex md:flex-row flex-col gap-4 text-primary">
             <button className="cursor-pointer bg-[#EFF0F6] flex items-center gap-4 py-1 px-4 rounded-lg">
-              <MdCalendarToday/> <span>November 2025</span> <RiArrowDropDownLine className="text-3xl" />
+              <MdCalendarToday /> <span>November 2025</span> <RiArrowDropDownLine className="text-3xl" />
             </button>
-            <Link to="/add-movie" className="cursor-pointer bg-third font-semibold  gap-3 py-2 px-4 rounded-lg">
-              <span>Add Movies</span>
+            <Link to="/add-movie" className="cursor-pointer bg-third font-semibold gap-3 py-2 px-4 rounded-lg text-center">
+              Add Movies
             </Link>
           </div>
         </div>
-        <table className="mt-5">
-          <thead className="text-third" >
-            <th>No</th>
-            <th>Thumbnail</th>
-            <th>Movie Name</th>
-            <th>Category</th>
-            <th>Released Date</th>
-            <th>Duration</th>
-            <th>Action</th>
-          </thead>
-          <tbody  >
-            <tr className="text-center" >
-              <td>1.</td>
-              <td className="flex-center py-4">
-                <img className="size-13" src={placeholder} alt="" />
-              </td>
-              <td><p>Spiderman HomeComing</p></td>
-              <td><p>Action, Adventure</p></td>
-              <td><p>07/05/2023</p></td>
-              <td><p>2 Hours 15 Minute</p></td>
-              <td >
-                <button className="me-3" > <FaEye className="text-2xl" /> </button>
-                <button className="me-3" > <FaRegEdit className="text-2xl" /> </button>
-                <button className="bg-error text-white p-1 rounded-sm cursor-pointer" > <HiOutlineTrash className="text-2xl" /> </button>
-              </td>
-            </tr>
-            <tr className="text-center" >
-              <td>2.</td>
-              <td className="flex-center py-4">
-                <img className="size-13" src={placeholder} alt="" />
-              </td>
-              <td><p>Spiderman Not Coming</p></td>
-              <td><p>Action, Adventure</p></td>
-              <td><p>07/05/2023</p></td>
-              <td><p>2 Hours 15 Minute</p></td>
-              <td >
-                <button className="me-3" > <FaEye className="text-2xl" /> </button>
-                <button className="me-3" > <FaRegEdit className="text-2xl" /> </button>
-                <button className="bg-error text-white p-1 rounded-sm cursor-pointer" > <HiOutlineTrash className="text-2xl" /> </button>
-              </td>
-            </tr>
-            <tr className="text-center" >
-              <td>3.</td>
-              <td className="flex-center py-4">
-                <img className="size-13" src={placeholder} alt="" />
-              </td>
-              <td><p>Spiderman On The Way</p></td>
-              <td><p>Action, Adventure</p></td>
-              <td><p>07/05/2023</p></td>
-              <td><p>2 Hours 15 Minute</p></td>
-              <td >
-                <button className="me-3" > <FaEye className="text-2xl" /> </button>
-                <button className="me-3" > <FaRegEdit className="text-2xl" /> </button>
-                <button className="bg-error text-white p-1 rounded-sm cursor-pointer" > <HiOutlineTrash className="text-2xl" /> </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <div className="flex justify-center gap-3" >
-          <div className="bg-third text-primary size-10 flex-center text-xl font-bold rounded-lg" >1</div>
-          <div className="bg-[#EFF0F6] text-primary size-10 flex-center text-xl font-bold rounded-lg" >2</div>
-          <div className="bg-[#EFF0F6] text-primary size-10 flex-center text-xl font-bold rounded-lg" >3</div>
+        <div className="mt-5 overflow-x-auto">
+          <table className="w-full table-auto border-collapse">
+            <thead className="text-third bg-[#2D2D2D]">
+              <tr>
+                <th className="px-4 py-3 text-left text-sm font-medium">No</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Thumbnail</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Movie Name</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Category</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Released Date</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Duration</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {placeholderMovies.map((movie) => (
+                <tr key={movie.id} className="text-center border-b border-gray-700">
+                  <td className="px-4 py-3 text-sm">{movie.id}.</td>
+                  <td className="px-4 py-3 flex justify-center">
+                    <img className="size-13 object-cover rounded-md md:size-14" src={placeholder} alt={movie.title} />
+                  </td>
+                  <td className="px-4 py-3 text-sm text-left">{movie.title}</td>
+                  <td className="px-4 py-3 text-sm text-left">{movie.category}</td>
+                  <td className="px-4 py-3 text-sm text-left">{movie.date}</td>
+                  <td className="px-4 py-3 text-sm text-left">{movie.duration}</td>
+                  <td className="px-4 py-3 flex justify-center gap-2">
+                    <button className="text-2xl text-white hover:text-gray-300">
+                      <FaEye />
+                    </button>
+                    <button className="text-2xl text-white hover:text-gray-300">
+                      <FaRegEdit />
+                    </button>
+                    <button className="bg-error text-white p-1 rounded-sm hover:bg-red-700">
+                      <HiOutlineTrash className="text-2xl" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="flex justify-center gap-3 mt-6">
+          {[1, 2, 3].map((page) => (
+            <div key={page} className={`size-10 flex items-center justify-center text-xl font-bold rounded-lg cursor-pointer ${page === 1 ? "bg-third text-primary" : "bg-[#EFF0F6] text-primary"}`}>
+              {page}
+            </div>
+          ))}
         </div>
       </section>
     </>

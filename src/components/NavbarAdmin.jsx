@@ -1,4 +1,4 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
@@ -6,25 +6,26 @@ import { useDispatch } from "react-redux";
 import { MdLogout } from "react-icons/md";
 import { adminLogin } from "../redux/reducer/auth";
 import toast, { Toaster } from "react-hot-toast";
-import logo from '../assets/icon/logo.png'
+import logo from "../assets/icon/logo.png";
 
 const NavbarAdmin = () => {
   const [showHamburger, setShowHamburger] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function HandleHamburger() {
-    setShowHamburger(!showHamburger)
+    setShowHamburger(!showHamburger);
   }
-  
 
   function handleLogout() {
     toast.success("Logout Success!");
-    dispatch(adminLogin(null));
-    return <Navigate to="/login" />
+    dispatch(adminLogin());
+    toast.dismiss();
+    navigate("/login", { replace: true });
   }
 
   return (
-    <nav className="bg-secondary text-white z-100 fixed left-0 right-0 top-0 md:shadow shadow-xl  h-100px md:px-15 sm:px-10 px-7 py-4">
+    <nav className="bg-secondary text-white z-100 fixed left-0 right-0 top-0 md:shadow shadow-xl h-100px md:px-15 sm:px-10 px-7 py-4">
       <Toaster />
       <div className="flex-between">
         <div>
@@ -40,7 +41,7 @@ const NavbarAdmin = () => {
             <p className="text-xl">Admin</p>
           </div>
           <button onClick={handleLogout} aria-label="logout" className="ms-3 cursor-pointer flex flex-col justify-center items-center text-red-500">
-            <MdLogout className="text-2xl " />
+            <MdLogout className="text-2xl" />
           </button>
         </div>
 

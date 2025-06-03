@@ -4,8 +4,8 @@ import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 
 const LayoutAdmin = () => {
-  const checkAdminLogin = useSelector((state) => state.auth.adminLogin);
   const checkUserLogin = useSelector((state) => state.auth.currentUser);
+  const checkAdminLogin = useSelector((state) => state.auth.adminLogin);
 
   if(checkUserLogin !== null){
     toast.error("You must login as admin!");
@@ -18,7 +18,7 @@ const LayoutAdmin = () => {
   }
 
   return (
-    <main className="bg-primary h-fit py-30 flex-center flex-col gap-7 sm:px-10 px-7">
+    <main className="bg-primary h-fit py-30 flex-center flex-col gap-7 sm:px-10 px-5">
       <ScrollRestoration/>
       <Toaster />
       <NavbarAdmin />

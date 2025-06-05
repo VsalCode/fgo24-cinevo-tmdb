@@ -1,8 +1,35 @@
-import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
-import salesChart from "../assets/images/sales-chart.png"
+import { Chart } from "react-google-charts";
+import { useSelector } from "react-redux";
 
 const DashboardAdmin = () => {
+  const dataHistoryPayment = useSelector((state) => state.ticket.historyPayment);
+
+  const topMovieBook = dataHistoryPayment.reduce((acc, item) => {
+    const movieName = item.title || item.name; 
+    acc[movieName] = (acc[movieName] || 0) + 1;
+    return acc;
+  }, {});
+
+  const topMovies = Object.entries(topMovieBook)
+    .sort(([, countA], [, countB]) => countB - countA)
+    .slice(0, 6);
+
+  const salesChart = [["Movie", "Ticket Sales"], ...topMovies];
+
+  const jakarta = dataHistoryPayment.filter((e) => e.location === 'Jakarta' ).length
+  const bandung = dataHistoryPayment.filter((e) => e.location === 'Bandung' ).length
+  const bekasi = dataHistoryPayment.filter((e) => e.location === 'Bekasi' ).length
+  const depok = dataHistoryPayment.filter((e) => e.location === 'Depok' ).length
+
+  const ticketSales = [
+    ["Ticket Sales", "Location Cinema"],
+    ["Jakarta", jakarta],
+    ["Bandung", bandung],
+    ["Bekasi", bekasi],
+    ["Depok", depok],
+  ];
+
   return (
     <>
       <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[70svw] w-full h-fit p-8">
@@ -15,11 +42,10 @@ const DashboardAdmin = () => {
             <span>Weekly</span> <RiArrowDropDownLine className="text-3xl" />
           </button>
           <button className="cursor-pointer bg-third font-semibold  gap-3 py-2 px-4 rounded-lg">
-            <span>Filter</span> 
+            <span>Filter</span>
           </button>
         </div>
-        <p className="text-xl">Avengers: End Game</p>
-        <img className="rounded-2xl" src={salesChart} alt="sales-chart" />
+        <Chart chartType="PieChart" data={salesChart} width={"100%"} height={"350px"} />
       </section>
       <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[70svw] w-full h-fit p-8">
         <p className="text-3xl font-medium">Ticket Sales</p>
@@ -31,11 +57,10 @@ const DashboardAdmin = () => {
             <span>Location</span> <RiArrowDropDownLine className="text-3xl" />
           </button>
           <button className="cursor-pointer bg-third font-semibold  gap-3 py-2 px-4 rounded-lg">
-            <span>Filter</span> 
+            <span>Filter</span>
           </button>
         </div>
-        <p className="text-xl">Adventure, Purwokerto</p>
-        <img className="rounded-2xl" src={salesChart} alt="sales-chart" />
+        <Chart chartType="PieChart" data={ticketSales} width={"100%"} height={"350px"} />
       </section>
     </>
   );

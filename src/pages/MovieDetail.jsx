@@ -37,7 +37,7 @@ const MovieDetail = () => {
 }, [userLogin, checkDataUsers]);
 
   function handleBookTicket(value) {
-    const { cinema, date, time } = value;
+    const { cinema, date, time, location } = value;
 
     if (currentUser === null) {
       toast.error("You must Login or Register!");
@@ -57,6 +57,7 @@ const MovieDetail = () => {
         date: date,
         time: time,
         poster: data?.poster_path,
+        location: location,
       };
 
       dispatch(bookTicketActions(bookTicket));
@@ -165,7 +166,7 @@ const MovieDetail = () => {
           </div>
           <div className="w-full">
             <h5 className="font-semibold pb-5">Choose Location</h5>
-            <SelectOptions type="location" />
+            <SelectOptions {...register("location")} type="location" />
           </div>
         </div>
         <div>
@@ -200,7 +201,7 @@ export const SelectOptions = ({ id, type, name, ...props }) => {
     return (
       <label htmlFor={type} className="bg-white text-primary font-semibold flex-between gap-5 rounded-full border py-3 px-5 w-full">
         <IoSearch className="text-xl" />
-        <select id={type} name={type} className="grow outline-none">
+        <select id={type} name={type} {...props} className="grow outline-none">
           <option value="Jakarta">Jakarta</option>
           <option value="Bandung">Bandung</option>
           <option value="Bekasi" selected>

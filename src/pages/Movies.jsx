@@ -25,7 +25,7 @@ const Movies = () => {
   const totalPages = Math.ceil(movies.length / limit);
   const [currentGenre, setCurrentGenre] = useState("");
   const [currentSort, setCurrentSort] = useState("");
-  
+
   useEffect(() => {
     async function fetchData() {
       try {
@@ -153,8 +153,9 @@ const Movies = () => {
               </form>
             </div>
           </div>
-          <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-between">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 justify-between">
             {movies.slice(offset, limit * page).length > 0 ? (
+
               movies.slice(offset, limit * page).map((item) => (
                 <Link to={`/movieDetail/${item.id}`} key={item.id} className="flex flex-col justify-between w-full max-w-xs transition-transform duration-300">
                   <div className="relative transition-transform duration-300 hover:scale-102">

@@ -1,37 +1,15 @@
-import React from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import { MdCalendarToday } from "react-icons/md";
-import { FaEye } from "react-icons/fa6";
 import { FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import { Link } from "react-router-dom";
-import placeholder from "../assets/images/thumbnail_movie_admin.png";
-
-const placeholderMovies = [
-  {
-    id: 1,
-    title: "Spiderman HomeComing",
-    category: "Action, Adventure",
-    date: "07/05/2023",
-    duration: "2 Hours 15 Minute",
-  },
-  {
-    id: 2,
-    title: "Spiderman Not Coming",
-    category: "Action, Adventure",
-    date: "07/05/2023",
-    duration: "2 Hours 15 Minute",
-  },
-  {
-    id: 3,
-    title: "Spiderman On The Way",
-    category: "Action, Adventure",
-    date: "07/05/2023",
-    duration: "2 Hours 15 Minute",
-  },
-];
+import { useDispatch, useSelector } from "react-redux";
+import { removeMovieActions } from "../redux/reducer/admin";
 
 const MovieAdmin = () => {
+  const dispatch = useDispatch();
+  const listMovie = useSelector((state) => state.admin.listMovie);
+
   return (
     <>
       <section className="bg-secondary text-white flex flex-col gap-6 rounded-4xl md:max-w-[75svw] w-full h-fit md:p-8 px-5 py-8">
@@ -60,24 +38,26 @@ const MovieAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {placeholderMovies.map((movie) => (
-                <tr key={movie.id} className="text-center border-b border-gray-700">
-                  <td className="px-4 py-3 text-sm">{movie.id}.</td>
+              {listMovie.map((movie, index) => (
+                <tr key={index} className=" text-center border-b border-gray-700">
+                  <td className="px-4 py-3 text-sm">{index + 1} .</td>
                   <td className="px-4 py-3 flex justify-center">
-                    <img className="size-13 object-cover rounded-md md:size-14" src={placeholder} alt={movie.title} />
+                    <img className="size-13 object-cover rounded-md md:size-14" src={movie.poster} alt={movie.title} />
                   </td>
                   <td className="px-4 py-3 text-sm text-left">{movie.title}</td>
                   <td className="px-4 py-3 text-sm text-left">{movie.category}</td>
                   <td className="px-4 py-3 text-sm text-left">{movie.date}</td>
                   <td className="px-4 py-3 text-sm text-left">{movie.duration}</td>
-                  <td className="px-4 py-3 flex justify-center gap-2">
-                    <button className="text-2xl text-white hover:text-gray-300">
-                      <FaEye />
-                    </button>
-                    <button className="text-2xl text-white hover:text-gray-300">
+                  <td className="px-4 py-3 flex-center gap-2 ">
+                    <button className="cursor-pointer text-2xl bg-third p-1 text-primary rounded-sm hover:text-gray-300">
                       <FaRegEdit />
                     </button>
-                    <button className="bg-error text-white p-1 rounded-sm hover:bg-red-700">
+                    <button
+                      onClick={() => {
+                        dispatch(removeMovieActions(index));
+                      }}
+                      className="cursor-pointer bg-error text-white p-1 rounded-sm hover:bg-red-700"
+                    >
                       <HiOutlineTrash className="text-2xl" />
                     </button>
                   </td>
@@ -86,13 +66,13 @@ const MovieAdmin = () => {
             </tbody>
           </table>
         </div>
-        <div className="flex justify-center gap-3 mt-6">
+        {/* <div className="flex justify-center gap-3 mt-6">
           {[1, 2, 3].map((page) => (
             <div key={page} className={`size-10 flex items-center justify-center text-xl font-bold rounded-lg cursor-pointer ${page === 1 ? "bg-third text-primary" : "bg-[#EFF0F6] text-primary"}`}>
               {page}
             </div>
           ))}
-        </div>
+        </div> */}
       </section>
     </>
   );

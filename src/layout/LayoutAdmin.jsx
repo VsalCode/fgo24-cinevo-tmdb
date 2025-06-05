@@ -18,7 +18,7 @@ const LayoutAdmin = () => {
   }
 
   return (
-    <main className="bg-primary h-fit py-30 flex-center flex-col gap-7 sm:px-10 px-5">
+    <main className="bg-primary h-fit min-h-[100svh] py-30 flex-center flex-col gap-7 sm:px-10 px-5">
       <ScrollRestoration/>
       <Toaster />
       <NavbarAdmin />

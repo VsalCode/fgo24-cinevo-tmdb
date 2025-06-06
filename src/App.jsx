@@ -20,6 +20,7 @@ import LayoutAdmin from "./layout/LayoutAdmin";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import MovieAdmin from "./pages/MovieAdmin";
 import AddMovie from "./pages/AddMovie";
+import EditMovie from "./pages/EditMovie";
 
 const PrivateRoute = ({ children }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
       {
         path: "/add-movie",
         element: <AddMovie />,
+      },
+      {
+        path: "/edit-movie/:index",
+        element: <EditMovie/>
       },
     ],
   },

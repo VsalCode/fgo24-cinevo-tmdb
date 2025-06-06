@@ -16,7 +16,7 @@ const MovieAdmin = () => {
         <div className="flex md:flex-row md:justify-between md:gap-0 flex-col gap-5">
           <p className="text-3xl font-medium">List Movie</p>
           <div className="flex md:flex-row flex-col gap-4 text-primary">
-            <button className="cursor-pointer bg-[#EFF0F6] flex items-center gap-4 py-1 px-4 rounded-lg">
+            <button className="cursor-pointer bg-[#EFF0F6] flex items-center gap breakfast-4 py-1 px-4 rounded-lg">
               <MdCalendarToday /> <span>November 2025</span> <RiArrowDropDownLine className="text-3xl" />
             </button>
             <Link to="/add-movie" className="cursor-pointer bg-third font-semibold gap-3 py-2 px-4 rounded-lg text-center">
@@ -33,25 +33,25 @@ const MovieAdmin = () => {
                 <th className="px-4 py-3 text-left text-sm font-medium">Movie Name</th>
                 <th className="px-4 py-3 text-left text-sm font-medium">Category</th>
                 <th className="px-4 py-3 text-left text-sm font-medium">Released Date</th>
-                <th className="px-4 py-3 text-left text-sm font-medium">Duration</th>
+                <th className="px-4 py-3 text-left text-sm font-medium">Duration (minute)</th>
                 <th className="px-4 py-3 text-left text-sm font-medium">Action</th>
               </tr>
             </thead>
             <tbody>
               {listMovie.map((movie, index) => (
-                <tr key={index} className=" text-center border-b border-gray-700">
-                  <td className="px-4 py-3 text-sm">{index + 1} .</td>
+                <tr key={index} className="text-center border-b border-gray-700">
+                  <td className="px-4 py-3 text-sm">{index + 1}.</td>
                   <td className="px-4 py-3 flex justify-center">
                     <img className="size-13 object-cover rounded-md md:size-14" src={movie.poster} alt={movie.title} />
                   </td>
                   <td className="px-4 py-3 text-sm text-left">{movie.title}</td>
-                  <td className="px-4 py-3 text-sm text-left">{movie.category}</td>
-                  <td className="px-4 py-3 text-sm text-left">{movie.date}</td>
+                  <td className="px-4 py-3 text-sm text-left">{movie.category || movie.genre}</td>
+                  <td className="px-4 py-3 text-sm text-left">{movie.date || movie.releaseDate}</td>
                   <td className="px-4 py-3 text-sm text-left">{movie.duration}</td>
-                  <td className="px-4 py-3 flex-center gap-2 ">
-                    <button className="cursor-pointer text-2xl bg-third p-1 text-primary rounded-sm hover:text-gray-300">
+                  <td className="px-4 py-3 flex-center gap-2">
+                    <Link to={`/edit-movie/${index}`} className="cursor-pointer text-2xl bg-third p-1 text-primary rounded-sm hover:text-gray-300">
                       <FaRegEdit />
-                    </button>
+                    </Link>
                     <button
                       onClick={() => {
                         dispatch(removeMovieActions(index));
@@ -66,13 +66,6 @@ const MovieAdmin = () => {
             </tbody>
           </table>
         </div>
-        {/* <div className="flex justify-center gap-3 mt-6">
-          {[1, 2, 3].map((page) => (
-            <div key={page} className={`size-10 flex items-center justify-center text-xl font-bold rounded-lg cursor-pointer ${page === 1 ? "bg-third text-primary" : "bg-[#EFF0F6] text-primary"}`}>
-              {page}
-            </div>
-          ))}
-        </div> */}
       </section>
     </>
   );

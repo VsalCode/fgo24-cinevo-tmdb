@@ -109,7 +109,7 @@ const router = createBrowserRouter([
         element: <AddMovie />,
       },
       {
-        path: "/edit-movie/:index",
+        path: "/edit-movie/:id",
         element: <EditMovie/>
       },
     ],

@@ -11,12 +11,15 @@ const admin = createSlice({
     addMovieActions: (state, action) => {
       state.listMovie.push(action.payload);
     },
-    removeMovieActions: (state, action) => {
-      state.listMovie.splice(action.payload, 1);
-    },
     editMovieActions: (state, action) => {
-      const { index, movie } = action.payload;
-      state.listMovie[index] = { ...movie, id: state.listMovie[index].id };
+      const { id, movie } = action.payload;
+      const index = state.listMovie.findIndex((m) => m.id === id);
+      if (index !== -1) {
+        state.listMovie[index] = { ...movie, id };
+      }
+    },
+    removeMovieActions: (state, action) => {
+      state.listMovie = state.listMovie.filter((m) => m.id !== action.payload);
     },
   },
 });

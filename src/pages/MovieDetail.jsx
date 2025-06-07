@@ -21,20 +21,19 @@ const MovieDetail = () => {
     },
   });
   const dispatch = useDispatch();
-  const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null);
   const userLogin = useSelector((state) => state.auth.currentUser);
   const checkDataUsers = useSelector((state) => state.users.users);
+  const listMovie = useSelector((state) => state.admin.listMovie);
 
   useEffect(() => {
-  if (userLogin !== null) {
-    const filtered = checkDataUsers.filter(
-      (e) => e.id === userLogin.id && userLogin.email === e.email
-    )[0]
-    setCurrentUser(filtered);
-  } else {
-    setCurrentUser(null);
-  }
-}, [userLogin, checkDataUsers]);
+    if (userLogin !== null) {
+      const filtered = checkDataUsers.filter((e) => e.id === userLogin.id && userLogin.email === e.email)[0];
+      setCurrentUser(filtered);
+    } else {
+      setCurrentUser(null);
+    }
+  }, [userLogin, checkDataUsers]);
 
   function handleBookTicket(value) {
     const { cinema, date, time, location } = value;
@@ -71,17 +70,21 @@ const MovieDetail = () => {
   }
 
   useEffect(() => {
-    const fetchDetails = async () => {
-      try {
-        const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
-        const getData = res.data;
-        setData(getData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchDetails();
+    const listMovieAdmin = listMovie.filter((e) => e.id === id);
+    if (listMovieAdmin) {
+      console.log("List Movie Admin");
+    } else {
+      const fetchDetails = async () => {
+        try {
+          const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
+          const getData = res.data;
+          setData(getData);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchDetails();
+    }
   }, []);
 
   const director = data.credits?.crew?.find((e) => e.job === "Director");
@@ -95,7 +98,9 @@ const MovieDetail = () => {
           <img
             className="h-[520px] object-cover w-full rounded-[40px] relative"
             src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
-            onError={(e) => { e.currentTarget.src = fallbackBackdrop }}
+            onError={(e) => {
+              e.currentTarget.src = fallbackBackdrop;
+            }}
             alt="backdrop_path"
           />
         </div>
@@ -106,7 +111,9 @@ const MovieDetail = () => {
               className="rounded-2xl h-100 w-250 object-contain"
               src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
               alt="Poster_Movie"
-              onError={(e) => { e.currentTarget.src = fallback }}
+              onError={(e) => {
+                e.currentTarget.src = fallback;
+              }}
             />
           </div>
           <div className="flex flex-col gap-15 py-2 h-fit text-white w-[75vw]">

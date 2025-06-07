@@ -4,68 +4,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { editMovieActions } from "../redux/reducer/admin";
 import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { useEffect } from "react";
-
-const schema = yup.object({
-  title: yup.string().required("Title Movie is required"),
-  poster: yup
-    .string()
-    .required("Poster URL is required")
-    .url("Poster must be a valid URL")
-    .matches(/\.(jpg|jpeg|png|webp)$/i, "Poster URL must be an image (jpg, jpeg, png, or webp)"),
-  backdrop: yup
-    .string()
-    .required("Backdrop URL is required")
-    .url("Backdrop must be a valid URL")
-    .matches(/\.(jpg|jpeg|png|webp)$/i, "Backdrop URL must be an image (jpg, jpeg, png, or webp)"),
-  genre: yup.string().required("Genre is required"),
-  vote_average: yup.number().required("Rating is required").min(0, "Rating cannot be less than 0").max(10, "Rating cannot be more than 10").typeError("Rating must be a number"),
-  releaseDate: yup
-    .string()
-    .required("Release date is required")
-    .matches(/^\d{4}-\d{2}-\d{2}$/, "Release date must be in YYYY-MM-DD format"),
-  duration: yup.number().required("Duration is required").min(1, "Duration must be at least 1 minute").max(600, "Duration cannot exceed 600 minutes").typeError("Duration must be a number"),
-  director: yup.string().required("Director name is required"),
-  cast: yup.string().required("Cast is required"),
-  synopsis: yup.string().required("Synopsis is required").min(10, "Synopsis must be at least 10 characters").max(1000, "Synopsis cannot exceed 1000 characters"),
-});
+import { ValidationMovies } from "../components/ValidationMovies";
 
 const EditMovie = () => {
-  const { index } = useParams();
+  const { id } = useParams();
   const dispatch = useDispatch();
   const nav = useNavigate();
-  const movie = useSelector((state) => state.admin.listMovie[parseInt(index)]);
+  const movie = useSelector((state) => state.admin.listMovie.find((m) => m.id === id));
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(ValidationMovies),
     defaultValues: movie,
   });
 
-  useEffect(() => {
-    if (movie) {
-      reset({
-        title: movie.title,
-        poster: movie.poster,
-        backdrop: movie.backdrop,
-        genre: movie.category || movie.genre,
-        vote_average: movie.vote_average,
-        releaseDate: movie.date || movie.releaseDate,
-        duration: movie.duration,
-        director: movie.director,
-        cast: movie.cast,
-        synopsis: movie.synopsis,
-      });
-    }
-  }, [movie, reset]);
-
   const handleEditMovie = (data) => {
-    dispatch(editMovieActions({ index: parseInt(index), movie: data }));
+    dispatch(editMovieActions({ id, movie: data }));
     toast.success("Movie updated successfully!");
     setTimeout(() => {
       nav("/movies-admin");

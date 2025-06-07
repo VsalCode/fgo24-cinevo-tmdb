@@ -55,7 +55,7 @@ const Movies = () => {
           genre: movie.genre_ids.map((id) => movieGenres.find((g) => g.id === id)?.name).filter(Boolean).join(", "),
         }));
 
-        const combinedMovies = [...listMovie, ...updatedTmdbMovies];
+        const combinedMovies = [...updatedTmdbMovies, ...listMovie];
 
         setMovies(combinedMovies);
       } catch (error) {

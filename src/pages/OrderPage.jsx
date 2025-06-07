@@ -13,6 +13,10 @@ const OrderPage = () => {
   const dispatch = useDispatch()
   const dataBookingTicket = useSelector((state) => state.ticket.historyBooking);
   const filtered = dataBookingTicket?.filter((e) => e?.idTransaction === id)[0]
+  let movie = {
+    ...filtered,
+    poster: filtered.poster ? filtered.poster : `https://image.tmdb.org/t/p/w500${filtered.poster}` 
+  }
   
   const rows = ["A", "B", "C", "D", "E", "F", "G"];
   const columns = Array.from({ length: 14 }, (_, i) => i + 1);
@@ -48,7 +52,7 @@ const OrderPage = () => {
     const queryId = newInfoBook.idTransaction
     dispatch(bookTicketActions(newInfoBook))
 
-    nav(`/payment/${queryId}`);
+    nav(`/payment/${queryId}`, { replace: true } );
   }
 
   return (
@@ -76,12 +80,12 @@ const OrderPage = () => {
         <aside className="sm:min-w-[600px] w-full h-fit rounded-xl sm:bg-secondary bg-primary shadow-xl sm:p-4 p-0">
           <div className="sm:h-[143px] h-fit w-full flex sm:flex-row sm:justify-between-between sm:items-center flex-col p-3 gap-7">
             <div className="w-[184px] h-full object-cover overflow-hidden rounded-lg">
-              <img src={`https://image.tmdb.org/t/p/w500${filtered.poster}`} onError={(e) => { e.currentTarget.src = fallback } } alt="poster_movie" />
+              <img src={movie.poster} onError={(e) => { e.currentTarget.src = fallback } } alt="poster_movie" />
             </div>
             <div className="flex flex-col items-start justify-center gap-4">
-              <p className="text-xl font-semibold">{filtered.title}</p>
+              <p className="text-xl font-semibold">{movie.title}</p>
               <div className="flex gap-2">
-                {filtered.genres?.slice(0, 2).map((item) => 
+                {movie.genres?.slice(0, 2).map((item) => 
                   <div key={`list-genre-${item.id}`} className="genre border">
                     {item.name}
                   </div>
@@ -157,16 +161,16 @@ const OrderPage = () => {
           <div className="sm:bg-secondary bg-primary p-5 items-center rounded-lg">
             <div className="text-center text-2xl mb-8 font-bold text-third">
               <p>
-                <span>{filtered.cinema}</span>
+                <span>{movie.cinema}</span>
               </p>
             </div>
             <div className="grid grid-cols-2 mb-8">
               <span className="text-start">Movie selected</span>
-              <span className="text-end font-semibold">{filtered.title}</span>
+              <span className="text-end font-semibold">{movie.title}</span>
             </div>
             <div className="grid grid-cols-2 mb-8">
-              <span className="text-start">{filtered.date}</span>
-              <span className="text-end font-semibold">{filtered.time}</span>
+              <span className="text-start">{movie.date}</span>
+              <span className="text-end font-semibold">{movie.time}</span>
             </div>
             <div className="grid grid-cols-2 mb-8">
               <span className="text-start">One ticket price</span>

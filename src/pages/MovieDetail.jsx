@@ -55,30 +55,42 @@ const MovieDetail = () => {
         cinema: cinema,
         date: date,
         time: time,
-        poster: data?.poster_path,
+        poster: data?.poster,
         location: location,
       };
 
       dispatch(bookTicketActions(bookTicket));
-      nav(`/order/${idTransaction}`);
-
-      // nav({
-      //   pathname: "/order",
-      //   search: `${idTransaction}`,
-      // });
+      nav(`/order/${idTransaction}`, { replace: true });
     }
   }
 
   useEffect(() => {
-    const listMovieAdmin = listMovie.filter((e) => e.id === id);
+    const listMovieAdmin = listMovie.find((e) => e.id === id);
     if (listMovieAdmin) {
-      console.log("List Movie Admin");
+      setData({
+        ...listMovieAdmin,
+        genres: listMovieAdmin.genre.split(", ").map((name, index) => ({
+          id: `custom-${index}`,
+          name: name.trim(),
+        })),
+        credits: {
+          cast: listMovieAdmin.cast.split(", ").map((name) => ({ name: name.trim() })),
+          crew: [{ job: "Director", name: listMovieAdmin.director }],
+        },
+      });
     } else {
       const fetchDetails = async () => {
         try {
           const res = await axios.get(`https://api.themoviedb.org/3/movie/${id}?append_to_response=credits&api_key=${import.meta.env.VITE_TMDB_API_KEY}`);
-          const getData = res.data;
-          setData(getData);
+          const tmdbMovie = res.data;
+
+          const updateTmdbMovieDetail = {
+            ...tmdbMovie,
+            backdrop: `https://image.tmdb.org/t/p/w1280${tmdbMovie.backdrop_path}`,
+            poster: `https://image.tmdb.org/t/p/w500${tmdbMovie?.poster_path}`,
+          };
+
+          setData(updateTmdbMovieDetail);
         } catch (error) {
           console.error(error);
         }
@@ -97,7 +109,7 @@ const MovieDetail = () => {
           <div className="bg-[linear-gradient(180deg,_rgba(15,16,13,0)_0%,_rgba(15,16,13,0.8)_65.1%)] h-full w-full rounded-[40px] absolute z-40"></div>
           <img
             className="h-[520px] object-cover w-full rounded-[40px] relative"
-            src={`https://image.tmdb.org/t/p/w1280${data.backdrop_path}`}
+            src={data.backdrop}
             onError={(e) => {
               e.currentTarget.src = fallbackBackdrop;
             }}
@@ -109,7 +121,7 @@ const MovieDetail = () => {
           <div className="flex-center lg:w-[25vw]">
             <img
               className="rounded-2xl h-100 w-250 object-contain"
-              src={`https://image.tmdb.org/t/p/w500${data?.poster_path}`}
+              src={data.poster}
               alt="Poster_Movie"
               onError={(e) => {
                 e.currentTarget.src = fallback;
@@ -142,13 +154,13 @@ const MovieDetail = () => {
                 </div>
                 <div className=" flex flex-col justify-end sm:pb-0 pb-5">
                   <p className="text-third">Directed By</p>
-                  <p className="font-bold">{director?.name}</p>
+                  <p className="font-bold">{director?.name || data.director}</p>
                 </div>
               </div>
               <div>
                 <div>
                   <p className="text-third">Cast</p>
-                  <p className=" text-sm">{data.credits?.cast ? data.credits?.cast?.map((cast) => cast.name).join(" , ") : "-"}</p>
+                  <p className=" text-sm">{data.credits?.cast ? data.credits?.cast?.map((cast) => cast.name).join(" , ") : data.cast}</p>
                 </div>
               </div>
             </div>

@@ -65,18 +65,18 @@ const EditMovie = () => {
       <div className="flex sm:flex-row flex-col gap-4">
         <div className="flex-1">
           <InputAddMovie
-            {...register("releaseDate")}
-            errors={errors.releaseDate?.message && <p className="text-red-400 text-sm italic">{errors.releaseDate.message}</p>}
+            {...register("release_date")}
+            errors={errors.release_date?.message && <p className="text-red-400 text-sm italic">{errors.release_date.message}</p>}
             label="Release date"
-            id="releaseDate"
+            id="release_date"
             placeholder="Input Release date (YYYY-MM-DD)"
             type="date"
           />
         </div>
         <div className="flex-1">
           <InputAddMovie
-            {...register("duration")}
-            errors={errors.duration?.message && <p className="text-red-400 text-sm italic">{errors.duration.message}</p>}
+            {...register("runtime")}
+            errors={errors.runtime?.message && <p className="text-red-400 text-sm italic">{errors.runtime.message}</p>}
             label="Duration (Minute)"
             id="duration"
             placeholder="Input Movie duration"
@@ -88,12 +88,12 @@ const EditMovie = () => {
       <InputAddMovie {...register("director")} errors={errors.director?.message && <p className="text-red-400 text-sm italic">{errors.director.message}</p>} label="Director Name" id="director" placeholder="Input director name" />
       <InputAddMovie {...register("cast")} errors={errors.cast?.message && <p className="text-red-400 text-sm italic">{errors.cast.message}</p>} label="Cast" id="cast" placeholder="Input casts name" />
       <InputAddMovie
-        {...register("synopsis")}
-        errors={errors.synopsis?.message && <p className="text-red-400 text-sm italic">{errors.synopsis.message}</p>}
+        {...register("overview")}
+        errors={errors.overview?.message && <p className="text-red-400 text-sm italic">{errors.overview.message}</p>}
         type="textarea"
-        label="Synopsis"
-        id="synopsis"
-        placeholder="Input movie synopsis"
+        label="overview"
+        id="overview"
+        placeholder="Input movie overview"
       />
 
       <button className="bg-third cursor-pointer py-4 text-primary font-semibold rounded-xl mt-4" type="submit">

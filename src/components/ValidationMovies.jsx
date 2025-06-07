@@ -19,11 +19,11 @@ export const ValidationMovies = yup.object({
     .min(0, "Rating cannot be less than 0")
     .max(10, "Rating cannot be more than 10")
     .typeError("Rating must be a number"),
-  releaseDate: yup
+  release_date: yup
     .string()
     .required("Release date is required")
     .matches(/^\d{4}-\d{2}-\d{2}$/, "Release date must be in YYYY-MM-DD format"),
-  duration: yup
+  runtime: yup
     .number()
     .required("Duration is required")
     .min(1, "Duration must be at least 1 minute")
@@ -31,9 +31,9 @@ export const ValidationMovies = yup.object({
     .typeError("Duration must be a number"),
   director: yup.string().required("Director name is required"),
   cast: yup.string().required("Cast is required"),
-  synopsis: yup
+  overview: yup
     .string()
-    .required("Synopsis is required")
-    .min(10, "Synopsis must be at least 10 characters")
-    .max(1000, "Synopsis cannot exceed 1000 characters"),
+    .required("overview is required")
+    .min(10, "overview must be at least 10 characters")
+    .max(1000, "overview cannot exceed 1000 characters"),
 });

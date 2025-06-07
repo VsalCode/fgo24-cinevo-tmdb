@@ -61,7 +61,7 @@ const TicketResult = () => {
         </div>
         <div className="flex flex-col gap-4">
           <button onClick={() => { toast.success("Ticket Donwloaded!") }} className="bg-third text-primary md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer"  >Donwload Your Ticket</button>
-          <Link to="/" className="bg-secondary text-center text-white md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer">Back To Homepage</Link>
+          <Link to="/" replace className="bg-secondary text-center text-white md:text-base text-sm font-bold px-10 py-3 rounded-md cursor-pointer">Back To Homepage</Link>
         </div>
       </div>
     </section>

@@ -49,8 +49,8 @@ const MovieAdmin = () => {
                 </td>
                 <td className="px-4 py-3 text-sm text-left">{movie.title}</td>
                 <td className="px-4 py-3 text-sm text-left">{movie.genre}</td>
-                <td className="px-4 py-3 text-sm text-left">{movie.releaseDate}</td>
-                <td className="px-4 py-3 text-sm text-left">{movie.duration}</td>
+                <td className="px-4 py-3 text-sm text-left">{movie.release_date}</td>
+                <td className="px-4 py-3 text-sm text-left">{movie.runtime}</td>
                 <td className="px-4 py-3 flex-center gap-2">
                   <Link
                     to={`/edit-movie/${movie.id}`}

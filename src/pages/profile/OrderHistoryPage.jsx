@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { RiArrowDropDownLine, RiArrowDropUpLine } from "react-icons/ri";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import qr from "../assets/images/QR.svg"
+import qr from "../../assets/images/QR.svg"
 
 const HistoryItem = ({ item, index }) => {
   const [showDetails, setShowDetails] = useState(false);

@@ -17,6 +17,9 @@ import DashboardPage from "./pages/admin/DashboardPage";
 import MovieAdminPage from "./pages/admin/MovieAdminPage";
 import MoviesPage from "./pages/MoviesPage";
 import NotFoundPage from "./pages/NotFound";
+import HomePage from "./pages/HomePage"
+import AddMoviePage from "./pages/admin/AddMoviePage"
+import EditMoviePage from "./pages/admin/EditMoviePage"
 
 const PrivateRoute = ({ children }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -30,7 +33,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <HomePage />,
+        element: <HomePage/> ,
       },
       {
         path: "/movies",

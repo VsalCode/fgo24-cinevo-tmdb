@@ -3,7 +3,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { GiTicket } from "react-icons/gi";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
-import qr from "../assets/images/QR.svg"
+import qr from "../../assets/images/QR.svg"
 
 const TicketResultPage = () => {
   const { queryId } = useParams();

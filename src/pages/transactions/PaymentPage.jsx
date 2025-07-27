@@ -5,14 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { paymentAction } from "../../redux/reducer/ticket";
 import toast, { Toaster } from "react-hot-toast";
-import bca from "../assets/images/bca.svg";
-import bri from "../assets/images/bri.svg";
-import dana from "../assets/images/dana.svg";
-import googlePay from "../assets/images/googlePay.svg";
-import gopay from "../assets/images/gopay.svg";
-import ovo from "../assets/images/ovo.svg";
-import paypal from "../assets/images/paypal.svg";
-import visa from "../assets/images/visa.svg";
+import bca from "../../assets/images/bca.svg";
+import bri from "../../assets/images/bri.svg";
+import dana from "../../assets/images/dana.svg";
+import googlePay from "../../assets/images/googlePay.svg";
+import gopay from "../../assets/images/gopay.svg";
+import ovo from "../../assets/images/ovo.svg";
+import paypal from "../../assets/images/paypal.svg";
+import visa from "../../assets/images/visa.svg";
 
 const PaymentPage = () => {
   const nav = useNavigate();

@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { bookTicketActions } from "../../redux/reducer/ticket";
 import toast, { Toaster } from "react-hot-toast";
-import fallback from '../assets/images/fallback.png'
+import fallback from '../../assets/images/fallback.png'
 
 const OrderPage = () => {
   const nav = useNavigate();

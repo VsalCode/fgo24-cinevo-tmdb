@@ -1,5 +1,5 @@
 import Button from "../../components/Button";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,8 +8,8 @@ import { IoSearch } from "react-icons/io5";
 import { useNavigate, useParams } from "react-router-dom";
 import { bookTicketActions } from "../../redux/reducer/ticket";
 import { nanoid } from "@reduxjs/toolkit";
-import fallback from "../assets/images/fallback.png";
-import fallbackBackdrop from "../assets/images/fallback_backdrop.png";
+import fallback from "../../assets/images/fallback.png";
+import fallbackBackdrop from "../../assets/images/fallback_backdrop.png";
 
 const MovieDetailPage = () => {
   const nav = useNavigate();

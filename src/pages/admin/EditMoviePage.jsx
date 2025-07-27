@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { editMovieActions } from "../../redux/reducer/admin";
 import { useNavigate, useParams } from "react-router-dom";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ValidationMovies } from "../../components/ValidationMovies";
+import { ValidationMovies } from "../../utils/validations/movieSchema";
 
 const EditMoviePage = () => {
   const { id } = useParams();

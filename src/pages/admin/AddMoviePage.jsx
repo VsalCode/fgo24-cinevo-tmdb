@@ -5,7 +5,7 @@ import { addMovieActions } from "../../redux/reducer/admin";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ValidationMovies } from "../../components/ValidationMovies";
+import { ValidationMovies } from "../../utils/validations/movieSchema";
 
 const AddMoviePage = () => {
   const {

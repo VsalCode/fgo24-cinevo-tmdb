@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import axios from "../utils/axios";
-import requests from "../utils/Requests";
+import axios from "../utils/api/axios";
+import requests from "../utils/api/Requests";
 import "swiper/css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
@@ -43,14 +43,18 @@ const NowShowingSection = () => {
     <div className="w-full my-20">
       <div className="flex  justify-between items-center overflow-hidden">
         <button
-          onClick={() => { scroll(-470) }}
+          onClick={() => {
+            scroll(-470);
+          }}
           className="button-icon md:text-lg text-sm"
         >
           <FaArrowLeft />
         </button>
         <p className="md:font-semibold font-bold md:text-4xl sm:text-2xl text-xl">Now Showing in Cinemas</p>
         <button
-          onClick={() => {scroll(470) }}
+          onClick={() => {
+            scroll(470);
+          }}
           className="button-icon md:text-lg text-sm bg-third"
         >
           <FaArrowRight />

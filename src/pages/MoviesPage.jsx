@@ -1,6 +1,6 @@
 import { useSearchParams } from "react-router-dom";
-import axios from "../utils/axios";
-import requests from "../utils/Requests";
+import axios from "../utils/api/axios";
+import requests from "../utils/api/Requests";
 import Subscribe from "../components/common/Subscribe";
 import Button from "../components/ui/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";

@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import qr from "../assets/images/QR.svg"
 
-const TicketResult = () => {
+const TicketResultPage = () => {
   const { queryId } = useParams();
   const dataHistoryPayment = useSelector((state) => state.ticket.historyPayment);
   const filtered = dataHistoryPayment?.filter((e) => e?.idTransaction === queryId )[0];
@@ -68,4 +68,4 @@ const TicketResult = () => {
   );
 };
 
-export default TicketResult;
+export default TicketResultPage;

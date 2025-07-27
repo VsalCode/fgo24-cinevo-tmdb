@@ -4,9 +4,9 @@ import { FaRegEdit } from "react-icons/fa";
 import { HiOutlineTrash } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { removeMovieActions } from "../redux/reducer/admin";
+import { removeMovieActions } from "../../redux/reducer/admin";
 
-const MovieAdmin = () => {
+const MovieAdminPage = () => {
   const dispatch = useDispatch();
   const listMovie = useSelector((state) => state.admin.listMovie);
 
@@ -74,4 +74,4 @@ const MovieAdmin = () => {
   );
 };
 
-export default MovieAdmin;
+export default MovieAdminPage;

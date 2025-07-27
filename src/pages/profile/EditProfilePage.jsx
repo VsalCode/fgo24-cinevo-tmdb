@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { useState } from "react";
-import { updateUser } from "../redux/reducer/users";
+import { updateUser } from "../../redux/reducer/users";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import toast, { Toaster } from "react-hot-toast";
@@ -24,7 +24,7 @@ const schema = yup.object().shape({
   }),
 });
 
-const AccountSettings = () => {
+const EditProfilePage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.auth.currentUser);
@@ -138,4 +138,4 @@ const AccountSettings = () => {
   );
 };
 
-export default AccountSettings;
+export default EditProfilePage;

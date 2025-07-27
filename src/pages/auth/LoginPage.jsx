@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import toast, { Toaster } from "react-hot-toast";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { userLogin, adminLogin } from "../redux/reducer/auth";
+import { userLogin, adminLogin } from "../../redux/reducer/auth";
 
 const schema = yup
   .object({
@@ -19,7 +19,7 @@ const schema = yup
   })
   .required();
 
-const Login = () => {
+const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -116,4 +116,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

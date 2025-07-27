@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import React from "react";
 
-const DashboardAdmin = () => {
+const DashboardPage = () => {
   const [ticketSalesData, setTicketSalesData] = React.useState([]);
   const [salesChartData, setSalesChartData] = React.useState([]);
   const { register, handleSubmit } = useForm();
@@ -144,4 +144,4 @@ const DashboardAdmin = () => {
   );
 };
 
-export default DashboardAdmin;
+export default DashboardPage;

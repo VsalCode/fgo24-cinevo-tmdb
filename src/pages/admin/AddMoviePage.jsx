@@ -1,13 +1,13 @@
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useDispatch } from "react-redux";
-import { addMovieActions } from "../redux/reducer/admin";
+import { addMovieActions } from "../../redux/reducer/admin";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { ValidationMovies } from "../components/ValidationMovies";
+import { ValidationMovies } from "../../components/ValidationMovies";
 
-const AddMovie = () => {
+const AddMoviePage = () => {
   const {
     register,
     handleSubmit,
@@ -127,4 +127,4 @@ const InputAddMovie = ({ label, id, type = "text", placeholder, errors, ...props
   );
 };
 
-export default AddMovie;
+export default AddMoviePage;

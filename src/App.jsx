@@ -1,26 +1,22 @@
 import { createBrowserRouter, Navigate, RouterProvider, ScrollRestoration } from "react-router-dom";
-import BuyTicket from "./pages/BuyTicket";
-import NotFound from "./pages/NotFound";
-import HomePage from "./pages/HomePage";
-import Movies from "./pages/Movies";
-import MovieDetail from "./pages/MovieDetail";
-import Login from "./pages/Login";
-import SignUp from "./pages/SignUp";
-import OrderPage from "./pages/OrderPage";
 import Layout from "./layout/Layout";
-import Payment from "./pages/Payment";
-import TicketResult from "./pages/TicketResult";
 import { Provider, useSelector } from "react-redux";
 import { store, persistor } from "./redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import AccountSettings from "./pages/AccountSettings";
 import LayoutProfile from "./layout/ProfileLayout";
-import OrderHistory from "./pages/OrderHistory";
 import LayoutAdmin from "./layout/LayoutAdmin";
-import DashboardAdmin from "./pages/DashboardAdmin";
-import MovieAdmin from "./pages/MovieAdmin";
-import AddMovie from "./pages/AddMovie";
-import EditMovie from "./pages/EditMovie";
+import EditProfilePage from "./pages/profile/EditProfilePage";
+import OrderHistoryPage from "./pages/profile/OrderHistoryPage";
+import LoginPage from "./pages/auth/LoginPage";
+import RegisterPage from "./pages/auth/RegisterPage";
+import TicketResultPage from "./pages/transactions/TicketResultPage";
+import PaymentPage from "./pages/transactions/PaymentPage";
+import OrderPage from "./pages/transactions/OrderPage";
+import MovieDetailPage from "./pages/transactions/MovieDetailPage";
+import DashboardPage from "./pages/admin/DashboardPage";
+import MovieAdminPage from "./pages/admin/MovieAdminPage";
+import MoviesPage from "./pages/MoviesPage";
+import NotFoundPage from "./pages/NotFound";
 
 const PrivateRoute = ({ children }) => {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -38,17 +34,17 @@ const router = createBrowserRouter([
       },
       {
         path: "/movies",
-        element: <Movies />,
+        element: <MoviesPage/> ,
       },
       {
         path: "/movieDetail/:id",
-        element: <MovieDetail />,
+        element: <MovieDetailPage/> ,
       },
       {
         path: "/order/:id",
         element: (
           <PrivateRoute>
-            <OrderPage />
+            <OrderPage/>
           </PrivateRoute>
         ),
       },
@@ -56,7 +52,7 @@ const router = createBrowserRouter([
         path: "/payment/:queryId",
         element: (
           <PrivateRoute>
-            <Payment />
+            <PaymentPage/>
           </PrivateRoute>
         ),
       },
@@ -64,7 +60,7 @@ const router = createBrowserRouter([
         path: "/ticket/:queryId",
         element: (
           <PrivateRoute>
-            <TicketResult />
+            <TicketResultPage/>
           </PrivateRoute>
         ),
       },
@@ -78,7 +74,7 @@ const router = createBrowserRouter([
         path: "/account-settings",
         element: (
           <PrivateRoute>
-            <AccountSettings />
+            <EditProfilePage/>
           </PrivateRoute>
         ),
       },
@@ -86,7 +82,7 @@ const router = createBrowserRouter([
         path: "/order-history",
         element: (
           <PrivateRoute>
-            <OrderHistory />
+            <OrderHistoryPage/>
           </PrivateRoute>
         ),
       },
@@ -98,37 +94,33 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard-admin",
-        element: <DashboardAdmin />,
+        element: <DashboardPage/> ,
       },
       {
         path: "/movies-admin",
-        element: <MovieAdmin />,
+        element: <MovieAdminPage/> ,
       },
       {
         path: "/add-movie",
-        element: <AddMovie />,
+        element: <AddMoviePage/> ,
       },
       {
         path: "/edit-movie/:id",
-        element: <EditMovie/>
+        element: <EditMoviePage/>
       },
     ],
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage/> ,
   },
   {
     path: "/signup",
-    element: <SignUp />,
-  },
-  {
-    path: "/buyTicket",
-    element: <BuyTicket />,
+    element: <RegisterPage/> ,
   },
   {
     path: "/*",
-    element: <NotFound />,
+    element: <NotFoundPage/> ,
   },
 ]);
 

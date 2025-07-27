@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
-import { addUser } from "../redux/reducer/users";
+import { addUser } from "../../redux/reducer/users";
 import toast, { Toaster } from "react-hot-toast";
 import { nanoid } from "@reduxjs/toolkit";
 
@@ -25,7 +25,7 @@ const schema = yup
   })
   .required();
 
-const SignUp = () => {
+const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {
     register,
@@ -143,4 +143,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default RegisterPage;

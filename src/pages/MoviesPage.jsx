@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
 
-const Movies = () => {
+const MoviesPage = () => {
   const [movies, setMovies] = useState([]);
   const [genres, setGenres] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -236,4 +236,4 @@ const Movies = () => {
   );
 };
 
-export default Movies;
+export default MoviesPage;

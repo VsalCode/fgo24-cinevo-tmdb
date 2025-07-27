@@ -2,7 +2,7 @@ import { FaCheck } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { bookTicketActions } from "../redux/reducer/ticket";
+import { bookTicketActions } from "../../redux/reducer/ticket";
 import toast, { Toaster } from "react-hot-toast";
 import fallback from '../assets/images/fallback.png'
 

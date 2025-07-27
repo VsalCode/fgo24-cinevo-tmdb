@@ -66,7 +66,7 @@ const HistoryItem = ({ item, index }) => {
   );
 };
 
-const OrderHistory = () => {
+const OrderHistoryPage = () => {
   const userLogin = useSelector((state) => state.auth.currentUser);
   const dataHistoryPayment = useSelector((state) => state.ticket.historyPayment);
   const filtered = dataHistoryPayment.filter((e) => e.userId === userLogin.id);
@@ -97,4 +97,4 @@ const OrderHistory = () => {
   );
 };
 
-export default OrderHistory;
+export default OrderHistoryPage;

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
-import { paymentAction } from "../redux/reducer/ticket";
+import { paymentAction } from "../../redux/reducer/ticket";
 import toast, { Toaster } from "react-hot-toast";
 import bca from "../assets/images/bca.svg";
 import bri from "../assets/images/bri.svg";
@@ -14,7 +14,7 @@ import ovo from "../assets/images/ovo.svg";
 import paypal from "../assets/images/paypal.svg";
 import visa from "../assets/images/visa.svg";
 
-const Payment = () => {
+const PaymentPage = () => {
   const nav = useNavigate();
   const [dataPayment, setDataPayment] = useState({});
   const dispatch = useDispatch();
@@ -145,7 +145,7 @@ const Payment = () => {
   );
 };
 
-export default Payment;
+export default PaymentPage;
 
 export const DetailInfo = ({ label, value, variant }) => {
   return (

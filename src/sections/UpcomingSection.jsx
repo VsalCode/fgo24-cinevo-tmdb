@@ -1,7 +1,7 @@
 import axios from "../utils/axios";
 import requests from "../utils/Requests";
 import { useEffect, useRef, useState } from "react";
-import Button from "../components/Button";
+import Button from "../components/ui/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 

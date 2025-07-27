@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar";
+import Navbar from "./Navbar";
 import { useSelector } from "react-redux";
 import { Toaster } from "react-hot-toast";
 import { SlOptions } from "react-icons/sl";

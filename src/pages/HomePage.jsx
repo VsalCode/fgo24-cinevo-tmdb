@@ -1,11 +1,11 @@
-import Navbar from "../components/Navbar";
+import Navbar from "../layout/Navbar";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { RiCustomerService2Fill } from "react-icons/ri";
 import { MdStars } from "react-icons/md";
-import BenefitCard from "../components/BenefitCard";
+import BenefitCard from "../components/common/BenefitCard";
 import NowShowingSection from "../sections/NowShowingSection";
 import UpcomingSection from "../sections/UpcomingSection";
-import Subscribe from "../components/Subscribe";
+import Subscribe from "../components/common/Subscribe";
 
 const HomePage = () => {
   return (

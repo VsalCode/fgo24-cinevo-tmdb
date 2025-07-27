@@ -1,5 +1,5 @@
 import { Outlet, Navigate, ScrollRestoration } from "react-router-dom";
-import NavbarAdmin from "../components/NavbarAdmin";
+import NavbarAdmin from "./NavbarAdmin";
 import toast, { Toaster } from "react-hot-toast";
 import { useSelector } from "react-redux";
 

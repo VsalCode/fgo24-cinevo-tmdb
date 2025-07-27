@@ -1,4 +1,4 @@
-import Button from "../../components/Button";
+import Button from "../../components/ui/Button";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import toast, { Toaster } from "react-hot-toast";

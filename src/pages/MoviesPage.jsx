@@ -1,8 +1,8 @@
 import { useSearchParams } from "react-router-dom";
 import axios from "../utils/axios";
 import requests from "../utils/Requests";
-import Subscribe from "../components/Subscribe";
-import Button from "../components/Button";
+import Subscribe from "../components/common/Subscribe";
+import Button from "../components/ui/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoFilterSharp, IoSearchSharp } from "react-icons/io5";
@@ -52,7 +52,10 @@ const MoviesPage = () => {
           title: movie.title || movie.name,
           poster: `https://image.tmdb.org/t/p/w500${movie.poster_path}`,
           backdrop: `https://image.tmdb.org/t/p/w1280${movie.backdrop_path || movie.poster_path}`,
-          genre: movie.genre_ids.map((id) => movieGenres.find((g) => g.id === id)?.name).filter(Boolean).join(", "),
+          genre: movie.genre_ids
+            .map((id) => movieGenres.find((g) => g.id === id)?.name)
+            .filter(Boolean)
+            .join(", "),
         }));
 
         const combinedMovies = [...updatedTmdbMovies, ...listMovie];
@@ -67,15 +70,14 @@ const MoviesPage = () => {
 
   const handleSearch = (data) => {
     const { query: searchQuery } = data;
-    setSearchParams({page: "1", ...(searchQuery && { query: searchQuery }),
-    });
+    setSearchParams({ page: "1", ...(searchQuery && { query: searchQuery }) });
   };
 
   const handleSort = (e) => {
     setCurrentSort(e.target.value);
   };
 
-  const handleGenreFilter = (value) =>  {
+  const handleGenreFilter = (value) => {
     const { genre } = value;
     if (genre.length > 0) {
       const sendCurrentGenre = genre.join("%2C");
@@ -84,7 +86,7 @@ const MoviesPage = () => {
       const sendCurrentGenre = genre.join("");
       setCurrentGenre(sendCurrentGenre);
     }
-  }
+  };
 
   return (
     <>

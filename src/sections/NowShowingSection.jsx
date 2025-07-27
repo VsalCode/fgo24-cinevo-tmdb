@@ -5,7 +5,7 @@ import "swiper/css";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const NowShowingMovies = () => {
+const NowShowingSection = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -96,4 +96,4 @@ const NowShowingMovies = () => {
   );
 };
 
-export default NowShowingMovies;
+export default NowShowingSection;

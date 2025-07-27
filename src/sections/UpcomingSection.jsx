@@ -1,11 +1,11 @@
 import axios from "../utils/axios";
 import requests from "../utils/Requests";
 import { useEffect, useRef, useState } from "react";
-import Button from "./Button";
+import Button from "../components/Button";
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const UpcomingMovies = () => {
+const UpcomingSection = () => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
@@ -62,13 +62,17 @@ const UpcomingMovies = () => {
       <div className="flex justify-between pt-10 overflow-hidden md:px-15 px-7">
         <div className="flex items-center gap-4">
           <button
-            onClick={() => {scroll(-400)}}
+            onClick={() => {
+              scroll(-400);
+            }}
             className="button-icon"
           >
             <FaArrowLeft className="md:text-lg text-sm" />
           </button>
           <button
-            onClick={() => {scroll(400)}}
+            onClick={() => {
+              scroll(400);
+            }}
             className="button-icon"
           >
             <FaArrowRight />
@@ -85,4 +89,4 @@ const UpcomingMovies = () => {
   );
 };
 
-export default UpcomingMovies;
+export default UpcomingSection;
